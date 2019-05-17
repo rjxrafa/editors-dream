@@ -64,3 +64,6 @@ HEADERS += \
     heap.h \
     node.h \
     editor.h
+
+DISTFILES += \
+    todo
