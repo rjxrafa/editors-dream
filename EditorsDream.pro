@@ -26,10 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    binarytree.cpp \
+    heap.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    binarytree.h \
+    heap.h
 
 FORMS += \
         mainwindow.ui
