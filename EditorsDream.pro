@@ -27,13 +27,14 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    binarytree.cpp \
     heap.cpp
 
 HEADERS += \
         mainwindow.h \
     binarytree.h \
-    heap.h
+    heap.h \
+    node.h \
+    binarytree.template
 
 FORMS += \
         mainwindow.ui
@@ -42,3 +43,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    todo
