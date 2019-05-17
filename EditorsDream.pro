@@ -27,14 +27,14 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    heap.cpp
+    heap.cpp \
+    binarytree.tpp
 
 HEADERS += \
         mainwindow.h \
     binarytree.h \
     heap.h \
-    node.h \
-    binarytree.template
+    node.h
 
 FORMS += \
         mainwindow.ui

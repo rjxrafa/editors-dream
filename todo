@@ -1,3 +1,13 @@
 Considerations:
 
-- which container to use for line numbers in binary tree nodes
+Binary Trees
+    - which container to use for line numbers in binary tree nodes
+    Needed functions
+    - insertion
+    - deletion
+    - searching element
+    - tree traversal (level order traversal)
+    - find max/min/any
+    Auxiliary functions
+    - tree height
+    - finding least common ancestor for nodes
