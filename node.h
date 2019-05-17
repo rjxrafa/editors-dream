@@ -17,7 +17,8 @@ template <typename T>
 struct Node {
     T data;
     unsigned int count;
-    Node* lineNumbers; //need container for line Numbers
+    vector<int> lineNumbers;
+    vector<int> paragraph;//need container for line Numbers
 
     Node (const T &data = T(), int count= 0);
     ~Node();
