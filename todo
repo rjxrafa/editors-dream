@@ -12,6 +12,8 @@ Binary Trees
     - tree height
     - finding least common ancestor for nodes
     - AVL balance
+    - replace function calls (set) with their constituents for opimization?
+    - finish extractor for bst
 Heap
 
 Editor
