@@ -1,6 +1,7 @@
 //#include "mainwindow.h"
 #include <iostream>
 #include "binarytree.h"
+#include "editorassistheap.h"
 //#include <QApplication>
 
 using namespace std;
@@ -9,15 +10,19 @@ int main(int argc, char *argv[]) {
 //    MainWindow w;
 //    w.show();
 //    return a.exec();
+EditorAssistHeap book;
 
-  bst::BinaryTree<int> a;
+book.insertion();
+book.extraction();
+//  bst::BinaryTree<int> a;
 
-  a << 25;
-  a << 13;
-  a << 43;
-  a << 55;
-
-  a.PrintTree(a.root());
+//  a << 25;
+//  a << 13;
+//  a << 43;
+//  a << 55;
+//  a << 55;
+//  cin>>a;
+//  a.PrintTree(cout,a.root());
 
 
 
