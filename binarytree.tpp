@@ -65,7 +65,8 @@ void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //to
 
     while (temp) {
       if (*new_item == *temp) { //dereference the node pointers as a node
-        new_item += temp->count;
+        temp->count += count;
+        std::cout << "test";
         delete new_item;
         return;
       }
@@ -203,29 +204,29 @@ unsigned int bst::BinaryTree<T>::height(const Node<T>* &root) const {
  * @modified 2019-05-18
  */
 template <typename T>
-void bst::BinaryTree<T>::PrintTree(const Node<T>* root, const BST_TRAVERSAL method) const {
+void bst::BinaryTree<T>::PrintTree(std::ostream &out, const Node<T>* root, const BST_TRAVERSAL method) const {
 
   if (root != nullptr) {
     switch(method) {
     case BST_TRAVERSAL::IN_ORDER:
-      PrintTree(root->left, BST_TRAVERSAL::POST_ORDER);
-      PrintTree(root->right, BST_TRAVERSAL::POST_ORDER);
-      std::cout << root->data << std::endl;
+      PrintTree(out, root->left, BST_TRAVERSAL::POST_ORDER);
+      PrintTree(out, root->right, BST_TRAVERSAL::POST_ORDER);
+      out << '[' << root->data << ']' << '(' <<root->count  << ')' <<std::endl;
       break;
     case BST_TRAVERSAL::PRE_ORDER:
-      std::cout << root->data << std::endl;
-      PrintTree(root->left, BST_TRAVERSAL::PRE_ORDER);
-      PrintTree(root->right, BST_TRAVERSAL::PRE_ORDER);
+      out << '[' << root->data << ']' << '(' <<root->count  << ')' <<std::endl;
+      PrintTree(out, root->left, BST_TRAVERSAL::PRE_ORDER);
+      PrintTree(out, root->right, BST_TRAVERSAL::PRE_ORDER);
       break;
     case BST_TRAVERSAL::POST_ORDER:
-      PrintTree(root->left, BST_TRAVERSAL::POST_ORDER);
-      PrintTree(root->right, BST_TRAVERSAL::POST_ORDER);
-      std::cout << root->data << std::endl;
+      PrintTree(out, root->left, BST_TRAVERSAL::POST_ORDER);
+      PrintTree(out, root->right, BST_TRAVERSAL::POST_ORDER);
+      out << '[' << root->data << ']' << '(' <<root->count  << ')' <<std::endl;
       break;
     case BST_TRAVERSAL::BACKWARD_IN_ORDER:
       break; //todo implement
     default:
-      std::cout << "Invalid traversal method" << std::endl;
+      out << "Invalid traversal method" << std::endl;
     }
   }
 }
@@ -251,5 +252,20 @@ const bst::Node<T>* bst::BinaryTree<T>::Find(const bst::BinaryTree<T>* root, con
 //    }
 //  }
 //  return nullptr;
+}
+
+template <typename S>
+std::ostream& operator<<(std::ostream& out, const bst::BinaryTree<S> &other) {
+  other.PrintTree(out, other.root());
+  return out;
+}
+
+template <typename S>
+std::istream& operator>>(std::istream& in, bst::BinaryTree<S> &other) {
+  bst::Node<S> temp;
+  while (in >> temp) {
+    other.Insert(temp.data, temp.count);
+  }
+  return in;
 }
 

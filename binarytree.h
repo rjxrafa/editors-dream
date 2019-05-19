@@ -35,7 +35,7 @@ class BinaryTree
   unsigned int height() const {return height(root_);}
   const Node<T>* root() const {return root_;}
   BST_TRAVERSAL traversal() const {return traversal;}
-  void PrintTree(const Node<T>* root, const BST_TRAVERSAL method = BST_TRAVERSAL::POST_ORDER) const;
+  void PrintTree(std::ostream &out, const Node<T>* root, const BST_TRAVERSAL method = BST_TRAVERSAL::POST_ORDER) const;
   const Node<T>* Find(const BinaryTree<T>* root, const T& data) const;
 
   template <typename S>
@@ -44,7 +44,7 @@ class BinaryTree
 
   template <typename S>
   friend
-  std::istream& operator>>(std::ostream& out, const BinaryTree<T> &other);
+  std::istream& operator>>(std::istream& in, BinaryTree<T> &other);
 
  private:
   Node<T> *root_;

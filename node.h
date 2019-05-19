@@ -126,7 +126,7 @@ struct Node {
 
   template<typename S>
   friend
-  void operator>>(std::istream& in, Node<S> &n);
+  bool operator>>(std::istream& in, Node<S> &n);
 
 private:
   void copy(const Node<T> &other);
@@ -344,22 +344,28 @@ std::ostream &operator<<(std::ostream &out, const Node<S> &n) {
 }
 
 template<typename S>
-void operator>>(std::istream &in, Node<S> &n) {
-  std::string line;
+bool operator>>(std::istream &in, Node<S> &n) {
 //    char junk;
   if (&in == &std::cin) {
-      std::cout << "Data: ";
-      std::cin >> n.data; // todo: add data validation
+    std::string line;
+    std::cout << "Data: ";
+    if (std::cin>>n.data) { // todo need some data validation
       getline(in,line);
       n.count = line.empty() ? 1 : stoi(line);
       fflush(stdin);
+      return true;
+    } else
+      return false;
   }
   else
 //        in >> n.data >> junk >> n.count >> junk;
     std::cout << "test"; // todo
 
+  return false;
 }
 
-} // end namespace myBinaryTree
+
+} // end namespace bst
+
 
 #endif // Node_H
