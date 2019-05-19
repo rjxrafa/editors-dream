@@ -66,7 +66,6 @@ void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //to
     while (temp) {
       if (*new_item == *temp) { //dereference the node pointers as a node
         temp->count += count;
-        std::cout << "test";
         delete new_item;
         return;
       }
@@ -101,18 +100,6 @@ bst::BinaryTree<T>& bst::BinaryTree<T>::operator<<(const T & data) {
   Insert(data);
   return *this;
 }
-
-/**
- * @brief Delete This function deletes N count occurences from the Binary Tree.
- * @param data
- * @param count
- */
-template <typename T>
-void bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
-  //todo
-}
-
-
 
 /**
  * @brief This function will copy a given tree from its root node
@@ -155,7 +142,7 @@ void bst::BinaryTree<T>::ClearTree(Node<T>*& root) {
  * @modified 2019-05-18
  */
 template <typename T>
-unsigned int bst::BinaryTree<T>::data_count(const Node<T>* &root) const {
+unsigned int bst::BinaryTree<T>::data_count(Node<T>* root) const {
   if (root == nullptr)
     return 0;
   else
@@ -169,7 +156,7 @@ unsigned int bst::BinaryTree<T>::data_count(const Node<T>* &root) const {
  * @modified 2019-05-18
  */
 template <typename T>
-unsigned int bst::BinaryTree<T>::node_count(const Node<T>* &root) const {
+unsigned int bst::BinaryTree<T>::node_count(Node<T>* root) const {
   if (root == nullptr)
     return 0;
   else
@@ -182,12 +169,12 @@ unsigned int bst::BinaryTree<T>::node_count(const Node<T>* &root) const {
  * @return
  */
 template <typename T>
-unsigned int bst::BinaryTree<T>::height(const Node<T>* &root) const {
+ int bst::BinaryTree<T>::height(Node<T>* root) const {
   if (root == nullptr)
-    return 0;
+    return -1;
   else {
-    unsigned int left_height = height(root->left);
-    unsigned int right_height = height(root->right);
+    int left_height = height(root->left);
+    int right_height = height(root->right);
 
     if (left_height > right_height)
       return ++left_height;
@@ -201,62 +188,82 @@ unsigned int bst::BinaryTree<T>::height(const Node<T>* &root) const {
  * @brief This function prints a given tree depending on the method passed
  * @param root
  * @param method
- * @modified 2019-05-18
+ * @modified 2019-05-19
  */
 template <typename T>
-void bst::BinaryTree<T>::PrintTree(std::ostream &out, const Node<T>* root, const BST_TRAVERSAL method) const {
+void bst::BinaryTree<T>::PrintTree(std::ostream &out, Node<T>* root) const {
 
-  if (root != nullptr) {
-    switch(method) {
-    case BST_TRAVERSAL::IN_ORDER:
-      PrintTree(out, root->left, BST_TRAVERSAL::POST_ORDER);
-      PrintTree(out, root->right, BST_TRAVERSAL::POST_ORDER);
-      out << '[' << root->data << ']' << '(' <<root->count  << ')' <<std::endl;
-      break;
-    case BST_TRAVERSAL::PRE_ORDER:
-      out << '[' << root->data << ']' << '(' <<root->count  << ')' <<std::endl;
-      PrintTree(out, root->left, BST_TRAVERSAL::PRE_ORDER);
-      PrintTree(out, root->right, BST_TRAVERSAL::PRE_ORDER);
-      break;
-    case BST_TRAVERSAL::POST_ORDER:
-      PrintTree(out, root->left, BST_TRAVERSAL::POST_ORDER);
-      PrintTree(out, root->right, BST_TRAVERSAL::POST_ORDER);
-      out << '[' << root->data << ']' << '(' <<root->count  << ')' <<std::endl;
-      break;
-    case BST_TRAVERSAL::BACKWARD_IN_ORDER:
-      break; //todo implement
-    default:
-      out << "Invalid traversal method" << std::endl;
-    }
+  if (root) {
+    if (traversal() == bst::BST_TRAVERSAL::PRE_ORDER)
+      out << root->data << '[' << root->count << ']' << " height: " << height(root) << std::endl;
+    PrintTree(out, root->left);
+    if (traversal() == bst::BST_TRAVERSAL::IN_ORDER)
+      out << root->data << '[' << root->count << ']' << " height: " << height(root)<< std::endl;
+    PrintTree(out, root->right);
+    if (traversal() == bst::BST_TRAVERSAL::POST_ORDER)
+      out << root->data << '[' << root->count << ']' << " height: " << height(root) << std::endl;
   }
+
 }
 
 template <typename T>
-const bst::Node<T>* bst::BinaryTree<T>::Find(const bst::BinaryTree<T>* root, const T& data) const {
-//  if (root == nullptr) // if not found, then data is not found
-//    return nullptr;
-//  else {
-//    if (data == root_->data)
-//      return root;
-//    else {
-//      Node<T>* temp = Find(root_->left)
-//    }
-//  }
-  //  while(root) {
-//    if (data == root->data())
-//      return root;
-//    else if (data > root->data())
-//      root = root->right();
-//    else {
-//      root = root->left();
-//    }
-//  }
-//  return nullptr;
+/**
+ * @brief This function will find a given data in the BST as well as the parent and a lessthan comparator. This function is adapted from
+ *         Paul Wilkinson's CS008 implementation
+ * @param data
+ * @return
+ * @modified 2019-05-18
+ */
+bst::Node<T>* bst::BinaryTree<T>::Find(const T& data, Node<T> *root, Node<T>* &parent, bool &less_than) const {
+
+  parent = root;
+  less_than = true;
+  bool cont = true;
+
+  while (root && cont) {
+    if(data == root->data) {
+      less_than = (root == parent->left);
+      cont = false;
+    } else if (data < root->data) {
+      parent = root;
+      root = root->left;
+    } else if (data > root->data) {
+      parent = root;
+      root = root->right;
+    }
+  }
+  return root; // returns null if not found
+}
+
+/**
+ * @brief Delete This function deletes N count occurences from the Binary Tree. Adapted from Paul Wilkinson's CS008 lectures.
+ * @param data
+ * @param count
+ * @modified 2019-05-18
+ */
+template <typename T>
+bool bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
+  bool less_than;
+  Node<T> *parent = nullptr,
+            *child = Find(data, root_, parent, less_than);
+
+  if (child) { // if an item was found..
+    if ((child->count -= count) < 1) {
+      if (less_than)
+        DeleteLeftChild(child, parent);
+      else
+        DeleteRightChild(child, parent);
+    }
+    return true;
+  } else {
+    std::cout << "No item to delete";
+    return false;
+  }
 }
 
 template <typename S>
 std::ostream& operator<<(std::ostream& out, const bst::BinaryTree<S> &other) {
-  other.PrintTree(out, other.root());
+  other.PrintTree(out, other.root_);
   return out;
 }
 
@@ -268,4 +275,69 @@ std::istream& operator>>(std::istream& in, bst::BinaryTree<S> &other) {
   }
   return in;
 }
+
+/**
+ * @brief FindSmallest This will return the smallest node for a given root
+ * @param root
+ * @return
+ * @modified 2019-05-18
+ */
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::FindSmallest(Node<T>* root) const {
+  for ( ; root->left != nullptr; root = root->left);
+  return root;
+}
+
+/**
+ * @brief This function has been adapted from Paul Wilkinson's CS008 lectures.
+ * @param child
+ * @param parent
+ * @modified 2019-05-18
+ */
+template <typename T>
+void bst::BinaryTree<T>::DeleteLeftChild(Node<T>* &child, Node<T>* &parent) {
+  if (child->right) {  // if the child to be deleted has a right child, we need to relink it
+    parent->left = child->right;
+    FindSmallest(child->right)->left = child->left;
+  } else  // if child has no right child, then we proceed to replace the node to be deleted with its left child
+    parent->left = child->left;
+  delete child;
+}
+
+/**
+ * @brief This function has been adapted from Paul Wilkinson's CS008 lectures.
+ * @param child
+ * @param parent
+ * @modified 2019-05-18
+ */
+template <typename T>
+void bst::BinaryTree<T>::DeleteRightChild(Node<T>* &child, Node<T>* &parent) {
+  if (parent == root_) { // special case: when deleting the root's right child
+    if (root_->right) {
+      root_ = root_->right;
+      FindSmallest(root_)->left = parent->left;
+    } else {
+      root_ = root_->left;
+    }
+    delete parent;
+
+  } else {
+    if (child->right) {
+      parent->right = child->right;
+      FindSmallest(child->right)->left = child->left;
+      }// if child has a right, we need to relink
+    else
+      parent->right = child->left;
+    delete child;
+  }
+}
+
+/**
+ * @brief bst::BinaryTree<T>::Rebalance
+ */
+template <typename T>
+void bst::BinaryTree<T>::Rebalance() {
+  //todo
+}
+
 

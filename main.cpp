@@ -16,14 +16,6 @@ book.insertion();
 book.extraction();
 //  bst::BinaryTree<int> a;
 
-//  a << 25;
-//  a << 13;
-//  a << 43;
-//  a << 55;
-//  a << 55;
-//  cin>>a;
-//  a.PrintTree(cout,a.root());
-
 
 
   return 0;

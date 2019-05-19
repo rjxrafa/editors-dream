@@ -15,5 +15,5 @@ Binary Trees
     - replace function calls (set) with their constituents for opimization?
     - finish extractor for bst
 Heap
-
+    - input validation when file not found
 Editor
