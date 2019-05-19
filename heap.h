@@ -9,7 +9,7 @@
 #include <cmath>
 #include <vector>
 
-enum HEAP_ERRORS {FULL, EMPTY, ILLEGAL_CHANGE};
+enum HEAP_ERRORS {FULL, EMPTY};
 
 template<typename T>
 class myHeap
@@ -30,13 +30,13 @@ public:
     int leftChild(int i);
     int rightChild(int i);
 
-    template<typename S>
-    friend
-    std::ostream& operator<<(std::ostream &, const myHeap<S> &);
+//    template<typename S>
+//    friend
+//    std::ostream& operator<<(std::ostream &, const myHeap<S> &);
 
-    template<typename S>
-    friend
-    std::istream& operator>>(std::istream &, myHeap<S> &);
+//    template<typename S>
+//    friend
+//    std::istream& operator>>(std::istream &, myHeap<S> &);
 
 private:
     std::vector<T> theHeap;
@@ -59,6 +59,8 @@ template<typename T>
 myHeap<T>::~myHeap()
 {
     theHeap.clear();
+    paragraph.clear();
+    lineNumber.clear();
     myPointer.clear();
 }
 
@@ -66,6 +68,8 @@ template<typename T>
 myHeap<T>::myHeap(const myHeap<T> &other)
 {
     theHeap = other.theHeap;
+    paragraph = other.paragraph;
+    lineNumber = other.lineNumber;
     myPointer = other.myPointer;
 }
 
@@ -75,6 +79,8 @@ myHeap<T>& myHeap<T>::operator=(const myHeap<T> &other)
     if(this != &other)
     {
         theHeap = other.theHeap;
+        paragraph = other.paragraph;
+        lineNumber = other.lineNumber;
         myPointer = other.myPointer;
     }
     return *this;
@@ -209,6 +215,7 @@ std::ostream& operator<<(std::ostream &out, const myHeap<S> &heap)
 template<typename S>
 std::istream& operator>>(std::istream &in, myHeap<S> &heap)
 {
+
     return in;
 }
 
