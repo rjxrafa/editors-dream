@@ -17,7 +17,7 @@ namespace bst{
 template <typename T>
 struct Node {
   T data;
-  unsigned int count;
+  int count;
   std::vector<int> line;
   std::vector<int> paragraph;
   struct Node* left;
@@ -339,7 +339,9 @@ bool operator!=(const Node<S> &x, const S &y) {
 
 template<typename S>
 std::ostream &operator<<(std::ostream &out, const Node<S> &n) {
-  out << n.data << "  (" << n.count << ") ";
+  if (&n != nullptr)
+    out << '[' << n.data << ']' << '(' << n.count << ')';
+
   return out;
 }
 
