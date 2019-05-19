@@ -57,11 +57,15 @@ void EditorAssistHeap::insertion()
 
 void EditorAssistHeap::extraction()
 {
-   std::ofstream myfile ("test.txt");
+    bool leastCount = false;
+    std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s = "A", previousWord = "A";
+    std::vector<bst::Node<std::string>> mostWords(10);
+    std::priority_queue<bst::Node<std::string>> mypq;
     int paragraph, line;
-    int wordCount = 1, total = 0;
+    int wordCount = 1, total = 0, size=0;
+    std::cout<<"hello"<<std::endl;
     for(int i = 0; i < 26; ++i)
     {
         while(!orchard_[i].empty())
@@ -74,14 +78,35 @@ void EditorAssistHeap::extraction()
                 ++wordCount;
             else
             {
-
+                if(mostWords.size() < 10)
+                {
+                    mostWords[size].data = previousWord;
+                    mostWords[size++].count = wordCount;
+//                    mostWords[mostWords.size()].paragraph.push_back(paragraph);
+//                    mostWords[mostWords.size()].line.push_back(line);
+                }
+               else
+                {
+                    for(int j = 0; j<10;++j)
+                    {
+                        if(wordCount > mostWords[j].count)
+                        {
+                            mostWords[j].data = previousWord;
+                            mostWords[j].count = wordCount;
+                            break;
+                        }
+                    }
+                }
                 myfile<<previousWord<<":"<<"["<<wordCount<<"]"<<std::endl;
-                //std::cout<<previousWord<<"["<<wordCount<<"]"<<std::endl;
                 wordCount = 1;
             }
 
            //  myfile << s;
         }
+    }
+    for(int w = 0; w < 10; ++w)
+    {
+        std::cout<<mostWords[w]<<std::endl;
     }
     std::cout<<"Total words: "<<total<<std::endl;
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;

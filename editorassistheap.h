@@ -3,8 +3,10 @@
 #include "editor.h"
 #include "heap.h"
 #include "string.h"
+#include "node.h"
 #include <ctime>
-#include <map>
+#include <vector>
+#include <queue>
 
 class EditorAssistHeap: public EditorAssist
 {
