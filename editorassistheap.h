@@ -4,6 +4,7 @@
 #include "heap.h"
 #include "string.h"
 #include <ctime>
+#include <map>
 
 class EditorAssistHeap: public EditorAssist
 {

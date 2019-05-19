@@ -26,7 +26,9 @@ bool EditorAssist::SanitizeString(std::string &s)
     if(s.empty())
         return false;
     //lower if it is a word
-    s[0] = tolower(s[0]);
+    std::transform(s.begin(), s.end(), s.begin(), tolower);
+    s[0] = toupper(s[0]);
+   // s[0] = tolower(s[0]);
     //else true
     return true;
 }
