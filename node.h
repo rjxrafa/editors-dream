@@ -16,120 +16,120 @@ namespace bst{
 
 template <typename T>
 struct Node {
-    T data;
-    unsigned int count;
-    std::vector<int> line;
-    std::vector<int> paragraph;
-    struct Node* left;
-    struct Node* right;
+  T data;
+  unsigned int count;
+  std::vector<int> line;
+  std::vector<int> paragraph;
+  struct Node* left;
+  struct Node* right;
 
-    Node (const T &data = T(), const unsigned int &c = 0);
-    ~Node();
-    Node(const Node<T> &other);
+  Node (const T &data = T(), const unsigned int &c = 0);
+  ~Node();
+  Node(const Node<T> &other);
 
-    Node<T>& operator=(const Node<T> &other);
-    Node<T>& operator^=(Node<T> &other); // this is the swap function for Nodes to swap values
-    Node<T>& operator-=(const unsigned int &c);
-    Node<T>& operator+=(const unsigned int &c);
+  Node<T>& operator=(const Node<T> &other);
+  Node<T>& operator^=(Node<T> &other); // this is the swap function for Nodes to swap values
+  Node<T>& operator-=(const unsigned int &c);
+  Node<T>& operator+=(const unsigned int &c);
 
-    bool empty() const;
-    void Set(const T& d, const unsigned int &c);
-    void SetLeft(Node<T> &other);
-    void SetRight(Node<T> &other);
-    void Clear(); // This function clears all values from a Node
+  bool empty() const;
+  bool is_leaf() const {return (left == nullptr)&&(right == nullptr);}
+  void Set(const T& d, const unsigned int &c);
+  void SetLeft(Node<T> &other);
+  void SetRight(Node<T> &other);
+  void Clear(); // This function clears all values from a Node
 
-    // Node-Node comparison operators
-    template<typename S>
-    friend
-    bool operator<(const Node<S> &x, const Node<S> &y);
+  // Node-Node comparison operators
+  template<typename S>
+  friend
+  bool operator<(const Node<S> &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator<=(const Node<S> &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator<=(const Node<S> &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator>(const Node<S> &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator>(const Node<S> &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator>=(const Node<S> &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator>=(const Node<S> &x, const Node<S> &y);
 
-    // This will check for data match
-    template<typename S>
-    friend
-    bool operator==(const Node<S> &x, const Node<S> &y);
+  // This will check for data match
+  template<typename S>
+  friend
+  bool operator==(const Node<S> &x, const Node<S> &y);
 
-    // This will check for exact match (data & count)
-    template<typename S>
-    friend
-    bool operator&=(const Node<S> &x, const Node<S> &y);
+  // This will check for exact match (data & count)
+  template<typename S>
+  friend
+  bool operator&=(const Node<S> &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator!=(const Node<S> &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator!=(const Node<S> &x, const Node<S> &y);
 
-    // Data-Node comparison operators
-    template<typename S>
-    friend
-    bool operator<(const S &x, const Node<S> &y);
+  // Data-Node comparison operators
+  template<typename S>
+  friend
+  bool operator<(const S &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator<=(const S &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator<=(const S &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator>(const S &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator>(const S &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator>=(const S &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator>=(const S &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator==(const S &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator==(const S &x, const Node<S> &y);
 
-    template<typename S>
-    friend
-    bool operator!=(const S &x, const Node<S> &y);
+  template<typename S>
+  friend
+  bool operator!=(const S &x, const Node<S> &y);
 
-    // Node-Data comparison operators
-    template<typename S>
-    friend
-    bool operator<(const Node<S> &x, const S &y);
+  // Node-Data comparison operators
+  template<typename S>
+  friend
+  bool operator<(const Node<S> &x, const S &y);
 
-    template<typename S>
-    friend
-    bool operator<=(const Node<S> &x, const S &y);
+  template<typename S>
+  friend
+  bool operator<=(const Node<S> &x, const S &y);
 
-    template<typename S>
-    friend
-    bool operator>(const Node<S> &x, const S &y);
+  template<typename S>
+  friend
+  bool operator>(const Node<S> &x, const S &y);
 
-    template<typename S>
-    friend
-    bool operator>=(const Node<S> &x, const S &y);
+  template<typename S>
+  friend
+  bool operator>=(const Node<S> &x, const S &y);
 
-    template<typename S>
-    friend
-    bool operator==(const Node<S> &x, const S &y);
+  template<typename S>
+  friend
+  bool operator==(const Node<S> &x, const S &y);
 
-    template<typename S>
-    friend
-    bool operator!=(const Node<S> &x, const S &y);
+  template<typename S>
+  friend
+  bool operator!=(const Node<S> &x, const S &y);
 
-    template<typename S>
-    friend
-    std::ostream& operator<<(std::ostream& out, const Node<S> &n);
+  template<typename S>
+  friend
+  std::ostream& operator<<(std::ostream& out, const Node<S> &n);
 
-    template<typename S>
-    friend
-    void operator>>(std::istream& in, Node<S> &n);
-
+  template<typename S>
+  friend
+  void operator>>(std::istream& in, Node<S> &n);
 
 private:
-    void copy(const Node<T> &other);
+  void copy(const Node<T> &other);
 };
 
 
