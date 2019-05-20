@@ -255,17 +255,17 @@ bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const uns
     root->left = Insert(root->left, data, count);
     if ((Node<T>::Height(root->left) - Node<T>::Height(root->right)) == 2) {
       if (data < root->left->data)
-        root = RotateLeft(root);
-      else
         root = RotateLeftRight(root);
+      else
+        root = RotateLeft(root);
     }
   } else if (data > root->data) {
     root->right = Insert(root->right, data, count);
     if ((Node<T>::Height(root->right) - Node<T>::Height(root->left)) == 2) {
       if (data < root->right->data)
-        root = RotateRight(root);
-      else
         root = RotateRightLeft(root);
+      else
+        root = RotateRight(root);
     }
   } else if (data == root->data) {
     root->count += count;
@@ -344,23 +344,6 @@ void bst::BinaryTree<T>::DeleteRightChild(Node<T>* &child, Node<T>* &parent) {
       parent->right = child->left;
     delete child;
   }
-}
-
-/**
- * @brief This function will rebalance a given tree with a series of rotations.
- * @modified 2019-05-18
- */
-template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::Rebalance(Node <T>* root) {
-
-//  if (root->balance_factor() > 1) {
-//    if (root->left->balance_factor() > 0)
-//      root = RotateRight(root);
-//  } else if (root->balance_factor() < -1) {
-//    root =
-//  }
-
-  return root;
 }
 
 /**
@@ -446,16 +429,31 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRightLeft(Node<T> *root) { // also known
  */
 template <typename T>
 void bst::BinaryTree<T>::PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const {
-    out << std::setw(4*depth) << "";
   if (root == nullptr) {
-    out << "[Empty]" << std::endl;
-  }  else if (root->is_leaf()) {
-    out << root->data << " [leaf]" << std::endl;
-  } else {
-    out << root->data << std::endl;
+    return;
+  }  else {
     PrintTreeDepth(out, root->right, depth+1);
+    out << std::setw(4*depth) << "" << root->data << std::endl;
     PrintTreeDepth(out, root->left, depth+1);
   }
+}
+
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::ExtractSmallest() {
+
+  if (root_ == nullptr)
+    throw BST_ERRORS::EMPTY;
+
+  Node<T> *parent, *temp = root_;
+
+
+  for ( ; temp->left != nullptr; temp = temp->left) {
+    parent = temp;
+  };
+
+  std::cout << "parent:" << *parent;
+  std::cout << std::endl << "min: " << *temp << std::endl;
+  return temp;
 }
 
 

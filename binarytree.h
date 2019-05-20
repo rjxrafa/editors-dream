@@ -15,6 +15,7 @@
 namespace bst {
 
 enum class BST_TRAVERSAL{PRE_ORDER, IN_ORDER, POST_ORDER, BACKWARD_IN_ORDER};
+enum class BST_ERRORS{EMPTY};
 
 template <typename T>
 class BinaryTree
@@ -30,6 +31,7 @@ class BinaryTree
 //  void Insert(const T &data, const unsigned int &count = 1);
   bool Delete(const T &data, const unsigned int &count = 1);
   Node<T>* Insert(Node<T>* root, const T &data, const unsigned int &count);
+  Node<T>* ExtractSmallest();
 
   // Const members
   bool empty() {return !root_;}
@@ -51,7 +53,6 @@ class BinaryTree
   Node<T> *root_;
   BST_TRAVERSAL traversal_;
 
-  Node<T>* Rebalance(Node <T>* root);
   Node<T>* RotateLeft(Node<T> *root);
   Node<T>* RotateRight(Node<T> *root);
   Node<T>* RotateLeftRight(Node<T> *root);
@@ -67,7 +68,7 @@ class BinaryTree
   unsigned int node_count(Node<T>* root) const;
   void PrintTree(std::ostream &out, Node<T>* root) const;
   Node<T>* Find(const T& data, Node<T> *root, Node<T>* &parent, bool &less_than) const;
-  Node<T>* FindSmallest(Node<T>* root) const;\
+  Node<T>* FindSmallest(Node<T>* root) const;
   void PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const;
 
 
