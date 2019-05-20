@@ -38,16 +38,16 @@ public:
 //    friend
 //    std::istream& operator>>(std::istream &, myHeap<S> &);
 
-private:
-    std::vector<T> theWords;
-    std::vector<int> paragraph;
-    std::vector<int> lineNumber;
-    std::vector<int> theHeap;
+//private:
+    std::vector<T> theWords_;
+    std::vector<int> paragraph_;
+    std::vector<int> lineNumber_;
+    std::vector<int> theHeap_;
     void shuffleUp();
     bool shuffleDown(int i);
     //void swap(T &x, T &y);
     bool xorSwap(int &x, int &y);
-    bool setLeast(int &x, int &y);
+    bool setLeast(int &x, int y);
 };
 
 template<typename T>
@@ -59,19 +59,19 @@ myHeap<T>::myHeap()
 template<typename T>
 myHeap<T>::~myHeap()
 {
-    theWords.clear();
-    paragraph.clear();
-    lineNumber.clear();
-    theHeap.clear();
+    theWords_.clear();
+    paragraph_.clear();
+    lineNumber_.clear();
+    theHeap_.clear();
 }
 
 template<typename T>
 myHeap<T>::myHeap(const myHeap<T> &other)
 {
-    theWords = other.theWords;
-    paragraph = other.paragraph;
-    lineNumber = other.lineNumber;
-    theHeap = other.theHeap;
+    theWords_ = other.theWords_;
+    paragraph_ = other.paragraph_;
+    lineNumber_ = other.lineNumber_;
+    theHeap_ = other.theHeap_;
 }
 
 template<typename T>
@@ -79,10 +79,10 @@ myHeap<T>& myHeap<T>::operator=(const myHeap<T> &other)
 {
     if(this != &other)
     {
-        theWords = other.theWords;
-        paragraph = other.paragraph;
-        lineNumber = other.lineNumber;
-        theHeap = other.theHeap;
+        theWords_ = other.theWords_;
+        paragraph_ = other.paragraph_;
+        lineNumber_ = other.lineNumber_;
+        theHeap_ = other.theHeap_;
     }
     return *this;
 }
@@ -90,10 +90,10 @@ myHeap<T>& myHeap<T>::operator=(const myHeap<T> &other)
 //template<typename T>
 //myHeap<T>& myHeap<T>::operator<<(const T &data, int paragr, int index)
 //{
-//    theWords.push_back(data);
-//    paragraph.push_back(paragr);
-//    lineNumber.push_back(index);
-//    theHeap.push_back(theWords.size()-1);
+//    theWords_.push_back(data);
+//    paragraph_.push_back(paragr);
+//    lineNumber_.push_back(index);
+//    theHeap_.push_back(theWords_.size()-1);
 //    shuffleUp();
 //    return *this;
 //}
@@ -101,10 +101,10 @@ myHeap<T>& myHeap<T>::operator=(const myHeap<T> &other)
 template<typename T>
 void myHeap<T>::insertData(const T &data, const int &paragr, const int &index)
 {
-    theWords.push_back(data);
-    paragraph.push_back(paragr);
-    lineNumber.push_back(index);
-    theHeap.push_back(theWords.size()-1);
+    theWords_.push_back(data);
+    paragraph_.push_back(paragr);
+    lineNumber_.push_back(index);
+    theHeap_.push_back(theWords_.size()-1);
     shuffleUp();
 }
 
@@ -113,13 +113,14 @@ void myHeap<T>::extractData(T &data, int &paragr, int &index)
 {
     if(empty())
         throw EMPTY;
-    data = theWords[theHeap[0]];
-    paragr = paragraph[theHeap[0]];
-    index = lineNumber[theHeap[0]];
-    xorSwap(theHeap[0],theHeap[theWords.size()-1]);
-    theWords.pop_back();
-    paragraph.pop_back();
-    lineNumber.pop_back();
+    data = theWords_[theHeap_[0]];
+    paragr = paragraph_[theHeap_[0]];
+    index = lineNumber_[theHeap_[0]];
+    xorSwap(theHeap_[0],theHeap_[theWords_.size()-1]);
+    theWords_.pop_back();
+    paragraph_.pop_back();
+    lineNumber_.pop_back();
+    theHeap_.pop_back();
     shuffleDown(0);
 }
 
@@ -128,13 +129,14 @@ myHeap<T>& myHeap<T>::operator>>(T &data)
 {
     if(empty())
         throw EMPTY;
-    //data = theWords[0];
-  //  swap(theWords[0],theWords[theWords.size()-1]);
-    data = theWords[theHeap[0]];
-    //swap(theWords[0],theWords[theWords.size()-1]);
-    xorSwap(theHeap[0],theHeap[theWords.size()-1]);
-   // data = theWords.back();
-    theWords.pop_back();
+    //data = theWords_[0];
+  //  swap(theWords_[0],theWords_[theWords_.size()-1]);
+    data = theWords_[theHeap_[0]];
+    //swap(theWords_[0],theWords_[theWords_.size()-1]);
+    xorSwap(theHeap_[0],theHeap_[theWords_.size()-1]);
+   // data = theWords_.back();
+    theWords_.pop_back();
+    theHeap_.pop_back();
     shuffleDown(0);
     return *this;
 }
@@ -142,7 +144,7 @@ myHeap<T>& myHeap<T>::operator>>(T &data)
 template<typename T>
 bool myHeap<T>::empty()
 {
-    return theWords.size() == 0;
+    return theWords_.size() == 0;
 }
 
 template<typename T>
@@ -154,7 +156,7 @@ bool myHeap<T>::full()
 template<typename T>
 unsigned int myHeap<T>::size()
 {
-    return theWords.size();
+    return theWords_.size();
 }
 
 template<typename T>
@@ -178,30 +180,30 @@ int myHeap<T>::rightChild(int i)
 template<typename T>
 void myHeap<T>::shuffleUp()
 {
-    int i = theWords.size()-1;
-    while (i != 0 && theWords[theHeap[parent(i)]] > theWords[theHeap[i]])
+    int i = theWords_.size()-1;
+    while (i != 0 && theWords_[theHeap_[parent(i)]] > theWords_[theHeap_[i]])
        {
-          xorSwap(theHeap[i], theHeap[parent(i)]);
+          xorSwap(theHeap_[i], theHeap_[parent(i)]);
           i = parent(i);
        }
-    return;         //swap(theWords[i], theWords[parent(i)]);
+    return;         //swap(theWords_[i], theWords_[parent(i)]);
 }
 
 //template<typename T>
 //bool myHeap<T>::shuffleDown(int i)
 //{
 //    int left = leftChild(i), right = rightChild(i), least = i;
-//    if(left < theWords.size() && theWords[theHeap[left]] < theWords[theHeap[i]])
+//    if(left < theWords_.size() && theWords_[theHeap_[left]] < theWords_[theHeap_[i]])
 //        least = left;
-//    if(right < theWords.size() && theWords[theHeap[right]] < theWords[theHeap[least]])
+//    if(right < theWords_.size() && theWords_[theHeap_[right]] < theWords_[theHeap_[least]])
 //        least = right;
 //    if(least != i)
 //    {
-//        xorSwap(theHeap[i], theHeap[least]);
+//        xorSwap(theHeap_[i], theHeap_[least]);
 //        shuffleDown(least);
 //    }
 //    return true;
-//    //swap(theWords[i], theWords[smallest]);
+//    //swap(theWords_[i], theWords_[smallest]);
 //}
 
 template<typename T>
@@ -210,12 +212,12 @@ bool myHeap<T>::shuffleDown(int i)
     //left 2n+1, right 2n+2
     int left = leftChild(i), right = rightChild(i), toBeSwapped = i;
     //first check if it is within the vector then if the left is less than it
-    (left < theWords.size())&&(theWords[theHeap[left]] < theWords[theHeap[i]])&&setLeast(toBeSwapped,left);
+    (left < theWords_.size())&&(theWords_[theHeap_[left]] < theWords_[theHeap_[i]])&&setLeast(toBeSwapped,left);
     //if so set it to the left and then check if the right is less than it
-    (right < theWords.size())&&(theWords[theHeap[right]] < theWords[theHeap[toBeSwapped]])&&setLeast(toBeSwapped,right);
-    (toBeSwapped != i)&&xorSwap(theHeap[i], theHeap[toBeSwapped])&&shuffleDown(toBeSwapped);
+    (right < theWords_.size())&&(theWords_[theHeap_[right]] < theWords_[theHeap_[toBeSwapped]])&&setLeast(toBeSwapped,right);
+    (toBeSwapped != i)&&xorSwap(theHeap_[i], theHeap_[toBeSwapped])&&shuffleDown(toBeSwapped);
     return true;
-    //swap(theWords[i], theWords[smallest]);
+    //swap(theWords_[i], theWords_[smallest]);
 }
 
 //template<typename T>
@@ -234,7 +236,7 @@ bool myHeap<T>::xorSwap(int &x, int &y)
 }
 
 template<typename T>
-bool myHeap<T>::setLeast(int &x, int &y)
+bool myHeap<T>::setLeast(int &x, int y)
 {
     x = y;
     return true;
@@ -243,8 +245,8 @@ bool myHeap<T>::setLeast(int &x, int &y)
 template<typename S>
 std::ostream& operator<<(std::ostream &out, const myHeap<S> &heap)
 {
-    for(unsigned int i = 0; i < heap.theWords.size(); ++i)
-        std::cout<<heap.theWords[heap.theHeap[i]]<<std::endl;
+    for(unsigned int i = 0; i < heap.theWords_.size(); ++i)
+        std::cout<<heap.theWords_[heap.theHeap_[i]]<<std::endl;
     return out;
 }
 

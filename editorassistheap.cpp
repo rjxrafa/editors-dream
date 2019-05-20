@@ -55,24 +55,19 @@ void EditorAssistHeap::insertion()
     myfile.close();
 }
 
-bool operator<(const bst::Node<std::string>& a, const bst::Node<std::string>& b)
-{
-  return a.count > b.count;
-}
-
 void EditorAssistHeap::extraction()
 {
+    bool first = true;
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
-    std::string s = "A", previousWord = "A";
-   // std::vector<bst::Node<std::string>> mostWords(10);
+    std::string s, previousWord;
+    std::vector<bst::Node<std::string>*> wordData;
     std::vector<int> letterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
     char c = 'A';
     int parag, line;
-    int wordCount = 1, total = 0, size=0, letterCount=0;
-    std::cout<<"hello"<<std::endl;
+    int wordCount = 1, total = 0, letterCount=0, indexTrack=0;
     for(int i = 0; i < 26; ++i)
     {
         while(!orchard_[i].empty())
@@ -81,38 +76,77 @@ void EditorAssistHeap::extraction()
             ++total;
             previousWord = s;
             orchard_[i].extractData(s,parag,line);
+           // std::cout<<s<<std::endl;
+           // std::cout<<total<<" Parag:"<<parag<<" "<<"Line: "<<line<<std::endl;
+            if(first)
+            {
+                previousWord = s;
+                first=false;
+//                bst::Node<std::string> *temp2 = new bst::Node<std::string>(s);
+//                wordData.push_back(temp2);
+            }
             if(previousWord == s)
+            {
                 ++wordCount;
+//                wordData[indexTrack]->count += 1;
+//                wordData[indexTrack]->paragraph.push_back(parag);
+//                wordData[indexTrack]->line.push_back(line);
+            }
             else
             {
-                bst::Node<std::string> temp(previousWord, wordCount);
-                mypq.push(temp);
+//                bst::Node<std::string> temp(previousWord, wordCount);
+//                mypq.push(temp);
                 myfile<<previousWord<<":"<<"["<<wordCount<<"]"<<std::endl;
                 wordCount = 1;
+                ++indexTrack;
+//                bst::Node<std::string> *temp2 = new bst::Node<std::string>(s);
+//                wordData.push_back(temp2);
+//                wordData[indexTrack]->count += 1;
+//                wordData[indexTrack]->paragraph.push_back(parag);
+//                wordData[indexTrack]->line.push_back(line);
             }
-
            //  myfile << s;
         }
         letterCounts[i] = letterCount;
         letterCount = 0;
     }
-    std::cout<<"Words: "<<total<<std::endl;
-    std::cout<<"Paragraphs: "<<paragraphs<<std::endl;
-    std::cout<<"Reading level: "<<"TODO"<<std::endl; //create readingLevel();
-    std::cout<<"Top 10 words: "<<std::endl;
-    for(int w = 0; w < 10; ++w)
-    {
-        std::cout<<mypq.top()<<std::endl;
-        mypq.pop();
-    }
-    for(int w = 0; w < 26; ++w)
-    {
-        std::cout<<"Number of words that start with "<<c++
-                 <<": "<<letterCounts[w]<<std::endl;
-    }
-
+    //put this in a separate function
+//    std::cout<<"Words: "<<total<<std::endl;
+//    std::cout<<"Paragraphs: "<<paragraphs<<std::endl;
+//    std::cout<<"Reading level: "<<"TODO"<<std::endl; //create readingLevel();
+//    std::cout<<"Top 10 words: "<<std::endl;
+//    for(int w = 0; w < 10; ++w)
+//    {
+//        std::cout<<mypq.top()<<std::endl;
+//        mypq.pop();
+//    }
+//    for(int w = 0; w < 26; ++w)
+//    {
+//        std::cout<<"Number of words that start with "<<c++
+//                 <<": "<<letterCounts[w]<<std::endl;
+//    }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
+    std::cout<<"Press y when you are ready to continue";
+    std::cin>>s;
+//    std::cout<<wordData[0].paragraph.size()<<std::endl;
+//    std::cout<<wordData[0]<<std::endl;
+//            for(int r = 0; r < wordData[0].paragraph.size(); ++r)
+//            {
+//                std::cout<<"Hello;"<<std::endl;
+//                std::cout<<wordData[0]<<":";
+//                std::cout<<"Press y when you are ready to continue";
+//                std::cout<<"["<<wordData[0].paragraph[r]<<","<<wordData[0].line[r]<<"]";
+//            }
+    for(int w = 0; w < wordData.size(); ++w)
+    {
+        std::cout<<*wordData[w]<<":";
+        for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
+        {
+            std::cout<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
+        }
+        std::cout<<std::endl;
+    }
 }
 //Word(count){[line,paragraph]}

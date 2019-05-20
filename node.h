@@ -38,7 +38,7 @@ struct Node {
   void SetLeft(Node<T> &other);
   void SetRight(Node<T> &other);
   void Clear(); // This function clears all values from a Node
-
+  bool operator==(T const& rhs) const { return this->data == rhs;}
   // Node-Node comparison operators
   template<typename S>
   friend
