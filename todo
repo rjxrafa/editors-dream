@@ -1,19 +1,15 @@
 Considerations:
 
 Binary Trees
-    - which container to use for line numbers in binary tree nodes
     Needed functions
-    - insertion
-    - deletion
-    - searching element
     - tree traversal (level order traversal)
     - find max/min/any
     Auxiliary functions
-    - tree height
     - finding least common ancestor for nodes
     - AVL balance
     - replace function calls (set) with their constituents for opimization?
     - finish extractor for bst
+    - move semantics for templated data in node
 Heap
     - input validation when file not found
 Editor

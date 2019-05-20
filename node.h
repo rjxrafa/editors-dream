@@ -20,8 +20,9 @@ struct Node {
   int count;
   std::vector<int> line;
   std::vector<int> paragraph;
-  struct Node* left;
-  struct Node* right;
+  int height;
+  Node* left;
+  Node* right;
 
   Node (const T &data = T(), const unsigned int &c = 0);
   ~Node();
@@ -33,6 +34,7 @@ struct Node {
   Node<T>& operator+=(const unsigned int &c);
 
   bool empty() const;
+  static int Height(Node<T>* root);
   bool is_leaf() const {return (left == nullptr)&&(right == nullptr);}
   void Set(const T& d, const unsigned int &c);
   void SetLeft(Node<T> &other);
@@ -143,8 +145,8 @@ Node<T>::Node(const T &d, const unsigned int &c)
     : data(d),
       count(c),
       left(nullptr),
-      right(nullptr) {
-}
+      right(nullptr),
+      height(0){}
 
 /**
  * This is the destructor for the node, which clears the data within the node and sets own children to
@@ -183,6 +185,11 @@ Node<T> &Node<T>::operator^=(Node<T> &other) {
 
   // XOR Swap for ints
   other.count ^= count ^= other.count ^= count;
+
+  // vector::swap
+  line.swap(other.line);
+  paragraph.swap(other.paragraph);
+
   return *this;
 }
 
@@ -364,6 +371,19 @@ bool operator>>(std::istream &in, Node<S> &n) {
     std::cout << "test"; // todo
 
   return false;
+}
+
+/**
+ * @brief
+ * @param root
+ * @return
+ */
+template <typename T>
+int bst::Node<T>::Height(Node<T>* root) {
+  if (!root)
+    return -1;
+  else
+    return root->height;
 }
 
 
