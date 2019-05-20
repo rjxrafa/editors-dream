@@ -12,6 +12,7 @@ EditorAssistHeap::~EditorAssistHeap()
 }
 
 //TODO:File check
+//TODO:Create with string parameter for auto run
 void EditorAssistHeap::insertion()
 {
     paragraphs = 1;
@@ -19,12 +20,12 @@ void EditorAssistHeap::insertion()
     std::string word, temp;
     std::stringstream words;
     int line = 1, letter;
-    std::cout<<"Input file name:"<<std::endl;
-    std::cin>>temp;
+    //std::cout<<"Input file name:"<<std::endl;
+    //std::cin>>temp;
     //if file does not contain.txt add it
     if(temp.find(".txt") == std::string::npos)
         temp += ".txt";
-    std::ifstream myfile(temp);
+    std::ifstream myfile("war_and_peace.txt");
     clock_t begin = clock();
     while(!myfile.eof())
     {
@@ -51,6 +52,7 @@ void EditorAssistHeap::insertion()
         ++line;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
+    std::cout<<"heapo"<<std::endl;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
 }
