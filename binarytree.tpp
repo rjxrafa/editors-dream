@@ -247,12 +247,16 @@ bool bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
  * @return
  */
 template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const unsigned int &count) {
+bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l) {
   if (root == nullptr) {
-    root = new Node<T>(data, count);
+    root = new Node<T>(data);
+    root->count = 1;
+    root->paragraph.push_back(p);
+    root->line.push_back(p);
     return root;
-  } else if (data < root->data) {
-    root->left = Insert(root->left, data, count);
+  }
+    else if (data < root->data) {
+    root->left = Insert(root->left, data,p,l);
     if ((Node<T>::Height(root->left) - Node<T>::Height(root->right)) == 2) {
       if (data < root->left->data)
         root = RotateLeftRight(root);
@@ -260,7 +264,7 @@ bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const uns
         root = RotateLeft(root);
     }
   } else if (data > root->data) {
-    root->right = Insert(root->right, data, count);
+    root->right = Insert(root->right, data,p,l);
     if ((Node<T>::Height(root->right) - Node<T>::Height(root->left)) == 2) {
       if (data < root->right->data)
         root = RotateRightLeft(root);
@@ -268,7 +272,9 @@ bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const uns
         root = RotateRight(root);
     }
   } else if (data == root->data) {
-    root->count += count;
+    ++root->count;
+    root->paragraph.push_back(p);
+    root->line.push_back(l);
   }
   root->height = std::max (Node<T>::Height(root->left), Node<T>::Height(root->right)) + 1;
   return root;
