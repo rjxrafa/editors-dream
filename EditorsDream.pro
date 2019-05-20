@@ -54,7 +54,8 @@ SOURCES += \
     mainwindow.cpp \
     binarytree.tpp \
     editor.cpp \
-    editorassistheap.cpp
+    editorassistheap.cpp \
+    editorassistbinarytree.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -62,7 +63,8 @@ HEADERS += \
     heap.h \
     node.h \
     editor.h \
-    editorassistheap.h
+    editorassistheap.h \
+    editorassistbinarytree.h
 
 DISTFILES += \
     todo

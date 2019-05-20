@@ -30,13 +30,15 @@ class BinaryTree
   BinaryTree<T>& operator<<(const T & data);
 //  void Insert(const T &data, const unsigned int &count = 1);
   bool Delete(const T &data, const unsigned int &count = 1);
-  Node<T>* Insert(Node<T>* root, const T &data, const unsigned int &count);
+  Node<T>* Insert(Node<T>* root, const T &data,
+                  const unsigned int &p, const unsigned int &l);
   Node<T>* ExtractSmallest();
 
   // Const members
   bool empty() {return !root_;}
   int height() const {return height(root_);}
   const Node<T>* root() const {return root_;}
+  Node<T>* root() {return root_;}
   BST_TRAVERSAL traversal() const {return traversal_;}
   unsigned int data_count() const {return data_count(root_);}
   unsigned int node_count() const {return node_count(root_);}
