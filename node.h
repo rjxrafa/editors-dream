@@ -381,7 +381,7 @@ bool operator>>(std::istream &in, Node<S> &n) {
 template <typename T>
 int bst::Node<T>::Height(Node<T>* root) {
   if (!root)
-    return -1;
+    return 0;
   else
     return root->height;
 }

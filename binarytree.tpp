@@ -254,18 +254,18 @@ bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const uns
   } else if (data < root->data) {
     root->left = Insert(root->left, data, count);
     if ((Node<T>::Height(root->left) - Node<T>::Height(root->right)) == 2) {
-      if (data < root->left->data)
+      if (data < root->left->data) //
         root = RotateLeftRight(root);
       else
-        root = RotateLeft(root);
+        root = RotateRight(root);
     }
   } else if (data > root->data) {
     root->right = Insert(root->right, data, count);
     if ((Node<T>::Height(root->right) - Node<T>::Height(root->left)) == 2) {
       if (data < root->right->data)
-        root = RotateRightLeft(root);
+        root = RotateRightLeft(root); // node is inserted as the right child of root's child, causing a right skew
       else
-        root = RotateRight(root);
+        root = RotateLeft(root); // node is inserted to the left of the right child
     }
   } else if (data == root->data) {
     root->count += count;
@@ -362,8 +362,8 @@ void bst::BinaryTree<T>::DeleteRightChild(Node<T>* &child, Node<T>* &parent) {
  *
  */
 template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // RR case
-  Node<T> * temp = root->right;
+bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // RR case
+  Node<T> * temp = root->right; // assign X to temp
   root->right = temp->left;
   temp->left = root;
   root->height = std::max(Node<T>::Height(root->right), Node<T>::Height(root->left)) + 1;
@@ -377,6 +377,10 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // RR case
  * @return
  * @modified 2019-05-19
  */
+
+
+
+
 /** Where X is the root
  *        X                W
  *       / \              / \
@@ -386,10 +390,10 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // RR case
  */
 
 template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // LL case
-  Node<T> *temp = root->left; // set w to temp
-  root->left = temp->right; // set x's left to B
-  temp->right = root; // set W's right to X
+bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // LL case
+  Node<T> *temp = root->left; // hold a
+  root->left = temp->right; // someone now holds a, so we can replace with something else
+  temp->right = root;
   root->height = std::max(Node<T>::Height(root->left), Node<T>::Height(root->right)) + 1;
   temp->height = std::max(Node<T>::Height(temp->left), root->height) + 1;
   return temp;
@@ -403,8 +407,8 @@ bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // LL case
  * @modified 2019-05-19
  */
 template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::RotateLeftRight(Node<T> *root) { // also known as left right case
-  root->left = RotateRight(root->left);
+bst::Node<T>* bst::BinaryTree<T>::RotateRightLeft(Node<T> *root) { // also known as left right case
+  root->right = RotateRight(root->right);
   return RotateLeft(root);
 }
 
@@ -415,8 +419,8 @@ bst::Node<T>* bst::BinaryTree<T>::RotateLeftRight(Node<T> *root) { // also known
  * @modified 2019-05-19
  */
 template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::RotateRightLeft(Node<T> *root) { // also known as right left case
-  root->right = RotateLeft(root->right);
+bst::Node<T>* bst::BinaryTree<T>::RotateLeftRight(Node<T> *root) { // also known as right left case
+  root->left = RotateLeft(root->left);
   return RotateRight(root);
 }
 
@@ -444,16 +448,23 @@ bst::Node<T>* bst::BinaryTree<T>::ExtractSmallest() {
   if (root_ == nullptr)
     throw BST_ERRORS::EMPTY;
 
-  Node<T> *parent, *temp = root_;
+  Node<T> *parent, *min = root_;
 
 
-  for ( ; temp->left != nullptr; temp = temp->left) {
-    parent = temp;
+  for ( ; min->left != nullptr; min = min->left) {
+    parent = min;
   };
 
   std::cout << "parent:" << *parent;
-  std::cout << std::endl << "min: " << *temp << std::endl;
-  return temp;
+  std::cout << std::endl << "min: " << *min << std::endl;
+
+  if (min == root_) {
+    root_ = root_->right;
+    delete min;
+  } else {
+    DeleteLeftChild(min, parent);
+  }
+
 }
 
 
