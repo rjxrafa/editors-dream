@@ -44,9 +44,10 @@ private:
     std::vector<int> lineNumber;
     std::vector<int> theHeap;
     void shuffleUp();
-    void shuffleDown(int i);
+    bool shuffleDown(int i);
     //void swap(T &x, T &y);
-    void xorSwap(int &x, int &y);
+    bool xorSwap(int &x, int &y);
+    bool setLeast(int &x, int &y);
 };
 
 template<typename T>
@@ -180,29 +181,41 @@ void myHeap<T>::shuffleUp()
     int i = theWords.size()-1;
     while (i != 0 && theWords[theHeap[parent(i)]] > theWords[theHeap[i]])
        {
-          //swap(theWords[i], theWords[parent(i)]);
           xorSwap(theHeap[i], theHeap[parent(i)]);
           i = parent(i);
        }
+    return;         //swap(theWords[i], theWords[parent(i)]);
 }
 
+//template<typename T>
+//bool myHeap<T>::shuffleDown(int i)
+//{
+//    int left = leftChild(i), right = rightChild(i), least = i;
+//    if(left < theWords.size() && theWords[theHeap[left]] < theWords[theHeap[i]])
+//        least = left;
+//    if(right < theWords.size() && theWords[theHeap[right]] < theWords[theHeap[least]])
+//        least = right;
+//    if(least != i)
+//    {
+//        xorSwap(theHeap[i], theHeap[least]);
+//        shuffleDown(least);
+//    }
+//    return true;
+//    //swap(theWords[i], theWords[smallest]);
+//}
+
 template<typename T>
-void myHeap<T>::shuffleDown(int i)
+bool myHeap<T>::shuffleDown(int i)
 {
-    int left = leftChild(i);
-    int right = rightChild(i);
-    int smallest = i;
-    if (left < theWords.size() && theWords[theHeap[left]] < theWords[theHeap[i]])
-        smallest = left;
-    if (right < theWords.size() && theWords[theHeap[right]] < theWords[theHeap[smallest]])
-        smallest = right;
-    if (smallest != i)
-    {
-       //swap(theWords[i], theWords[smallest]);
-        xorSwap(theHeap[i], theHeap[smallest]);
-        shuffleDown(smallest);
-    }
-    return;
+    //left 2n+1, right 2n+2
+    int left = leftChild(i), right = rightChild(i), toBeSwapped = i;
+    //first check if it is within the vector then if the left is less than it
+    (left < theWords.size())&&(theWords[theHeap[left]] < theWords[theHeap[i]])&&setLeast(toBeSwapped,left);
+    //if so set it to the left and then check if the right is less than it
+    (right < theWords.size())&&(theWords[theHeap[right]] < theWords[theHeap[toBeSwapped]])&&setLeast(toBeSwapped,right);
+    (toBeSwapped != i)&&xorSwap(theHeap[i], theHeap[toBeSwapped])&&shuffleDown(toBeSwapped);
+    return true;
+    //swap(theWords[i], theWords[smallest]);
 }
 
 //template<typename T>
@@ -214,9 +227,17 @@ void myHeap<T>::shuffleDown(int i)
 //}
 
 template<typename T>
-void myHeap<T>::xorSwap(int &x, int &y)
+bool myHeap<T>::xorSwap(int &x, int &y)
 {
     x ^= y ^= x ^= y;
+    return true;
+}
+
+template<typename T>
+bool myHeap<T>::setLeast(int &x, int &y)
+{
+    x = y;
+    return true;
 }
 
 template<typename S>
