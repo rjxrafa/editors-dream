@@ -31,8 +31,9 @@ class BinaryTree
 //  void Insert(const T &data, const unsigned int &count = 1);
   bool Delete(const T &data, const unsigned int &count = 1);
   Node<T>* Insert(Node<T>* root, const T &data,
-                  const unsigned int &p, const unsigned int &l);
-  Node<T>* ExtractSmallest();
+                     const unsigned int &p, const unsigned int &l);
+  void InsertData(const T &data, const unsigned int &p, const unsigned int &l);
+  Node<T> ExtractSmallest();
 
   // Const members
   bool empty() {return !root_;}
@@ -62,10 +63,12 @@ class BinaryTree
 
   void ClearTree(Node<T>*& root);
   void CopyTree(const Node<T>& root);
-  void DeleteLeftChild(Node<T>* &child, Node<T>* &parent);
+  Node<T> DeleteLeftChild(Node<T>* &child, Node<T>* &parent);
   void DeleteRightChild(Node<T>* &child, Node<T>* &parent);
 
+  Node<T>* rebalance(Node<T>* root);
   int height(Node<T>* root) const;
+  int balance_factor(Node<T>* root) const;
   unsigned int data_count(Node<T>* root) const;
   unsigned int node_count(Node<T>* root) const;
   void PrintTree(std::ostream &out, Node<T>* root) const;

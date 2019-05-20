@@ -37,12 +37,13 @@ void EditorAssistBinaryTree::insertion()
             flag = false;
             while(words >> word)
             {
+
                 //ascii for a = 97 and 97-97 is for index 0
                 if(SanitizeString(word)) //optimize sanitize?
                 {
+//                    std::cout << word << std::endl;
                     letter = word[0] - 65;
-                    orchard_[letter].Insert(orchard_[letter].root(),word,paragraphs,line);
-                    //orchard_[letter].insertData(word,paragraphs,line);
+                    orchard_[letter].InsertData(word, paragraphs, line);
                 }
             }
             words.clear();
@@ -52,6 +53,8 @@ void EditorAssistBinaryTree::insertion()
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
+//    std::cout << orchard_[0];
+//    std::cout << "test";
 }
 
 void EditorAssistBinaryTree::extraction()
@@ -60,7 +63,7 @@ void EditorAssistBinaryTree::extraction()
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s;
-    std::vector<bst::Node<std::string>*> wordData;
+    std::vector<bst::Node<std::string>> wordData;
     std::vector<int> letterCounts(26);
    // std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
@@ -73,8 +76,8 @@ void EditorAssistBinaryTree::extraction()
         {
             ++letterCount;
             ++total;
-          // Rafa implement
-          //  wordData.pushback(orchard_[i].ExtractSmallest())
+//           Rafa implement
+            wordData.push_back(orchard_[i].ExtractSmallest());
          }
         letterCounts[i] = letterCount;
         letterCount = 0;
@@ -94,7 +97,7 @@ void EditorAssistBinaryTree::extraction()
 //    }
     for(int w = 0; w < 26; ++w)
     {
-        std::cout<<"Number of words that start with "<<c++;
+        std::cout<<"Number of words that start with "<<c++; // todo add count
         if(!letterCounts.empty())
             std::cout<<": "<<letterCounts[w]<<std::endl;
     }
@@ -105,10 +108,10 @@ void EditorAssistBinaryTree::extraction()
     std::cin>>s;
     for(int w = 0; w < wordData.size(); ++w)
     {
-        std::cout<<*wordData[w]<<":";
-        for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
+        std::cout<< wordData[w]<<":";
+        for(int r = 0; r < wordData[w].paragraph.size(); ++r)
         {
-            std::cout<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
+            std::cout<<"["<<wordData[w].paragraph[r]<<","<<wordData[w].line[r]<<"]";
         }
         std::cout<<std::endl;
     }

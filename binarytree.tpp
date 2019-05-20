@@ -97,7 +97,7 @@ bst::BinaryTree<T>& bst::BinaryTree<T>::operator=(const BinaryTree<T> &other) {
  */
 template <typename T>
 bst::BinaryTree<T>& bst::BinaryTree<T>::operator<<(const T & data) {
-  root_ = Insert(root_, data, 1);
+  root_ = Insert(root_, data, 1, 1);
   return *this;
 }
 
@@ -248,35 +248,23 @@ bool bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
  */
 template <typename T>
 bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l) {
+
   if (root == nullptr) {
-    root = new Node<T>(data);
-    root->count = 1;
+    root = new Node<T>(data, 1);
     root->paragraph.push_back(p);
-    root->line.push_back(p);
+    root->line.push_back(l);
     return root;
-  }
-    else if (data < root->data) {
-    root->left = Insert(root->left, data,p,l);
-    if ((Node<T>::Height(root->left) - Node<T>::Height(root->right)) == 2) {
-      if (data < root->left->data) //
-        root = RotateLeftRight(root);
-      else
-        root = RotateRight(root);
-    }
-  } else if (data > root->data) {
-    root->right = Insert(root->right, data,p,l);
-    if ((Node<T>::Height(root->right) - Node<T>::Height(root->left)) == 2) {
-      if (data < root->right->data)
-        root = RotateRightLeft(root); // node is inserted as the right child of root's child, causing a right skew
-      else
-        root = RotateLeft(root); // node is inserted to the left of the right child
-    }
-  } else if (data == root->data) {
+  } else if (data == root->data){
     ++root->count;
     root->paragraph.push_back(p);
     root->line.push_back(l);
+  }else if (data < root->data) {
+    root->left = Insert(root->left, data, p, l);
+    root = rebalance(root);
+  } else if (data > root->data) {
+    root->right = Insert(root->right, data, p, l);
+    root = rebalance(root);
   }
-  root->height = std::max (Node<T>::Height(root->left), Node<T>::Height(root->right)) + 1;
   return root;
 }
 
@@ -315,13 +303,16 @@ bst::Node<T>* bst::BinaryTree<T>::FindSmallest(Node<T>* root) const {
  * @modified 2019-05-18
  */
 template <typename T>
-void bst::BinaryTree<T>::DeleteLeftChild(Node<T>* &child, Node<T>* &parent) {
+bst::Node<T> bst::BinaryTree<T>::DeleteLeftChild(Node<T>* &child, Node<T>* &parent) {
   if (child->right) {  // if the child to be deleted has a right child, we need to relink it
     parent->left = child->right;
     FindSmallest(child->right)->left = child->left;
   } else  // if child has no right child, then we proceed to replace the node to be deleted with its left child
     parent->left = child->left;
+
+  Node<T> temp = *child; // this will give a copy of child
   delete child;
+  return temp;
 }
 
 /**
@@ -372,8 +363,6 @@ bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // RR case
   Node<T> * temp = root->right; // assign X to temp
   root->right = temp->left;
   temp->left = root;
-  root->height = std::max(Node<T>::Height(root->right), Node<T>::Height(root->left)) + 1;
-  temp->height = std::max(Node<T>::Height(temp->right), root->height) + 1;
   return temp;
 }
 
@@ -400,8 +389,6 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // LL case
   Node<T> *temp = root->left; // hold a
   root->left = temp->right; // someone now holds a, so we can replace with something else
   temp->right = root;
-  root->height = std::max(Node<T>::Height(root->left), Node<T>::Height(root->right)) + 1;
-  temp->height = std::max(Node<T>::Height(temp->left), root->height) + 1;
   return temp;
 }
 
@@ -449,28 +436,91 @@ void bst::BinaryTree<T>::PrintTreeDepth(std::ostream &out, Node<T>* root, size_t
 }
 
 template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::ExtractSmallest() {
+bst::Node<T> bst::BinaryTree<T>::ExtractSmallest() {
 
   if (root_ == nullptr)
     throw BST_ERRORS::EMPTY;
 
   Node<T> *parent, *min = root_;
 
-
+  // This finds the lowest element in the tree, as well as its parent
   for ( ; min->left != nullptr; min = min->left) {
     parent = min;
   };
 
-  std::cout << "parent:" << *parent;
-  std::cout << std::endl << "min: " << *min << std::endl;
-
+//  std::cout << "parent:" << *parent;
+//  std::cout << std::endl << "min: " << *min << std::endl;
+  Node <T> temp = *min;
   if (min == root_) {
     root_ = root_->right;
     delete min;
+    return temp;
   } else {
-    DeleteLeftChild(min, parent);
+    return DeleteLeftChild(min, parent);
   }
+}
 
+/**
+ * @brief InsertData
+ * @param root
+ * @param data
+ * @param p
+ * @param l
+ */
+template <typename T>
+void bst::BinaryTree<T>::InsertData(const T &data,
+                                        const unsigned int &p,
+                                        const unsigned int &l) {
+    root_ = Insert(root_, data, p, l);
+}
+
+/**
+ * @brief rebalance
+ * @param root
+ * @return
+ */
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::rebalance(Node<T>* root) {
+
+  int balance = balance_factor(root);
+
+  if (balance > 1) {
+    if (balance_factor(root->left) > 0)
+      root = RotateRight(root);
+    else {
+      root = RotateLeftRight(root);
+    }
+  } else if (balance < -1) {
+    if (balance_factor(root->right) > 0)
+      root = RotateRightLeft(root);
+    else {
+      root = RotateLeft(root);
+    }
+  }
+  return root;
+}
+
+
+template <typename T>
+int bst::BinaryTree<T>::height(Node<T>* root) const {
+  if (root == nullptr)
+    return 0;
+  else {
+    int left = 0, right = 0;
+
+    if (root->left != nullptr)
+      left = height(root->left) + 1;
+    if (root->right != nullptr)
+      right = height(root->right) + 1;
+    return std::max(left,right);
+  }
+}
+
+template <typename T>
+int bst::BinaryTree<T>::balance_factor(Node<T>* root) const {
+  int left = height(root->left),
+      right = height(root->right);
+  return left - right;
 }
 
 
