@@ -47,47 +47,47 @@ bst::BinaryTree<T>& bst::BinaryTree<T>::operator=(const BinaryTree<T> &other) {
   return this;
 }
 
-/**
- * @brief This function inserts a given data into a binary tree
- * @param data
- * @param count
- * @modified 2019-05-18
- */
-template <typename T>
-void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //todo add rebalance
-  bst::Node<T> *new_item = new bst::Node<T>(data, count);
+///**
+// * @brief This function inserts a given data into a binary tree
+// * @param data
+// * @param count
+// * @modified 2019-05-18
+// */
+//template <typename T>
+//void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //todo add rebalance
+//  bst::Node<T> *new_item = new bst::Node<T>(data, count);
 
-  if(root_ == nullptr) {
-    root_ = new_item;
-    return;
-  } else {
-    bst::Node<T> *temp = root_;
+//  if(root_ == nullptr) {
+//    root_ = new_item;
+//    return;
+//  } else {
+//    bst::Node<T> *temp = root_;
 
-    while (temp) {
-      if (*new_item == *temp) { //dereference the node pointers as a node
-        temp->count += count;
-        delete new_item;
-        return;
-      }
+//    while (temp) {
+//      if (*new_item == *temp) { //dereference the node pointers as a node
+//        temp->count += count;
+//        delete new_item;
+//        return;
+//      }
 
-      if (*new_item < *temp) { // if the item to be inserted is less than the current item
-        if (temp->left) // if temp left is not null, keep traversing
-          temp = temp->left;
-        else {
-          temp->left = new_item;
-          return;
-        }
-      } else { // the item to be inserted is greater than the current item
-        if (temp->right) // if temp right is not null, keep traversing
-          temp = temp->right;
-        else {
-          temp->right = new_item;
-          return;
-        }
-      }
-    }
-  }
-}
+//      if (*new_item < *temp) { // if the item to be inserted is less than the current item
+//        if (temp->left) // if temp left is not null, keep traversing
+//          temp = temp->left;
+//        else {
+//          temp->left = new_item;
+//          return;
+//        }
+//      } else { // the item to be inserted is greater than the current item
+//        if (temp->right) // if temp right is not null, keep traversing
+//          temp = temp->right;
+//        else {
+//          temp->right = new_item;
+//          return;
+//        }
+//      }
+//    }
+//  }
+//}
 
 /**
  * @brief operator << This function utilizes the Insert functionality of the BinaryTree class
@@ -97,7 +97,7 @@ void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //to
  */
 template <typename T>
 bst::BinaryTree<T>& bst::BinaryTree<T>::operator<<(const T & data) {
-  Insert(data);
+  root_ = Insert(root_, data, 1);
   return *this;
 }
 
@@ -161,27 +161,6 @@ unsigned int bst::BinaryTree<T>::node_count(Node<T>* root) const {
     return 0;
   else
     return (1 + node_count(root->left) + node_count(root->right));
-}
-
-/**
- * @brief bst::BinaryTree<T>::height
- * @param root
- * @return
- */
-template <typename T>
- int bst::BinaryTree<T>::height(Node<T>* root) const {
-  if (root == nullptr)
-    return -1;
-  else {
-    int left_height = height(root->left);
-    int right_height = height(root->right);
-
-    if (left_height > right_height)
-      return ++left_height;
-    else {
-      return ++right_height;
-    }
-  }
 }
 
 /**
@@ -261,9 +240,44 @@ bool bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
   }
 }
 
+/**
+ * @brief bst::BinaryTree<T>::Insert
+ * @param root
+ * @param data
+ * @return
+ */
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const unsigned int &count) {
+  if (root == nullptr) {
+    root = new Node<T>(data, count);
+    return root;
+  } else if (data < root->data) {
+    root->left = Insert(root->left, data, count);
+    if ((Node<T>::Height(root->left) - Node<T>::Height(root->right)) == 2) {
+      if (data < root->left->data)
+        root = RotateLeft(root);
+      else
+        root = RotateLeftRight(root);
+    }
+  } else if (data > root->data) {
+    root->right = Insert(root->right, data, count);
+    if ((Node<T>::Height(root->right) - Node<T>::Height(root->left)) == 2) {
+      if (data < root->right->data)
+        root = RotateRight(root);
+      else
+        root = RotateRightLeft(root);
+    }
+  } else if (data == root->data) {
+    root->count += count;
+  }
+  root->height = std::max (Node<T>::Height(root->left), Node<T>::Height(root->right)) + 1;
+  return root;
+}
+
 template <typename S>
 std::ostream& operator<<(std::ostream& out, const bst::BinaryTree<S> &other) {
-  other.PrintTree(out, other.root_);
+//  other.PrintTree(out, other.root_);
+  other.PrintTreeDepth(out, other.root_, 0);
   return out;
 }
 
@@ -333,11 +347,115 @@ void bst::BinaryTree<T>::DeleteRightChild(Node<T>* &child, Node<T>* &parent) {
 }
 
 /**
- * @brief bst::BinaryTree<T>::Rebalance
+ * @brief This function will rebalance a given tree with a series of rotations.
+ * @modified 2019-05-18
  */
 template <typename T>
-void bst::BinaryTree<T>::Rebalance() {
-  //todo
+bst::Node<T>* bst::BinaryTree<T>::Rebalance(Node <T>* root) {
+
+//  if (root->balance_factor() > 1) {
+//    if (root->left->balance_factor() > 0)
+//      root = RotateRight(root);
+//  } else if (root->balance_factor() < -1) {
+//    root =
+//  }
+
+  return root;
+}
+
+/**
+ * @brief
+ * @param root
+ * @return
+ * @modified 2019-05-19
+ */
+
+/** Example, where x is the root
+ *        W                  X
+ *      /  \               /  \
+ *     A    X            W    C
+ *         / \          / \
+ *        B   C       A   B
+ *
+ */
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // RR case
+  Node<T> * temp = root->right;
+  root->right = temp->left;
+  temp->left = root;
+  root->height = std::max(Node<T>::Height(root->right), Node<T>::Height(root->left)) + 1;
+  temp->height = std::max(Node<T>::Height(temp->right), root->height) + 1;
+  return temp;
+}
+
+/**
+ * @brief
+ * @param root
+ * @return
+ * @modified 2019-05-19
+ */
+/** Where X is the root
+ *        X                W
+ *       / \              / \
+ *     W   C            A   X
+ *    / \                   / \
+ *   A  B                  B  C
+ */
+
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // LL case
+  Node<T> *temp = root->left; // set w to temp
+  root->left = temp->right; // set x's left to B
+  temp->right = root; // set W's right to X
+  root->height = std::max(Node<T>::Height(root->left), Node<T>::Height(root->right)) + 1;
+  temp->height = std::max(Node<T>::Height(temp->left), root->height) + 1;
+  return temp;
+}
+
+
+/**
+ * @brief
+ * @param root
+ * @return
+ * @modified 2019-05-19
+ */
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::RotateLeftRight(Node<T> *root) { // also known as left right case
+  root->left = RotateRight(root->left);
+  return RotateLeft(root);
+}
+
+/**
+ * @brief RotateRightLeft
+ * @param root
+ * @return
+ * @modified 2019-05-19
+ */
+template <typename T>
+bst::Node<T>* bst::BinaryTree<T>::RotateRightLeft(Node<T> *root) { // also known as right left case
+  root->right = RotateLeft(root->right);
+  return RotateRight(root);
+}
+
+/**
+ * @brief PrintTreeDepth This function prints a given tree with depth
+ * @param out
+ * @param root
+ * @param depth
+ * @modified 2019-05-18
+ */
+template <typename T>
+void bst::BinaryTree<T>::PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const {
+    out << std::setw(4*depth) << "";
+  if (root == nullptr) {
+    out << "[Empty]" << std::endl;
+  }  else if (root->is_leaf()) {
+    out << root->data << " [leaf]" << std::endl;
+  } else {
+    out << root->data << std::endl;
+    PrintTreeDepth(out, root->right, depth+1);
+    PrintTreeDepth(out, root->left, depth+1);
+  }
 }
 
 
