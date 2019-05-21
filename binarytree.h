@@ -30,8 +30,7 @@ class BinaryTree
   BinaryTree<T>& operator<<(const T & data);
 //  void Insert(const T &data, const unsigned int &count = 1);
   bool Delete(const T &data, const unsigned int &count = 1);
-  Node<T>* Insert(Node<T>* root, const T &data,
-                     const unsigned int &p, const unsigned int &l);
+  Node<T>* Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l);
   void InsertData(const T &data, const unsigned int &p, const unsigned int &l);
   Node<T> ExtractSmallest();
 
@@ -75,7 +74,6 @@ class BinaryTree
   Node<T>* Find(const T& data, Node<T> *root, Node<T>* &parent, bool &less_than) const;
   Node<T>* FindSmallest(Node<T>* root) const;
   void PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const;
-
 
 };
 

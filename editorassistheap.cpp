@@ -54,6 +54,19 @@ void EditorAssistHeap::insertion()
     in.close();
 }
 
+void EditorAssistHeap::Output(std::ostream &out)
+{
+  for(int w = 0, total = wordData.size(); w < total; ++w)
+  {
+      out<<*wordData[w]<<":";
+      for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
+      {
+          out<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
+      }
+      out<<std::endl;
+  }
+}
+
 void EditorAssistHeap::extraction()
 {
     bool first = true;
@@ -139,17 +152,9 @@ void EditorAssistHeap::extraction()
     }
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
-    std::cout<<"Press y when you are ready to continue";
-    std::cin>>s;
-    for(int w = 0; w < wordData.size(); ++w)
-    {
-        std::cout<<*wordData[w]<<":";
-        for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
-        {
-            std::cout<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
-        }
-        std::cout<<std::endl;
-    }
-    WriteToFile();
+    if (WriteToFile())
+      Output(out);
+    else
+      Output(std::cout);
 }
 //Word(count){[line,paragraph]}
