@@ -15,6 +15,10 @@ public:
     virtual void insertion() = 0;
     virtual void extraction() = 0;
 
+    int sentence;
+    int syllables;
+    int syllableCounter(const std::string &word);
+    double fleschKincaid(int words, int sentences, int syllables);
 };
 
 #endif // EDITOR_H

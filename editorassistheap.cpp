@@ -25,7 +25,7 @@ void EditorAssistHeap::insertion()
     //if file does not contain.txt add it
     if(temp.find(".txt") == std::string::npos)
         temp += ".txt";
-    std::ifstream myfile("war_and_peace.txt");
+    std::ifstream myfile("testing.txt");
     clock_t begin = clock();
     while(!myfile.eof())
     {
@@ -52,7 +52,7 @@ void EditorAssistHeap::insertion()
         ++line;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
-    std::cout<<"heapo"<<std::endl;
+    std::cout<<"heapo "<<sentence<<std::endl;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
 }
@@ -97,9 +97,9 @@ void EditorAssistHeap::extraction()
 //                bst::Node<std::string> *temp  = new bst::Node<std::string>(previousWord, wordCount);
 //                //std::set might be faster TODO:replace and see time
 //                mypq.push(*temp);
-                bst::Node<std::string> temp(previousWord, wordCount);
+                bst::Node<std::string> *temp = new bst::Node<std::string>(previousWord, wordCount);
                 //std::set might be faster TODO:replace and see time
-                mypq.push(temp);
+                mypq.push(*temp);
                 myfile<<previousWord<<":"<<"["<<wordCount<<"]"<<std::endl;
                 wordCount = 1;
                 ++indexTrack;
@@ -114,13 +114,14 @@ void EditorAssistHeap::extraction()
         if(i == 25 && orchard_[i].empty())
         {
             myfile<<s<<":"<<"["<<wordCount<<"]"<<std::endl;
-            bst::Node<std::string> temp(s, wordCount);
+            bst::Node<std::string> *temp = new bst::Node<std::string>(s, wordCount);
             //std::set might be faster TODO:replace and see time
-            mypq.push(temp);
+            mypq.push(*temp);
         }
         letterCounts[i] = letterCount;
         letterCount = 0;
     }
+    double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     //put this in a separate function
     std::cout<<"Words: "<<total<<std::endl;
     std::cout<<"Paragraphs: "<<paragraphs<<std::endl;
@@ -140,7 +141,6 @@ void EditorAssistHeap::extraction()
         if(!letterCounts.empty())
             std::cout<<": "<<letterCounts[w]<<std::endl;
     }
-    double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
     std::cout<<"Press y when you are ready to continue";

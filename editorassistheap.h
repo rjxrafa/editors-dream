@@ -19,6 +19,7 @@ public:
 private:
     myHeap<std::string> orchard_[26];
     int paragraphs;
+    int sentences;
 };
 
 //Helper to tell the priority how to compare nodes by its count so it does not conflict
