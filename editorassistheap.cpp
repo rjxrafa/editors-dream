@@ -12,6 +12,7 @@ EditorAssistHeap::~EditorAssistHeap()
 }
 
 //TODO:File check
+//TODO:Create with string parameter for auto run
 void EditorAssistHeap::insertion()
 {
     paragraphs = 1;
@@ -48,6 +49,7 @@ void EditorAssistHeap::insertion()
         ++line;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
+    std::cout<<"heapo"<<std::endl;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     in.close();
 }

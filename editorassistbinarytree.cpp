@@ -17,12 +17,12 @@ void EditorAssistBinaryTree::insertion()
     std::string word, temp;
     std::stringstream words;
     int line = 1, letter;
-    std::cout<<"Input file name:"<<std::endl;
-    std::cin>>temp;
+//    std::cout<<"Input file name:"<<std::endl;
+//    std::cin>>temp;
     //if file does not contain.txt add it
-    if(temp.find(".txt") == std::string::npos)
-        temp += ".txt";
-    std::ifstream myfile(temp);
+   // if(temp.find(".txt") == std::string::npos)
+    //    temp += ".txt";
+    std::ifstream myfile("war_and_peace.txt");
     clock_t begin = clock();
     while(!myfile.eof())
     {
@@ -51,6 +51,7 @@ void EditorAssistBinaryTree::insertion()
         ++line;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
+    std::cout<<"binaryTree"<<std::endl;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
 //    std::cout << orchard_[0];
@@ -75,9 +76,9 @@ void EditorAssistBinaryTree::extraction()
         while(!orchard_[i].empty())
         {
             ++letterCount;
-            ++total;
-//           Rafa implement
-            wordData.push_back(orchard_[i].ExtractSmallest());
+                      // Rafa implement
+             wordData.push_back(orchard_[i].ExtractSmallest());
+             total += wordData[indexTrack++].count;
          }
         letterCounts[i] = letterCount;
         letterCount = 0;
