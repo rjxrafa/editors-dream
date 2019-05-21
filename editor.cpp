@@ -69,5 +69,52 @@ int EditorAssist::syllableCounter(const std::string &word)
 
 double EditorAssist::fleschKincaid(int words, int sentences, int syllables)
 {
+}
+bool EditorAssist::LoadFile() {
 
+  std::string filename;
+
+  std::cout << "Filename: ";
+  getline(std::cin, filename);
+
+  in.close(); // closes if already open
+  in.open(filename);
+
+  if (!in.good())
+    std::cout << "File not found! Try again. " << std::endl;
+
+  return in.good();
+}
+
+void EditorAssist::WriteToFile() {
+
+  std::string user_input, filename;
+
+  std::cout << "Do you want to save this file? Type 'Y' for yes" << std::endl;
+
+  getline(std::cin, user_input);
+
+  if (tolower(user_input[0]) == 'y') {
+    std::cout << "Enter filename: " << std::endl;
+
+    getline(std::cin, filename);
+
+    std::ifstream temp;
+    temp.open(filename);
+    temp.close();
+
+    if (in.fail()) {
+      out.open(user_input);
+    } else {
+      std::cout << "File already exists! Do you want to overwrite it?" << std::endl;
+      getline(std::cin, user_input);
+
+      if (tolower(user_input[0]) == 'y') {
+        out.open(user_input);
+      } else {
+        std::cout << "File not saved." << std::endl;
+        return;
+      }
+    }
+  }
 }

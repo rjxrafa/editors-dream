@@ -3,14 +3,14 @@
 #include "binarytree.h"
 #include "editorassistheap.h"
 #include "editorassistbinarytree.h"
-//#include <QApplication>
-#include <QDebug>
 #include <QThread>
+#include <QDebug>
 #include <QString>
 #include <qtconcurrentrun.h>
 #include <QApplication>
 
 using namespace QtConcurrent;
+using namespace std;
 
 //void hello()
 //{
