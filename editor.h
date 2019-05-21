@@ -17,6 +17,32 @@ public:
     virtual void extraction() = 0;
     bool LoadFile();
     bool WriteToFile();
+    void menu();
+    struct FileFlag
+    {
+        bool wordTota,pars,readLevel,topTen,letterC,runTime,wordIndex;
+
+//        for(unsigned int i = 0; i < s.size(); ++i)
+//        {
+//            switch(tolower(s[i]))
+//            {
+//            case 't': wordTotal = true;
+//                break;
+//            case 'p': pars = true;
+//                break;
+//            case '3': readLevel = true;
+//                break;
+//            case '4': topTen = true;
+//                break;
+//            case '5': letterC = true;
+//                break;
+//            case 'r': runTime = true;
+//                break;
+//            case '7': wordInfo = true;
+//                break;
+//            default : return
+//            }
+    };
 
 protected:
     std::ifstream in;

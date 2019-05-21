@@ -16,12 +16,14 @@ public:
 
     void insertion();
     void extraction();
+
 private:
     std::vector<bst::Node<std::string>*> wordData;
     myHeap<std::string> orchard_[26];
     int paragraphs_;
 //    int sentences_;
-    void Output(std::ostream &out);
+    void Menu();
+    void Output(std::ostream &out, const std::string &s);
 };
 
 //Helper to tell the priority how to compare nodes by its count so it does not conflict
