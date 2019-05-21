@@ -59,21 +59,25 @@ void EditorAssistBinaryTree::extraction()
     clock_t begin = clock();
     std::string s;
     std::vector<int> letterCounts(26);
+    std::vector<int> uniqueLetterCounts(26);
    // std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
     char c = 'A';
     int parag, line;
-    int wordCount = 0, total = 0, letterCount = 0, indexTrack = 0;
+    int wordCount = 0, total = 0, letterCount = 0, indexTrack = 0, uniqueletterCount = 0;
     for(int i = 0; i < 26; ++i)
     {
         while(!orchard_[i].empty())
         {
-            ++letterCount;
                       // Rafa implement
              wordData.push_back(orchard_[i].ExtractSmallest());
+             letterCount+= wordData[indexTrack].count;
+             ++uniqueletterCount;
              total += wordData[indexTrack++].count;
          }
+        uniqueLetterCounts[i] = uniqueletterCount;
         letterCounts[i] = letterCount;
+        uniqueletterCount = 0;
         letterCount = 0;
     }
 //    //put this in a separate function
@@ -93,20 +97,20 @@ void EditorAssistBinaryTree::extraction()
     {
         std::cout<<"Number of words that start with "<<c++; // todo add count
         if(!letterCounts.empty())
-            std::cout<<": "<<letterCounts[w]<<std::endl;
+            std::cout<<": "<<letterCounts[w]<<" Unique: "<<uniqueLetterCounts[w]<<std::endl;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
-    std::cout<<"Press y when you are ready to continue";
-    std::cin>>s;
-    for(int w = 0; w < wordData.size(); ++w)
-    {
-        std::cout<< wordData[w]<<":";
-        for(int r = 0; r < wordData[w].paragraph.size(); ++r)
-        {
-            std::cout<<"["<<wordData[w].paragraph[r]<<","<<wordData[w].line[r]<<"]";
-        }
-        std::cout<<std::endl;
-    }
+//    std::cout<<"Press y when you are ready to continue";
+//    std::cin>>s;
+//    for(int w = 0; w < wordData.size(); ++w)
+//    {
+//        std::cout<< wordData[w]<<":";
+//        for(int r = 0; r < wordData[w].paragraph.size(); ++r)
+//        {
+//            std::cout<<"["<<wordData[w].paragraph[r]<<","<<wordData[w].line[r]<<"]";
+//        }
+//        std::cout<<std::endl;
+//    }
 }

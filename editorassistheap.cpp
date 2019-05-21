@@ -141,21 +141,24 @@ void EditorAssistHeap::extraction()
     clock_t begin = clock();
     std::string s, previousWord;
     std::vector<int> letterCounts(26);
+    std::vector<int> uniqueLetterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
     char c = 'A';
     int parag, line;
-    int wordCount = 0, total = 0, letterCount = 0, indexTrack = 0;
+    int wordCount = 0, total = 0, letterCount = 0, indexTrack = 0, uniqueletterCount = 0;
     for(int i = 0; i < 26; ++i)
     {
         while(!orchard_[i].empty())
         {
+
             ++letterCount;
             ++total;
             previousWord = s;
             orchard_[i].extractData(s,parag,line);
             if(first)
             {
+                ++uniqueletterCount;
                 previousWord = s;
                 first=false;
                 bst::Node<std::string> *temp2 = new bst::Node<std::string>(s);
@@ -170,6 +173,8 @@ void EditorAssistHeap::extraction()
             }
             else
             {
+                ++uniqueletterCount;
+               // uniqueLetterCounts[i]
 //                bst::Node<std::string> *temp  = new bst::Node<std::string>(previousWord, wordCount);
 //                //std::set might be faster TODO:replace and see time
 //                mypq.push(*temp);
@@ -195,7 +200,9 @@ void EditorAssistHeap::extraction()
             mypq.push(*temp);
         }
         letterCounts[i] = letterCount;
+        uniqueLetterCounts[i] = uniqueletterCount;
         letterCount = 0;
+        uniqueletterCount = 0;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     //put this in a separate function
@@ -215,12 +222,12 @@ void EditorAssistHeap::extraction()
     {
         std::cout<<"Number of words that start with "<<c++;
         if(!letterCounts.empty())
-            std::cout<<": "<<letterCounts[w]<<std::endl;
+            std::cout<<": "<<letterCounts[w]<<" Unique: "<<uniqueLetterCounts[w]<<std::endl;
     }
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
     //Output(std::cout);
-    if (WriteToFile())
-      Menu();
+//    if (WriteToFile())
+//      Menu();
 }
 //Word(count){[line,paragraph]}

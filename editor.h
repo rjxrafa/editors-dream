@@ -45,6 +45,7 @@ public:
     };
 
 protected:
+    std::vector<bst::Node<std::string>> wordData_;
     std::ifstream in;
     std::ofstream out;
     int sentence_;
