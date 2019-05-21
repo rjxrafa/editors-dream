@@ -19,16 +19,13 @@ void EditorAssistHeap::insertion()
     std::string word, temp;
     std::stringstream words;
     int line = 1, letter;
-    std::cout<<"Input file name:"<<std::endl;
-    std::cin>>temp;
-    //if file does not contain.txt add it
-    if(temp.find(".txt") == std::string::npos)
-        temp += ".txt";
-    std::ifstream myfile(temp);
+
+    while (!LoadFile());
+
     clock_t begin = clock();
-    while(!myfile.eof())
+    while(!in.eof())
     {
-        getline(myfile, temp);
+        getline(in, temp);
         words.str(temp);
         if(temp.empty())
             flag = true;
@@ -52,7 +49,7 @@ void EditorAssistHeap::insertion()
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
-    myfile.close();
+    in.close();
 }
 
 void EditorAssistHeap::extraction()

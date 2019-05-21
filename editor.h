@@ -14,6 +14,13 @@ public:
     bool SanitizeString(std::string &s);
     virtual void insertion() = 0;
     virtual void extraction() = 0;
+    bool LoadFile();
+    void WriteToFile();
+
+protected:
+  std::ifstream in;
+  std::ofstream out;
+
 
 };
 

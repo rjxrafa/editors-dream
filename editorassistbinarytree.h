@@ -15,6 +15,7 @@ public:
     void insertion();
     void extraction();
 private:
+
     bst::BinaryTree<std::string> orchard_[26];
     int paragraphs;
 };
