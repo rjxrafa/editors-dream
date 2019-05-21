@@ -2,7 +2,7 @@
 
 EditorAssistHeap::EditorAssistHeap()
 {
-
+    paragraphs_ = 1;
 }
 
 EditorAssistHeap::~EditorAssistHeap()
@@ -15,7 +15,6 @@ EditorAssistHeap::~EditorAssistHeap()
 //TODO:Create with string parameter for auto run
 void EditorAssistHeap::insertion()
 {
-    paragraphs = 1;
     bool flag = false;
     std::string word, temp;
     std::stringstream words;
@@ -33,7 +32,7 @@ void EditorAssistHeap::insertion()
         else
         {
             if(flag)
-                ++paragraphs;
+                ++paragraphs_;
             flag = false;
             while(words >> word)
             {
@@ -41,7 +40,8 @@ void EditorAssistHeap::insertion()
                 if(SanitizeString(word)) //optimize sanitize?
                 {
                     letter = word[0] - 65;
-                    orchard_[letter].insertData(word,paragraphs,line);
+                    syllables_ += syllableCounter(word);
+                    orchard_[letter].insertData(word,paragraphs_,line);
                 }
             }
             words.clear();
@@ -49,7 +49,7 @@ void EditorAssistHeap::insertion()
         ++line;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
-    std::cout<<"heapo "<<sentence<<std::endl;
+    std::cout<<"heapo "<<std::endl;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     in.close();
 }
@@ -60,7 +60,6 @@ void EditorAssistHeap::extraction()
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s, previousWord;
-    std::vector<bst::Node<std::string>*> wordData;
     std::vector<int> letterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
@@ -121,8 +120,8 @@ void EditorAssistHeap::extraction()
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     //put this in a separate function
     std::cout<<"Words: "<<total<<std::endl;
-    std::cout<<"Paragraphs: "<<paragraphs<<std::endl;
-    std::cout<<"Reading level: "<<"TODO"<<std::endl; //create readingLevel();
+    std::cout<<"Paragraphs: "<<paragraphs_<<std::endl;
+    std::cout<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl; //create readingLevel();
     std::cout<<"Top 10 words: "<<std::endl;
     for(int w = 0; w < 10; ++w)
     {
@@ -151,5 +150,6 @@ void EditorAssistHeap::extraction()
         }
         std::cout<<std::endl;
     }
+    WriteToFile();
 }
 //Word(count){[line,paragraph]}

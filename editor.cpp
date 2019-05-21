@@ -2,12 +2,14 @@
 
 EditorAssist::EditorAssist()
 {
-    sentence = 0;
+    sentence_ = 1;
+    syllables_ = 0;
 }
 
 EditorAssist::~EditorAssist()
 {
-
+    sentence_ = 0;
+    syllables_ = 0;
 }
 
 bool EditorAssist::SanitizeString(std::string &s)
@@ -25,7 +27,7 @@ bool EditorAssist::SanitizeString(std::string &s)
     while(!isalpha(s[s.size()-1]))
     {
         if(s[s.size()-1] == '.' || s[s.size()-1] == '!' || s[s.size()-1] == '?')
-            sentence += 1;
+            sentence_ += 1;
         s.pop_back();
     }
     //if string empty it was not a word
@@ -69,7 +71,12 @@ int EditorAssist::syllableCounter(const std::string &word)
 
 double EditorAssist::fleschKincaid(int words, int sentences, int syllables)
 {
+    double temp = 0.39 * ((double)words/sentences) + 11.8 * ((double)syllables/words) - 15.9;
+    if(temp < 0)
+        temp = 1;
+    return temp;
 }
+
 bool EditorAssist::LoadFile() {
 
   std::string filename;
@@ -86,7 +93,7 @@ bool EditorAssist::LoadFile() {
   return in.good();
 }
 
-void EditorAssist::WriteToFile() {
+bool EditorAssist::WriteToFile() {
 
   std::string user_input, filename;
 
@@ -113,7 +120,7 @@ void EditorAssist::WriteToFile() {
         out.open(user_input);
       } else {
         std::cout << "File not saved." << std::endl;
-        return;
+        return false;
       }
     }
   }

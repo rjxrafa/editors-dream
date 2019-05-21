@@ -17,9 +17,10 @@ public:
     void insertion();
     void extraction();
 private:
+    std::vector<bst::Node<std::string>*> wordData;
     myHeap<std::string> orchard_[26];
-    int paragraphs;
-    int sentences;
+    int paragraphs_;
+//    int sentences_;
 };
 
 //Helper to tell the priority how to compare nodes by its count so it does not conflict
