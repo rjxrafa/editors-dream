@@ -302,7 +302,7 @@ void bst::BinaryTree<T>::DeleteRightChild(Node<T>* &child, Node<T>* &parent) {
 }
 
 /**
- * @brief
+ * @brief This function rotates a given node and its right child (and any subtrees)
  * @param root
  * @return
  * @modified 2019-05-19
@@ -325,19 +325,16 @@ bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // RR case
 }
 
 /**
- * @brief
+ * @brief This function rotates a given node and its left child (and any subtrees)
  * @param root
  * @return
  * @modified 2019-05-19
  */
 
-
-
-
 /** Where X is the root
  *        X                W
  *       / \              / \
- *     W   C            A   X
+ *     W   C            A    X
  *    / \                   / \
  *   A  B                  B  C
  */
@@ -352,7 +349,7 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // LL case
 
 
 /**
- * @brief
+ * @brief This function rotates a given node and its children twice (RL case)
  * @param root
  * @return
  * @modified 2019-05-19
@@ -364,7 +361,7 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRightLeft(Node<T> *root) { // also known
 }
 
 /**
- * @brief RotateRightLeft
+ * @brief This function rotates a given node and its children twice (LR case)
  * @param root
  * @return
  * @modified 2019-05-19
@@ -419,7 +416,7 @@ bst::Node<T> bst::BinaryTree<T>::ExtractSmallest() {
 }
 
 /**
- * @brief InsertData
+ * @brief This function is a wrapper for the insert class that automatically inserts at the root.
  * @param root
  * @param data
  * @param p
@@ -433,7 +430,7 @@ void bst::BinaryTree<T>::InsertData(const T &data,
 }
 
 /**
- * @brief rebalance
+ * @brief rebalance This rebalance implements the AVL rebalancing algorithm.
  * @param root
  * @return
  */
@@ -458,7 +455,11 @@ bst::Node<T>* bst::BinaryTree<T>::rebalance(Node<T>* root) {
   return root;
 }
 
-
+/**
+ * @brief This function returns the height of a given root node
+ * @param root
+ * @return
+ */
 template <typename T>
 int bst::BinaryTree<T>::height(Node<T>* root) const {
   if (root == nullptr)
@@ -474,6 +475,11 @@ int bst::BinaryTree<T>::height(Node<T>* root) const {
   }
 }
 
+/**
+ * @brief This function returns the balance factor which is calculated recursively.
+ * @param root
+ * @return
+ */
 template <typename T>
 int bst::BinaryTree<T>::balance_factor(Node<T>* root) const {
   int left = height(root->left),
