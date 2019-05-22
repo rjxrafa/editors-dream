@@ -154,6 +154,8 @@ template<typename T>
 Node<T>::~Node() {
   data = T();
   count = 0;
+  line.clear();
+  paragraph.clear();
   left = right = nullptr;
 }
 

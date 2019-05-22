@@ -36,8 +36,10 @@ int main(int argc, char *argv[]) {
     //   QFuture<void> f2 = run(hello2);
     //   f1.waitForFinished();
 //    cout<<"Syllables: "<<book.syllableCounter("air")<<endl;
-//    EditorAssistHeap book;
-  EditorAssistBinaryTree book;
+    EditorAssistBinaryTree book1;
+    book1.insertion();
+    book1.extraction();
+  EditorAssistHeap book;
   book.insertion();
   book.extraction();
     //  f2.waitForFinished();

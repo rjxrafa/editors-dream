@@ -54,50 +54,45 @@ void EditorAssistHeap::insertion()
     in.close();
 }
 
-//void EditorAssistHeap::Output(std::ostream &out, const std::string & s)
-//{
-
-<<<<<<< HEAD
-//}
-=======
-    if(wordTotal)
-       // out<<"Words: "<<total<<std::endl;
-    if(pars)
-        out<<"Paragraphs: "<<paragraphs_<<std::endl;
-    if(readLevel)
-     //   out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl;
-    if(topTen)
-    {
-        out<<"Top 10 words: "<<std::endl;
-        for(int w = 0; w < 10; ++w)
-        {
-            if(!topWords.empty())
-            {
-                topWords[w];
-            }
-        }
-    }
-    if(letterC)
-        for(int w = 0; w < 26; ++w)
-        {
-            //out<<"Number of words that start with "<<c++;
-            //if(!letterCounts.empty())
-            //    out<<": "<<letterCounts[w]<<std::endl;
-        }
-    if(runTime)
-       // std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
-    if(wordIndex)
-        for(int w = 0, total = wordData.size(); w < total; ++w)
-        {
-            out<<*wordData[w]<<":";
-            for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
-            {
-                out<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
-            }
-            out<<std::endl;
-        }
+void EditorAssistHeap::Output(std::ostream &out, const std::string & s)
+{
+//    if(wordTotal)
+//       // out<<"Words: "<<total<<std::endl;
+//    if(pars)
+//        out<<"Paragraphs: "<<paragraphs_<<std::endl;
+//    if(readLevel)
+//     //   out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl;
+//    if(topTen)
+//    {
+//        out<<"Top 10 words: "<<std::endl;
+//        for(int w = 0; w < 10; ++w)
+//        {
+//            if(!topWords.empty())
+//            {
+//                topWords[w];
+//            }
+//        }
+//    }
+//    if(letterC)
+//        for(int w = 0; w < 26; ++w)
+//        {
+//            //out<<"Number of words that start with "<<c++;
+//            //if(!letterCounts.empty())
+//            //    out<<": "<<letterCounts[w]<<std::endl;
+//        }
+//    if(runTime)
+//       // std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
+//    if(wordIndex)
+//        for(int w = 0, total = wordData.size(); w < total; ++w)
+//        {
+//            out<<*wordData[w]<<":";
+//            for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
+//            {
+//                out<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
+//            }
+//            out<<std::endl;
+//        }
 }
->>>>>>> bc51b7ac7c65a524ac8e326df651ea26c4eab72d
 
 void EditorAssistHeap::extraction()
 {
@@ -111,14 +106,14 @@ void EditorAssistHeap::extraction()
     bst::Node<std::string> temp;
     char c = 'A';
     int parag, line;
-    int wordCount = 0, total = 0, letterCount = 0, indexTrack = 0, uniqueletterCount = 0;
+    int wordCount = 0, letterCount = 0, indexTrack = 0, uniqueletterCount = 0;
     for(int i = 0; i < 26; ++i)
     {
         while(!orchard_[i].empty())
         {
 
             ++letterCount;
-            ++total;
+            ++total_;
             previousWord = s;
             orchard_[i].extractData(s,parag,line);
             if(first)
@@ -126,15 +121,15 @@ void EditorAssistHeap::extraction()
                 ++uniqueletterCount;
                 previousWord = s;
                 first=false;
-                bst::Node<std::string> *temp2 = new bst::Node<std::string>(s);
-                wordData.push_back(temp2);
+                bst::Node<std::string> *temp2 = new bst::Node<std::string>(s,0);
+                wordData_.push_back(temp2);
             }
             if(previousWord == s)
             {
                 ++wordCount;
-                wordData[indexTrack]->count += 1;
-                wordData[indexTrack]->paragraph.push_back(parag);
-                wordData[indexTrack]->line.push_back(line);
+                wordData_[indexTrack]->count += 1;
+                wordData_[indexTrack]->paragraph.push_back(parag);
+                wordData_[indexTrack]->line.push_back(line);
             }
             else
             {
@@ -150,10 +145,9 @@ void EditorAssistHeap::extraction()
                 wordCount = 1;
                 ++indexTrack;
                 bst::Node<std::string> *temp2 = new bst::Node<std::string>(s);
-                wordData.push_back(temp2);
-                wordData[indexTrack]->count += 1;
-                wordData[indexTrack]->paragraph.push_back(parag);
-                wordData[indexTrack]->line.push_back(line);
+                wordData_.push_back(temp2);
+                wordData_[indexTrack]->paragraph.push_back(parag);
+                wordData_[indexTrack]->line.push_back(line);
             }
            //  myfile << s;
         }
@@ -171,16 +165,16 @@ void EditorAssistHeap::extraction()
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     //put this in a separate function
-    std::cout<<"Words: "<<total<<std::endl;
+    std::cout<<"Words: "<<total_<<std::endl;
     std::cout<<"Paragraphs: "<<paragraphs_<<std::endl;
-    std::cout<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl; //create readingLevel();
+    std::cout<<"Reading level: "<<"Grade "<<round(fleschKincaid(total_,sentence_,syllables_))<<std::endl; //create readingLevel();
     std::cout<<"Top 10 words: "<<std::endl;
     for(int w = 0; w < 10; ++w)
     {
         if(!mypq.empty())
         {
             std::cout<<mypq.top()<<std::endl;
-            topWords[w] = mypq.top().data;
+            topWords_.push_back(mypq.top().data);
             mypq.pop();
         }
     }
@@ -192,6 +186,15 @@ void EditorAssistHeap::extraction()
     }
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();
+    for(int w = 0; w < wordData_.size(); ++w)
+    {
+        std::cout<< *wordData_[w]<<":";
+        for(int r = 0; r < wordData_[w]->paragraph.size(); ++r)
+        {
+            std::cout<<"["<<wordData_[w]->paragraph[r]<<","<<wordData_[w]->line[r]<<"]";
+        }
+        std::cout<<std::endl;
+    }
     //Output(std::cout);
 //    if (WriteToFile())
 //      Menu();

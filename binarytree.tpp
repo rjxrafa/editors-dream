@@ -263,12 +263,12 @@ bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const uns
     ++root->count;
     root->paragraph.push_back(p);
     root->line.push_back(l);
-  }else if (data < root->data) {
+  } else if (data < root->data) {
     root->left = Insert(root->left, data, p, l);
-//    root = rebalance(root);
+    root = rebalance(root);
   } else if (data > root->data) {
     root->right = Insert(root->right, data, p, l);
-//    root = rebalance(root);
+    root = rebalance(root);
   }
   return root;
 }

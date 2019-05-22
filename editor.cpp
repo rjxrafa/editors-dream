@@ -2,8 +2,12 @@
 
 EditorAssist::EditorAssist()
 {
+    letterCounts.resize(26);
     sentence_ = 1;
     syllables_ = 0;
+    total_ = 0;
+    paragraphs_ = 1;
+    seconds_ = 0;
 }
 
 EditorAssist::~EditorAssist()
@@ -14,8 +18,6 @@ EditorAssist::~EditorAssist()
 
 bool EditorAssist::SanitizeString(std::string &s)
 {
-//    std::cout<<"in sanitize"<<std::endl;
-//    std::cout<<"word to sanitize: "<<s<<std::endl;
     //check front
     while(!s.empty()&&!isalpha(s[0]))
     {
@@ -36,7 +38,6 @@ bool EditorAssist::SanitizeString(std::string &s)
     //lower if it is a word
     std::transform(s.begin(), s.end(), s.begin(), tolower);
     s[0] = toupper(s[0]);
-   // s[0] = tolower(s[0]);
     //else true
     return true;
 }
@@ -188,15 +189,14 @@ void EditorAssist::Menu()
         break;
     case 'a':
         my_flags.all = !my_flags.all;
+        break;
      default:
         std::cout << "Invalid input!\n";
         }
+    Output(out, my_flags);
     }
 
-    Output(out, my_flags);
-
 }
-
 
 
 //
@@ -205,42 +205,47 @@ void EditorAssist::Menu()
 
 
 void EditorAssist::Output(std::ostream &out, FileFlags &my_flags) {
-  if (my_flags.all) {
-    out << "Stuff here\n" ;
-//    out<<"Words: "<<total<<std::endl;
-     //   if(pars)
-//    out<<"Paragraphs: "<<paragraphs_<<std::endl;
-     //   if(readLevel)
-//    out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl;
-     //   if(topTen)
-//    out<<"Top 10 words: "<<std::endl;
-     //       for(int w = 0; w < 10; ++w)
-     //       {
-     //         //  if(!mypq.empty())
-//                {
-//                    std::cout<<mypq.top()<<std::endl;
-//                    mypq.pop();
-//                }
-//            }
-     //   }
-     //   if(letterC)
-     //       for(int w = 0; w < 26; ++w)
-     //       {
-     //           //out<<"Number of words that start with "<<c++;
-     //           //if(!letterCounts.empty())
-     //           //    out<<": "<<letterCounts[w]<<std::endl;
-     //       }
-//    if(my_flags.runtime)
-//      std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
-
-//    if(my_flags.word_index) {
-//      for (int i = 0, total = wordData.size(); i < total; ++i) {
-//        out << *wordData[i] << ":";
-//        for (int s = 0, total_ = wordData[i]->paragraph.size(); s < total_; ++s) {
-//          out << "[" << wordData[i]->paragraph[s] << ',' << wordData[i]->line[s]<<']';
-//        }
-//        out << std::endl;
-//    }
-
+    if (my_flags.all)
+        out << "Stuff here\n" ;
+    if (my_flags.word_total)
+        out<<"Words: "<<total_<<std::endl;
+    if(my_flags.paragraph_total)
+        out<<"Paragraphs: "<<paragraphs_<<std::endl;
+    if(my_flags.flesch_level)
+        out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total_,sentence_,syllables_))<<std::endl;
+    if(my_flags.top_ten)
+    {
+        out<<"Top 10 words: "<<std::endl;
+        for(int w = 0; w < 10; ++w)
+        {
+            if(!topWords_[w].empty())
+            {
+                std::cout<<topWords_[w]<<std::endl;
+            }
+        }
+    }
+    if(my_flags.letter_count)
+    {
+        char c='A';
+        for(int w = 0; w < 26; ++w)
+        {
+            out<<"Number of words that start with "<<c++;
+            if(!letterCounts.empty())
+                out<<": "<<letterCounts[w]<<std::endl;
+        }
+    }
+    if(my_flags.runtime)
+        std::cout<<"Runtime: "<<seconds_<<" seconds"<<std::endl<<std::endl;
+    if(my_flags.word_index)
+    {
+        for (int i = 0, total = wordData_.size(); i < total; ++i)
+        {
+            out << *wordData_[i] << ":";
+            for (int s = 0, total_ = wordData_[i]->paragraph.size(); s < total_; ++s)
+            {
+                out << " [" << wordData_[i]->paragraph[s] << ',' << wordData_[i]->line[s]<<']';
+            }
+            out << std::endl;
+        }
     }
 }

@@ -32,13 +32,12 @@ public:
     };
 
 protected:
-
-    std::vector<bst::Node<std::string>> wordData_;
-    std::vector<std::string> topWords;
+    std::vector<int> letterCounts;
+    std::vector<bst::Node<std::string>*> wordData_;
+    std::vector<std::string> topWords_;
     std::ifstream in;
     std::ofstream out;
-    int sentence_;
-    int syllables_;
+    int sentence_, total_, paragraphs_, syllables_, seconds_;
     int syllableCounter(const std::string &word);
     double fleschKincaid(int words, int sentences, int syllables);
     void Output(std::ostream &out, FileFlags &my_flags);
