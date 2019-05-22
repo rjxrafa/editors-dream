@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cstdio>
 #include <vector>
+#include <fstream>
 
 namespace bst{
 
@@ -370,12 +371,18 @@ bool operator>>(std::istream &in, Node<S> &n) {
   }
   else
 //        in >> n.data >> junk >> n.count >> junk;
-    std::cout << "test"; // todo
+  //  std::cout << "test"; // todo
 
   return false;
 }
 
 } // end namespace bst
 
+struct CompareNodes {
+    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
+    {
+        return x.count < y.count;
+    }
+};
 
 #endif // Node_H

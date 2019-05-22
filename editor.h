@@ -6,6 +6,9 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
+#include <ctime>
+
+enum EDITOR_ERRORS {INVALID_INPUT,OPTION_USED};
 
 class EditorAssist
 {
@@ -18,6 +21,7 @@ public:
     bool LoadFile();
     bool WriteToFile();
     void Menu();
+    void Display();
 
     struct FileFlags
     {
@@ -32,24 +36,20 @@ public:
     };
 
 protected:
-    std::vector<int> uniqueLetterCounts;
+    std::vector<int> uniqueLetterCounts_;
     std::vector<int> letterCounts_;
     std::vector<bst::Node<std::string>*> wordData_;
-    std::vector<std::string> topWords_;
+    std::vector<bst::Node<std::string>> topWords_;
     std::ifstream in;
     std::ofstream out;
-    int sentence_, total_, paragraphs_, syllables_, seconds_;
+    int sentence_, total_, paragraphs_, syllables_;
+    double seconds_;
+    clock_t begin_;
     int syllableCounter(const std::string &word);
     double fleschKincaid(int words, int sentences, int syllables);
-    void Output(std::ostream &out, FileFlags &my_flags);
-
-};
-
-struct CompareNodes {
-    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
-    {
-        return x.count < y.count;
-    }
+    void Output();
+    void FileOutput(std::ostream &out, FileFlags &my_flags);
+    bool getInput(const std::string &s);
 };
 
 #endif // EDITOR_H

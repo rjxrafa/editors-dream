@@ -16,7 +16,7 @@ public:
     void insertion();
     void extraction();
 private:
-    std::vector<bst::Node<std::string>*> wordData;
+    //std::vector<bst::Node<std::string>*> wordData;
     bst::BinaryTree<std::string> orchard_[26];
 };
 
