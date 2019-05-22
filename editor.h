@@ -21,37 +21,25 @@ public:
     struct FileFlag
     {
         bool wordTota,pars,readLevel,topTen,letterC,runTime,wordIndex;
-
-//        for(unsigned int i = 0; i < s.size(); ++i)
-//        {
-//            switch(tolower(s[i]))
-//            {
-//            case 't': wordTotal = true;
-//                break;
-//            case 'p': pars = true;
-//                break;
-//            case '3': readLevel = true;
-//                break;
-//            case '4': topTen = true;
-//                break;
-//            case '5': letterC = true;
-//                break;
-//            case 'r': runTime = true;
-//                break;
-//            case '7': wordInfo = true;
-//                break;
-//            default : return
-//            }
     };
 
 protected:
+
     std::vector<bst::Node<std::string>> wordData_;
+    std::vector<std::string> topWords;
     std::ifstream in;
     std::ofstream out;
     int sentence_;
     int syllables_;
     int syllableCounter(const std::string &word);
     double fleschKincaid(int words, int sentences, int syllables);
+};
+
+struct CompareNodes {
+    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
+    {
+        return x.count < y.count;
+    }
 };
 
 #endif // EDITOR_H

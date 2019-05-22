@@ -2,6 +2,7 @@
 #define EDITORASSISTBINARYTREE_H
 #include <iostream>
 #include <ctime>
+#include <queue>
 #include "editor.h"
 #include "binarytree.h"
 #include "vector"
@@ -15,9 +16,16 @@ public:
     void insertion();
     void extraction();
 private:
-    std::vector<bst::Node<std::string>> wordData;
+    std::vector<bst::Node<std::string>*> wordData;
     bst::BinaryTree<std::string> orchard_[26];
     int paragraphs;
 };
+
+//struct CompareNodes {
+//    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
+//    {
+//        return x.count < y.count;
+//    }
+//};
 
 #endif // EDITORASSISTBINARYTREE_H

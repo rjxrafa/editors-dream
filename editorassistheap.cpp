@@ -106,10 +106,9 @@ void EditorAssistHeap::Output(std::ostream &out, const std::string & s)
         out<<"Top 10 words: "<<std::endl;
         for(int w = 0; w < 10; ++w)
         {
-          //  if(!mypq.empty())
+            if(!topWords.empty())
             {
-          //      std::cout<<mypq.top()<<std::endl;
-           //     mypq.pop();
+                topWords[w];
             }
         }
     }
@@ -215,6 +214,7 @@ void EditorAssistHeap::extraction()
         if(!mypq.empty())
         {
             std::cout<<mypq.top()<<std::endl;
+            topWords[w] = mypq.top().data;
             mypq.pop();
         }
     }

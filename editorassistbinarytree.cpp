@@ -7,7 +7,6 @@ EditorAssistBinaryTree::EditorAssistBinaryTree()
 
 EditorAssistBinaryTree::~EditorAssistBinaryTree()
 {
-
 }
 
 void EditorAssistBinaryTree::insertion()
@@ -60,7 +59,7 @@ void EditorAssistBinaryTree::extraction()
     std::string s;
     std::vector<int> letterCounts(26);
     std::vector<int> uniqueLetterCounts(26);
-   // std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
+    std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
     char c = 'A';
     int parag, line;
@@ -70,10 +69,12 @@ void EditorAssistBinaryTree::extraction()
         while(!orchard_[i].empty())
         {
                       // Rafa implement
-             wordData.push_back(orchard_[i].ExtractSmallest());
-             letterCount+= wordData[indexTrack].count;
+            bst::Node<std::string> *temp = new bst::Node<std::string>(orchard_[i].ExtractSmallest());
+             wordData.push_back(temp);
+             mypq.push(*temp);
+             letterCount+= wordData[indexTrack]->count;
              ++uniqueletterCount;
-             total += wordData[indexTrack++].count;
+             total += wordData[indexTrack++]->count;
          }
         uniqueLetterCounts[i] = uniqueletterCount;
         letterCounts[i] = letterCount;
@@ -85,14 +86,14 @@ void EditorAssistBinaryTree::extraction()
     std::cout<<"Paragraphs: "<<paragraphs<<std::endl;
     std::cout<<"Reading level: "<<"TODO"<<std::endl; //create readingLevel();
     std::cout<<"Top 10 words: "<<std::endl;
-//    for(int w = 0; w < 10; ++w)
-//    {
-//        if(!mypq.empty())
-//        {
-//            std::cout<<mypq.top()<<std::endl;
-//            mypq.pop();
-//        }
-//    }
+    for(int w = 0; w < 10; ++w)
+    {
+        if(!mypq.empty())
+        {
+            std::cout<<mypq.top()<<std::endl;
+            mypq.pop();
+        }
+    }
     for(int w = 0; w < 26; ++w)
     {
         std::cout<<"Number of words that start with "<<c++; // todo add count
