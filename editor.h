@@ -32,7 +32,7 @@ public:
     };
 
 protected:
-    std::vector<int> letterCounts;
+    std::vector<int> letterCounts_;
     std::vector<bst::Node<std::string>*> wordData_;
     std::vector<std::string> topWords_;
     std::ifstream in;

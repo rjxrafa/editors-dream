@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     //   QFuture<void> f1 = run(hello);
     //   QFuture<void> f2 = run(hello2);
     //   f1.waitForFinished();
-//    cout<<"Syllables: "<<book.syllableCounter("air")<<endl;
+  //  cout<<"Syllables: "<<book.syllableCounter("air")<<endl;
     EditorAssistBinaryTree book1;
     book1.insertion();
     book1.extraction();

@@ -239,6 +239,8 @@ void Node<T>::Clear() {
 template<typename T>
 void Node<T>::copy(const Node<T> &other) {
   Set(other.data, other.count);
+  line = other.line;
+  paragraph = other.paragraph;
   left = other.left;
   right = other.right;
 }

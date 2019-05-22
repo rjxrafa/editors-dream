@@ -100,7 +100,6 @@ void EditorAssistHeap::extraction()
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s, previousWord;
-    std::vector<int> letterCounts(26);
     std::vector<int> uniqueLetterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
@@ -158,7 +157,7 @@ void EditorAssistHeap::extraction()
             //std::set might be faster TODO:replace and see time
             mypq.push(*temp);
         }
-        letterCounts[i] = letterCount;
+        letterCounts_[i] = letterCount;
         uniqueLetterCounts[i] = uniqueletterCount;
         letterCount = 0;
         uniqueletterCount = 0;
@@ -181,8 +180,8 @@ void EditorAssistHeap::extraction()
     for(int w = 0; w < 26; ++w)
     {
         std::cout<<"Number of words that start with "<<c++;
-        if(!letterCounts.empty())
-            std::cout<<": "<<letterCounts[w]<<" Unique: "<<uniqueLetterCounts[w]<<std::endl;
+        if(!letterCounts_.empty())
+            std::cout<<": "<<letterCounts_[w]<<" Unique: "<<uniqueLetterCounts[w]<<std::endl;
     }
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     myfile.close();

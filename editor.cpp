@@ -2,7 +2,7 @@
 
 EditorAssist::EditorAssist()
 {
-    letterCounts.resize(26);
+    letterCounts_.resize(26);
     sentence_ = 1;
     syllables_ = 0;
     total_ = 0;
@@ -230,8 +230,8 @@ void EditorAssist::Output(std::ostream &out, FileFlags &my_flags) {
         for(int w = 0; w < 26; ++w)
         {
             out<<"Number of words that start with "<<c++;
-            if(!letterCounts.empty())
-                out<<": "<<letterCounts[w]<<std::endl;
+            if(!letterCounts_.empty())
+                out<<": "<<letterCounts_[w]<<std::endl;
         }
     }
     if(my_flags.runtime)

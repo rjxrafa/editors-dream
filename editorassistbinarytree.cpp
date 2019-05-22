@@ -55,7 +55,6 @@ void EditorAssistBinaryTree::extraction()
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s;
-    std::vector<int> letterCounts(26);
     std::vector<int> uniqueLetterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     char c = 'A';
@@ -79,14 +78,14 @@ void EditorAssistBinaryTree::extraction()
              total_ += wordData[indexTrack++]->count;
          }
         uniqueLetterCounts[i] = uniqueletterCount;
-        letterCounts[i] = letterCount;
+        letterCounts_[i] = letterCount;
         uniqueletterCount = 0;
         letterCount = 0;
     }
 //    //put this in a separate function
     std::cout<<"Words: "<<total_<<std::endl;
     std::cout<<"Paragraphs: "<<paragraphs_<<std::endl;
-    std::cout<<"Reading level: "<<"TODO"<<std::endl; //create readingLevel();
+    std::cout<<"Reading level: "<<"Grade "<<round(fleschKincaid(total_,sentence_,syllables_))<<std::endl;  //create readingLevel();
     std::cout<<"Top 10 words: "<<std::endl;
     for(int w = 0; w < 10; ++w)
     {
@@ -100,8 +99,8 @@ void EditorAssistBinaryTree::extraction()
     for(int w = 0; w < 26; ++w)
     {
         std::cout<<"Number of words that start with "<<c++; // todo add count
-        if(!letterCounts.empty())
-            std::cout<<": "<<letterCounts[w]<<" Unique: "<<uniqueLetterCounts[w]<<std::endl;
+        if(!letterCounts_.empty())
+            std::cout<<": "<<letterCounts_[w]<<" Unique: "<<uniqueLetterCounts[w]<<std::endl;
     }
     double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
