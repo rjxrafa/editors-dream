@@ -48,48 +48,6 @@ bst::BinaryTree<T>& bst::BinaryTree<T>::operator=(const BinaryTree<T> &other) {
   return this;
 }
 
-///**
-// * @brief This function inserts a given data into a binary tree
-// * @param data
-// * @param count
-// * @modified 2019-05-18
-// */
-//template <typename T>
-//void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //todo add rebalance
-//  bst::Node<T> *new_item = new bst::Node<T>(data, count);
-
-//  if(root_ == nullptr) {
-//    root_ = new_item;
-//    return;
-//  } else {
-//    bst::Node<T> *temp = root_;
-
-//    while (temp) {
-//      if (*new_item == *temp) { //dereference the node pointers as a node
-//        temp->count += count;
-//        delete new_item;
-//        return;
-//      }
-
-//      if (*new_item < *temp) { // if the item to be inserted is less than the current item
-//        if (temp->left) // if temp left is not null, keep traversing
-//          temp = temp->left;
-//        else {
-//          temp->left = new_item;
-//          return;
-//        }
-//      } else { // the item to be inserted is greater than the current item
-//        if (temp->right) // if temp right is not null, keep traversing
-//          temp = temp->right;
-//        else {
-//          temp->right = new_item;
-//          return;
-//        }
-//      }
-//    }
-//  }
-//}
-
 /**
  * @brief operator << This function utilizes the Insert functionality of the BinaryTree class
  * @param data
@@ -349,7 +307,7 @@ void bst::BinaryTree<T>::DeleteRightChild(Node<T>* &child, Node<T>* &parent) {
 }
 
 /**
- * @brief
+ * @brief This function rotates a given node and its right child (and any subtrees)
  * @param root
  * @return
  * @modified 2019-05-19
@@ -372,19 +330,16 @@ bst::Node<T>* bst::BinaryTree<T>::RotateLeft(Node<T> *root) { // RR case
 }
 
 /**
- * @brief
+ * @brief This function rotates a given node and its left child (and any subtrees)
  * @param root
  * @return
  * @modified 2019-05-19
  */
 
-
-
-
 /** Where X is the root
  *        X                W
  *       / \              / \
- *     W   C            A   X
+ *     W   C            A    X
  *    / \                   / \
  *   A  B                  B  C
  */
@@ -399,7 +354,7 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // LL case
 
 
 /**
- * @brief
+ * @brief This function rotates a given node and its children twice (RL case)
  * @param root
  * @return
  * @modified 2019-05-19
@@ -411,7 +366,7 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRightLeft(Node<T> *root) { // also known
 }
 
 /**
- * @brief RotateRightLeft
+ * @brief This function rotates a given node and its children twice (LR case)
  * @param root
  * @return
  * @modified 2019-05-19
@@ -466,7 +421,7 @@ bst::Node<T> bst::BinaryTree<T>::ExtractSmallest() {
 }
 
 /**
- * @brief InsertData
+ * @brief This function is a wrapper for the insert class that automatically inserts at the root.
  * @param root
  * @param data
  * @param p
@@ -480,7 +435,7 @@ void bst::BinaryTree<T>::InsertData(const T &data,
 }
 
 /**
- * @brief rebalance
+ * @brief rebalance This rebalance implements the AVL rebalancing algorithm.
  * @param root
  * @return
  */
@@ -505,7 +460,11 @@ bst::Node<T>* bst::BinaryTree<T>::rebalance(Node<T>* root) {
   return root;
 }
 
-
+/**
+ * @brief This function returns the height of a given root node
+ * @param root
+ * @return
+ */
 template <typename T>
 int bst::BinaryTree<T>::height(Node<T>* root) const {
   if (root == nullptr)
@@ -521,6 +480,11 @@ int bst::BinaryTree<T>::height(Node<T>* root) const {
   }
 }
 
+/**
+ * @brief This function returns the balance factor which is calculated recursively.
+ * @param root
+ * @return
+ */
 template <typename T>
 int bst::BinaryTree<T>::balance_factor(Node<T>* root) const {
   int left = height(root->left),
