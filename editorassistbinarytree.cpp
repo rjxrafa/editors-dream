@@ -109,4 +109,5 @@ void EditorAssistBinaryTree::extraction()
         }
         std::cout<<std::endl;
     }
+    Menu();
 }

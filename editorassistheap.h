@@ -22,8 +22,6 @@ private:
     myHeap<std::string> orchard_[26];
     int paragraphs_;
 //    int sentences_;
-    void Menu();
-    void Output(std::ostream &out, const std::string &s);
 };
 
 //Helper to tell the priority how to compare nodes by its count so it does not conflict

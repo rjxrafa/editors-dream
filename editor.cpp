@@ -130,3 +130,117 @@ bool EditorAssist::WriteToFile() {
   }
 }
 
+void EditorAssist::Menu()
+{
+    FileFlags my_flags;
+    my_flags.paragraph_total = my_flags.flesch_level = my_flags.top_ten =
+    my_flags.letter_count = my_flags.runtime = my_flags.word_index = my_flags.all = false;
+
+    while (1) {
+    std::cout << "What would you like to save?\n"
+              <<  "[" << ((my_flags.word_total) ? 'x' : ' ' )<< "]"
+              << "(T)otal Words\n"
+              << "["<< ((my_flags.paragraph_total) ? 'x' : ' ' )<< "]"
+              << "(P)aragraph Count\n"
+              << "["<< ((my_flags.flesch_level) ? 'x' : ' ' )<< "]"
+              << "(F)lesch Reading Grade Level\n"
+              << "["<< ((my_flags.letter_count) ? 'x' : ' ' )<< "]"
+              << "(L)etter Count\n"
+              << "["<< ((my_flags.word_index) ? 'x' : ' ' )<< "]"
+              << "(W)ord Info (index)\n"
+              << "["<< ((my_flags.top_ten) ? 'x' : ' ' )<< "]"
+              << "(M)ost Used Words\n"
+              << "["<< ((my_flags.runtime) ? 'x' : ' ' )<< "]"
+              << "(R)untime\n"
+              << "["<< ((my_flags.all) ? 'x' : ' ' )<< "]"
+              << "(A)ll of the above\n\n" << "Press enter to quit.\n"
+              <<  std::endl;
+
+    std::string user_input;
+    getline(std::cin, user_input);
+    fflush(stdin);
+
+    if (user_input.empty())
+        return;
+
+    switch(tolower(user_input[0])) {
+
+    case 't':
+        my_flags.word_total = !my_flags.word_total;
+        break;
+    case 'p':
+        my_flags.paragraph_total = !my_flags.paragraph_total;
+        break;
+    case 'f':
+        my_flags.flesch_level = !my_flags.flesch_level;
+        break;
+    case 'm':
+        my_flags.top_ten = !my_flags.top_ten;
+        break;
+    case 'l':
+        my_flags.letter_count = !my_flags.letter_count;
+        break;
+    case 'r':
+        my_flags.runtime = !my_flags.runtime;
+        break;
+    case 'w':
+        my_flags.word_index = !my_flags.word_index;
+        break;
+    case 'a':
+        my_flags.all = !my_flags.all;
+     default:
+        std::cout << "Invalid input!\n";
+        }
+    }
+
+    Output(out, my_flags);
+
+}
+
+
+
+//
+//   Output(out,s);
+//}
+
+
+void EditorAssist::Output(std::ostream &out, FileFlags &my_flags) {
+  if (my_flags.all) {
+    out << "Stuff here\n" ;
+//    out<<"Words: "<<total<<std::endl;
+     //   if(pars)
+//    out<<"Paragraphs: "<<paragraphs_<<std::endl;
+     //   if(readLevel)
+//    out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl;
+     //   if(topTen)
+//    out<<"Top 10 words: "<<std::endl;
+     //       for(int w = 0; w < 10; ++w)
+     //       {
+     //         //  if(!mypq.empty())
+//                {
+//                    std::cout<<mypq.top()<<std::endl;
+//                    mypq.pop();
+//                }
+//            }
+     //   }
+     //   if(letterC)
+     //       for(int w = 0; w < 26; ++w)
+     //       {
+     //           //out<<"Number of words that start with "<<c++;
+     //           //if(!letterCounts.empty())
+     //           //    out<<": "<<letterCounts[w]<<std::endl;
+     //       }
+//    if(my_flags.runtime)
+//      std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
+
+//    if(my_flags.word_index) {
+//      for (int i = 0, total = wordData.size(); i < total; ++i) {
+//        out << *wordData[i] << ":";
+//        for (int s = 0, total_ = wordData[i]->paragraph.size(); s < total_; ++s) {
+//          out << "[" << wordData[i]->paragraph[s] << ',' << wordData[i]->line[s]<<']';
+//        }
+//        out << std::endl;
+//    }
+
+    }
+}

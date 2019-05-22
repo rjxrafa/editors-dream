@@ -53,86 +53,11 @@ void EditorAssistHeap::insertion()
     std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     in.close();
 }
-void EditorAssistHeap::Menu()
-{
-   std::cout<<"What would you like to save?\n"
-              "[ ] (T)otal Words\n"
-              "[ ] (P)aragraph Count\n"
-              "[ ] (F)lesch Reading Grade Level\n"
-              "[ ] (M)ost Used Words\n"
-              "[ ] (R)untime\n"
-              "[x] (L)etter count\n"
-              "[ ] (A)ll of the above\n"
 
-              "Press return to quit.\n";
-   std::string s;
-   std::cin>>s;
-   Output(out,s);
-}
-void EditorAssistHeap::Output(std::ostream &out, const std::string & s)
-{
-    bool wordTotal,pars,readLevel,topTen,letterC,runTime,wordIndex;
-    wordTotal=pars=readLevel=topTen=letterC=runTime=wordIndex= false;
-    for(unsigned int i = 0; i < s.size(); ++i)
-    {
-        switch(tolower(s[i]))
-        {
-        case 't': wordTotal = true;
-            break;
-        case 'p': pars = true;
-            break;
-        case 'f': readLevel = true;
-            break;
-        case 'M': topTen = true;
-            break;
-        case '5': letterC = true;
-            break;
-        case 'l': runTime = true;
-            break;
-        case '7': wordIndex = true;
-            break;
-        default : return;
-        }
-    }
+//void EditorAssistHeap::Output(std::ostream &out, const std::string & s)
+//{
 
-    if(wordTotal)
-       // out<<"Words: "<<total<<std::endl;
-    if(pars)
-        out<<"Paragraphs: "<<paragraphs_<<std::endl;
-    if(readLevel)
-     //   out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl;
-    if(topTen)
-    {
-        out<<"Top 10 words: "<<std::endl;
-        for(int w = 0; w < 10; ++w)
-        {
-          //  if(!mypq.empty())
-            {
-          //      std::cout<<mypq.top()<<std::endl;
-           //     mypq.pop();
-            }
-        }
-    }
-    if(letterC)
-        for(int w = 0; w < 26; ++w)
-        {
-            //out<<"Number of words that start with "<<c++;
-            //if(!letterCounts.empty())
-            //    out<<": "<<letterCounts[w]<<std::endl;
-        }
-    if(runTime)
-       // std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
-    if(wordIndex)
-        for(int w = 0, total = wordData.size(); w < total; ++w)
-        {
-            out<<*wordData[w]<<":";
-            for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
-            {
-                out<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
-            }
-            out<<std::endl;
-        }
-}
+//}
 
 void EditorAssistHeap::extraction()
 {

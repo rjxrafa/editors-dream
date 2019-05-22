@@ -23,7 +23,7 @@ struct Node {
   Node* left;
   Node* right;
 
-  Node (const T &data = T(), const unsigned int &c = 0);
+  Node (const T &data = T(), const unsigned int &c = 1);
   ~Node();
   Node(const Node<T> &other);
 

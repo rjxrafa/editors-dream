@@ -35,15 +35,15 @@ int main(int argc, char *argv[]) {
     //   QFuture<void> f1 = run(hello);
     //   QFuture<void> f2 = run(hello2);
     //   f1.waitForFinished();
-//    EditorAssistHeap book;
 //    cout<<"Syllables: "<<book.syllableCounter("air")<<endl;
-//  EditorAssistBinaryTree book;
-//  book.insertion();
-//  book.extraction();
+//    EditorAssistHeap book;
+  EditorAssistBinaryTree book;
+  book.insertion();
+  book.extraction();
     //  f2.waitForFinished();
-    bst::BinaryTree<int> a;
-    a << 10 << 20 << 30 << 40 << 50;
-    cout << a;
+//    bst::BinaryTree<int> a;
+//    a << 10 << 20 << 30 << 40 << 50;
+//    cout << a;
 
     return 0;
 }

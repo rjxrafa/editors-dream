@@ -20,7 +20,7 @@ enum class BST_ERRORS{EMPTY};
 template <typename T>
 class BinaryTree
 {
- public:
+public:
   BinaryTree() : root_(nullptr), traversal_(BST_TRAVERSAL::IN_ORDER) {}
   BinaryTree(const T &data, const unsigned int &count);
   BinaryTree(const BinaryTree<T> &other);
@@ -43,6 +43,8 @@ class BinaryTree
   unsigned int data_count() const {return data_count(root_);}
   unsigned int node_count() const {return node_count(root_);}
 
+
+
   template <typename S>
   friend
   std::ostream& operator<<(std::ostream& out, const BinaryTree<S> &other);
@@ -54,7 +56,9 @@ class BinaryTree
  private:
   Node<T> *root_;
   BST_TRAVERSAL traversal_;
-
+  Node<T> *node_stack_;
+  int node_stack_count_ = 50;
+  int node_stack_index = 0;
   Node<T>* RotateLeft(Node<T> *root);
   Node<T>* RotateRight(Node<T> *root);
   Node<T>* RotateLeftRight(Node<T> *root);
@@ -74,6 +78,8 @@ class BinaryTree
   Node<T>* Find(const T& data, Node<T> *root, Node<T>* &parent, bool &less_than) const;
   Node<T>* FindSmallest(Node<T>* root) const;
   void PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const;
+  void CreateNodes();
+  void ResizeNodeStack();
 
 };
 
