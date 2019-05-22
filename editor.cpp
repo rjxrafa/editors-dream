@@ -1,5 +1,11 @@
 #include "editor.h"
 
+/**
+ * @brief EditorAssist::EditorAssist
+ * letter counts, unique counts
+ * sentences, syllables, total, paragraphs
+ * and seconds
+ */
 EditorAssist::EditorAssist()
 {
 
@@ -29,6 +35,13 @@ EditorAssist::~EditorAssist()
     seconds_ = 0;
 }
 
+/**
+ * @brief EditorAssist::SanitizeString
+ * @param s
+ * @return
+ * Sanitizes string removes anything from the left and right
+ * that isnt a letter also counts '.' as sentences
+ */
 bool EditorAssist::SanitizeString(std::string &s)
 {
     //check front
@@ -54,7 +67,12 @@ bool EditorAssist::SanitizeString(std::string &s)
     //else true
     return true;
 }
-
+/**
+ * @brief EditorAssist::syllableCounter
+ * @param word
+ * @return
+ * Counts the syllables by using vowels and subtracting silent vowels
+ */
 int EditorAssist::syllableCounter(const std::string &word)
 {
     //vowels are aeiou
@@ -78,11 +96,19 @@ int EditorAssist::syllableCounter(const std::string &word)
     }
     if(tolower(word[word.size()-1]) == 'e')
         syllables -= 1;
-    if(!syllables)
+    if(syllables < 1)
         syllables +=1;
     return syllables;
 }
 
+/**
+ * @brief EditorAssist::FleschKincaid
+ * @param words
+ * @param sentences
+ * @param syllables
+ * @return
+ * Uses the FleschKincaid math to calculate grade level
+ */
 double EditorAssist::FleschKincaid(int words, int sentences, int syllables)
 {
     double temp = 0.39 * ((double)words/sentences) + 11.8 * ((double)syllables/words) - 15.9;
@@ -90,7 +116,11 @@ double EditorAssist::FleschKincaid(int words, int sentences, int syllables)
         temp = 1;
     return temp;
 }
-
+/**
+ * @brief EditorAssist::LoadFile
+ * @return
+ * check for file to load
+ */
 bool EditorAssist::LoadFile() {
 
   std::string filename;
@@ -107,6 +137,11 @@ bool EditorAssist::LoadFile() {
   return in.good();
 }
 
+/**
+ * @brief EditorAssist::WriteToFile
+ * @return
+ * check for writing to file
+ */
 bool EditorAssist::WriteToFile() {
 
   while (1) {
@@ -146,6 +181,9 @@ bool EditorAssist::WriteToFile() {
   }
 }
 
+/**
+ * @brief EditorAssist::Menu for the file save
+ */
 void EditorAssist::Menu()
 {
     OutputFlags my_flags;
@@ -169,7 +207,7 @@ void EditorAssist::Menu()
               << "["<< ((my_flags.word_index) ? 'x' : ' ' )<< "]"
               << "(W)ord Info (index)\n"
               << "["<< ((my_flags.all) ? 'x' : ' ' )<< "]"
-              << "(A)ll of the above\n\n" << "Press enter to quit.\n"
+              << "(A)ll of the above\n\n" << "Press enter to save.\n"
               <<  std::endl;
 
     std::string user_input;
@@ -215,6 +253,12 @@ void EditorAssist::Menu()
     }
 }
 
+/**
+ * @brief EditorAssist::Output
+ * @param out
+ * @param my_flags
+ * output for any output stream
+ */
 void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
     if (&out == &std::cout || my_flags.all) {
           my_flags.flesch_level = true;
@@ -227,11 +271,12 @@ void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
         }
 
     if (my_flags.word_total)
-        out<<"Words: "<<total_<<std::endl;
+        out<<"Words: "<<total_<<std::endl<<std::endl;
     if(my_flags.paragraph_total)
-        out<<"Paragraphs: "<<paragraphs_<<std::endl;
+        out<<"Paragraphs: "<<paragraphs_<<std::endl<<std::endl;
     if(my_flags.flesch_level)
-        out<<"Reading level: "<<"Grade "<<round(FleschKincaid(total_,sentence_,syllables_))<<std::endl;
+        out<<"Reading level: "<<"Grade "<<round(FleschKincaid(total_,sentence_,syllables_))<<std::endl
+             <<std::endl;
     if(my_flags.top_ten)
     {
         out<<"Top 10 words: "<<std::endl;
@@ -242,6 +287,7 @@ void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
                 out<<topWords_[w]<<std::endl;
             }
         }
+        out<<std::endl;
     }
     if(my_flags.letter_count)
     {
@@ -251,9 +297,10 @@ void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
             if(letterCounts_[w] != 0)
             {
                 out<<c++
-                  <<": "<<letterCounts_[w]<<" Unique: "<<uniqueLetterCounts_[w]<<std::endl;
+                  <<": "<<letterCounts_[w]<< " (" <<uniqueLetterCounts_[w]<< ')' <<std::endl;
             }
         }
+        out<<std::endl;
     }
     if(my_flags.runtime)
         out<<"Runtime: "<<seconds_<<" seconds"<<std::endl<<std::endl;
@@ -272,19 +319,32 @@ void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
     }
 }
 
-void EditorAssist::Run()
+/**
+ * @brief EditorAssist::Run
+ * @param fileWrite
+ * instructions on function call order for program
+ */
+void EditorAssist::Run(bool fileWrite)
 {
     OutputFlags cout_flags;
     insertion();
     extraction();
     Output(std::cout,cout_flags);
-
-    if(WriteToFile())
+    if(fileWrite)
     {
-        Menu();
+        if(WriteToFile())
+        {
+            Menu();
+        }
     }
 }
 
+/**
+ * @brief EditorAssist::getInput
+ * @param s
+ * @return
+ * input check for y or anything else
+ */
 bool EditorAssist::getInput(const std::string &s)
 {
     std::string user_input;

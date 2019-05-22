@@ -10,8 +10,13 @@ EditorAssistBinaryTree::~EditorAssistBinaryTree()
 
 }
 
+/**
+ * @brief EditorAssistBinaryTree::insertion
+ * information insertion to the binary tree
+ */
 void EditorAssistBinaryTree::insertion()
 {
+    std::cout<<"Binary Tree Start:"<<std::endl;
     bool flag = false;
     std::string word, temp;
     std::stringstream words;
@@ -33,8 +38,8 @@ void EditorAssistBinaryTree::insertion()
             while(words >> word)
             {
 
-                //ascii for a = 97 and 97-97 is for index 0
-                if(SanitizeString(word)) //optimize sanitize?
+                //ascii for A = 65 and 65 is for index 0
+                if(SanitizeString(word))
                 {
                     letter = word[0] - 65;
                     syllables_ += syllableCounter(word);
@@ -45,13 +50,15 @@ void EditorAssistBinaryTree::insertion()
         }
         ++line;
     }
-    std::cout<<"binaryTree"<<std::endl;
     in.close();
 }
 
+/**
+ * @brief EditorAssistBinaryTree::extraction
+ * information extractrion from the binary tree
+ */
 void EditorAssistBinaryTree::extraction()
 {
-//    std::ofstream myfile ("test.txt");
     std::string s;
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     int letterCount = 0, uniqueletterCount = 0;
@@ -81,38 +88,4 @@ void EditorAssistBinaryTree::extraction()
             mypq.pop();
         }
     }
-
-//   myfile.close();
-//    //put this in a separate function
-//    std::cout<<"Words: "<<total_<<std::endl;
-//    std::cout<<"Paragraphs: "<<paragraphs_<<std::endl;
-//    std::cout<<"Reading level: "<<"Grade "<<round(fleschKincaid(total_,sentence_,syllables_))<<std::endl;  //create readingLevel();
-//    std::cout<<"Top 10 words: "<<std::endl;
-//    for(int w = 0; w < 10; ++w)
-//    {
-//        if(!mypq.empty())
-//        {
-//            topWords_.push_back(mypq.top());
-//            mypq.pop();
-//        }
-//    }
-//    for(int w = 0; w < 26; ++w)
-//    {
-//        std::cout<<"Number of words that start with "<<c++; // todo add count
-//        if(!letterCounts_.empty())
-//            std::cout<<": "<<letterCounts_[w]<<" Unique: "<<uniqueLetterCounts_[w]<<std::endl;
-//    }
-//    std::cout<<"Runtime: "<<seconds_<<" seconds"<<std::endl<<std::endl;
-//    myfile.close();
-//    std::cout<<"Press y when you are ready to continue";
-//    std::cin>>s;
-//    for(int w = 0; w < wordData.size(); ++w)
-//    {
-//        std::cout<< *wordData[w]<<":";
-//        for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
-//        {
-//            std::cout<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
-//        }
-//        std::cout<<std::endl;
-//    }
 }

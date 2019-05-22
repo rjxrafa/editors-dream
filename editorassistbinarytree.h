@@ -1,3 +1,4 @@
+//@author Ara Mico Segismundo and Rafael Betita
 #ifndef EDITORASSISTBINARYTREE_H
 #define EDITORASSISTBINARYTREE_H
 #include <iostream>
@@ -6,7 +7,10 @@
 #include "editor.h"
 #include "binarytree.h"
 #include "vector"
-
+/**
+ * @brief The EditorAssistBinaryTree class
+ * class that uses binary tree to process documents
+ */
 class EditorAssistBinaryTree : public EditorAssist
 {
 public:
@@ -16,15 +20,7 @@ public:
     void insertion();
     void extraction();
 private:
-    //std::vector<bst::Node<std::string>*> wordData;
     bst::BinaryTree<std::string> orchard_[26];
 };
-
-//struct CompareNodes {
-//    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
-//    {
-//        return x.count < y.count;
-//    }
-//};
 
 #endif // EDITORASSISTBINARYTREE_H

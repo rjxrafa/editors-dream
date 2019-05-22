@@ -1,3 +1,4 @@
+//@author Ara Mico Segismundo and Rafael Betita
 #ifndef EDITORASSISTHEAP_H
 #define EDITORASSISTHEAP_H
 #include "editor.h"
@@ -7,7 +8,10 @@
 #include <ctime>
 #include <vector>
 #include <queue>
-
+/**
+ * @brief The EditorAssistHeap class
+ * class that uses heap to process documents
+ */
 class EditorAssistHeap: public EditorAssist
 {
 public:

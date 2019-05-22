@@ -11,8 +11,13 @@ EditorAssistHeap::~EditorAssistHeap()
 }
 
 //TODO:Create with string parameter for auto run
+/**
+ * @brief EditorAssistHeap::insertion
+ * information insertion to the heap
+ */
 void EditorAssistHeap::insertion()
 {
+    std::cout<<"Heap Start:"<<std::endl;
     bool flag = false;
     std::string word, temp;
     std::stringstream words;
@@ -49,6 +54,10 @@ void EditorAssistHeap::insertion()
     in.close();
 }
 
+/**
+ * @brief EditorAssistHeap::extraction
+ * information extraction from the heap
+ */
 void EditorAssistHeap::extraction()
 {
     bool first = true;
@@ -83,12 +92,8 @@ void EditorAssistHeap::extraction()
             else
             {
                 ++uniqueletterCount;
-               // uniqueLetterCounts[i]
-//                bst::Node<std::string> *temp  = new bst::Node<std::string>(previousWord, wordCount);
                 bst::Node<std::string> *temp = new bst::Node<std::string>(previousWord, wordCount);
-                //std::set might be faster TODO:replace and see time
                 mypq.push(*temp);
-               // myfile<<previousWord<<":"<<"["<<wordCount<<"]"<<std::endl;
                 wordCount = 1;
                 ++indexTrack;
                 bst::Node<std::string> *temp2 = new bst::Node<std::string>(s);
@@ -96,11 +101,9 @@ void EditorAssistHeap::extraction()
                 wordData_[indexTrack]->paragraph.push_back(parag);
                 wordData_[indexTrack]->line.push_back(line);
             }
-           //  myfile << s;
         }
         if(i == 25 && orchard_[i].empty())
         {
-//            myfile<<s<<":"<<"["<<wordCount<<"]"<<std::endl;
             bst::Node<std::string> *temp = new bst::Node<std::string>(s, wordCount);
             //std::set might be faster TODO:replace and see time
             mypq.push(*temp);

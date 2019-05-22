@@ -30,7 +30,6 @@ bst::BinaryTree<T>::BinaryTree(const BinaryTree<T> &other) {
 template <typename T>
 bst::BinaryTree<T>::~BinaryTree() {
     ClearTree(root_);
-    delete [] node_stack_;
 }
 
 /**
@@ -47,48 +46,6 @@ bst::BinaryTree<T>& bst::BinaryTree<T>::operator=(const BinaryTree<T> &other) {
   }
   return this;
 }
-
-///**
-// * @brief This function inserts a given data into a binary tree
-// * @param data
-// * @param count
-// * @modified 2019-05-18
-// */
-//template <typename T>
-//void bst::BinaryTree<T>::Insert(const T &data, const unsigned int &count) { //todo add rebalance
-//  bst::Node<T> *new_item = new bst::Node<T>(data, count);
-
-//  if(root_ == nullptr) {
-//    root_ = new_item;
-//    return;
-//  } else {
-//    bst::Node<T> *temp = root_;
-
-//    while (temp) {
-//      if (*new_item == *temp) { //dereference the node pointers as a node
-//        temp->count += count;
-//        delete new_item;
-//        return;
-//      }
-
-//      if (*new_item < *temp) { // if the item to be inserted is less than the current item
-//        if (temp->left) // if temp left is not null, keep traversing
-//          temp = temp->left;
-//        else {
-//          temp->left = new_item;
-//          return;
-//        }
-//      } else { // the item to be inserted is greater than the current item
-//        if (temp->right) // if temp right is not null, keep traversing
-//          temp = temp->right;
-//        else {
-//          temp->right = new_item;
-//          return;
-//        }
-//      }
-//    }
-//  }
-//}
 
 /**
  * @brief operator << This function utilizes the Insert functionality of the BinaryTree class
@@ -251,11 +208,7 @@ template <typename T>
 bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l) {
 
   if (root == nullptr) {
-//    root = &node_stack_[node_stack_index++];
-//    if ((node_stack_count_ - node_stack_index) <= 10 )
-//        ResizeNodeStack();
     root = new Node<T>(data, 1);
-    root->data = data;
     root->paragraph.push_back(p);
     root->line.push_back(l);
     return root;
@@ -263,7 +216,7 @@ bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const uns
     ++root->count;
     root->paragraph.push_back(p);
     root->line.push_back(l);
-  } else if (data < root->data) {
+  }else if (data < root->data) {
     root->left = Insert(root->left, data, p, l);
     root = rebalance(root);
   } else if (data > root->data) {
@@ -527,23 +480,5 @@ int bst::BinaryTree<T>::balance_factor(Node<T>* root) const {
       right = height(root->right);
   return left - right;
 }
-
-/**
- * @todo add parameters?
- */
-template <typename T>
-void bst::BinaryTree<T>::CreateNodes() {
-  node_stack_ = new Node<T>[node_stack_count_]();
-}
-
-template <typename T>
-void bst::BinaryTree<T>::ResizeNodeStack() {
-  bst::Node <T> * temp = new Node<T>[node_stack_count_*2];
-  std::copy(node_stack_, node_stack_+node_stack_count_, temp);
-  delete [] node_stack_;
-  node_stack_ = temp;
-  node_stack_count_ *= 2;
-}
-
 
 

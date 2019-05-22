@@ -1,4 +1,5 @@
 //@author Ara Mico Segismundo
+//min heap array implementation with "pointers"
 #ifndef HEAP_H
 #define HEAP_H
 
@@ -11,6 +12,10 @@
 enum HEAP_ERRORS {FULL, EMPTY};
 
 template<typename T>
+/**
+ * @brief The myHeap class
+ * min heap implementation with fake pointers
+ */
 class myHeap
 {
 public:
@@ -49,12 +54,18 @@ private:
 };
 
 template<typename T>
+/**
+ * @brief constructor is empty because vectors handle it
+ */
 myHeap<T>::myHeap()
 {
 
 }
 
 template<typename T>
+/**
+ * @brief clear works because no node or pointers are used
+ */
 myHeap<T>::~myHeap()
 {
     theWords_.clear();
@@ -64,12 +75,21 @@ myHeap<T>::~myHeap()
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::myHeap copies another heap using vector stl
+ * @param other
+ */
 myHeap<T>::myHeap(const myHeap<T> &other)
 {
     copy(other);
 }
 
 template<typename T>
+/**
+ * @brief assignment operator copies another heap using vector stl
+ * @param other
+ * @return
+ */
 myHeap<T>& myHeap<T>::operator=(const myHeap<T> &other)
 {
     if(this != &other)
@@ -80,6 +100,13 @@ myHeap<T>& myHeap<T>::operator=(const myHeap<T> &other)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::insertData inserts data using pushback and keeping "pointers" in
+ * the heap vector.
+ * @param data
+ * @param paragr
+ * @param index
+ */
 void myHeap<T>::insertData(const T &data, const int &paragr, const int &index)
 {
     theWords_.push_back(data);
@@ -90,6 +117,13 @@ void myHeap<T>::insertData(const T &data, const int &paragr, const int &index)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::extractData uses the "pointers" to get the top of the heap
+ * only pointers need to be deleted since it uses size of another vector
+ * @param data
+ * @param paragr
+ * @param index
+ */
 void myHeap<T>::extractData(T &data, int &paragr, int &index)
 {
     if(empty())
@@ -104,6 +138,12 @@ void myHeap<T>::extractData(T &data, int &paragr, int &index)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::operator >> if we only need to pull data
+ * overloaded >> is used
+ * @param data
+ * @return
+ */
 myHeap<T>& myHeap<T>::operator>>(T &data)
 {
     if(empty())
@@ -117,42 +157,72 @@ myHeap<T>& myHeap<T>::operator>>(T &data)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::empty if size is 0
+ * @return
+ */
 bool myHeap<T>::empty() const
 {
     return !theHeap_.size();
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::full will never be full because we pushback
+ * @return
+ */
 bool myHeap<T>::full() const
 {
     return false;
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::size only needs the size of the "pointers"
+ * @return
+ */
 unsigned int myHeap<T>::size() const
 {
     return theHeap_.size();
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::parent is n-1/2 ex:2-1/2 = 0 in c++
+ * @param i
+ * @return
+ */
 int myHeap<T>::parent(int i)
 {
     return (i-1)/2;
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::leftChild 2n+1
+ * @param i
+ * @return
+ */
 int myHeap<T>::leftChild(int i)
 {
     return (2*i)+1;
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::rightChild 2n+2
+ * @param i
+ * @return
+ */
 int myHeap<T>::rightChild(int i)
 {
     return (2*i)+2;
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::shuffleUp insert and shuffle from the end
+ */
 void myHeap<T>::shuffleUp()
 {
     int i = theHeap_.size()-1;
@@ -161,10 +231,16 @@ void myHeap<T>::shuffleUp()
           xorSwap(theHeap_[i], theHeap_[parent(i)]);
           i = parent(i);
        }
-    return;         //swap(theWords_[i], theWords_[parent(i)]);
+    return;
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::shuffleDown replace 0th index with last then needed to shuffle down
+ * uses professors concept of no ifs
+ * @param i
+ * @return
+ */
 bool myHeap<T>::shuffleDown(int i)
 {
     //left 2n+1, right 2n+2
@@ -178,6 +254,12 @@ bool myHeap<T>::shuffleDown(int i)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::xorSwap implementation
+ * @param x
+ * @param y
+ * @return
+ */
 bool myHeap<T>::xorSwap(int &x, int &y)
 {
     x ^= y ^= x ^= y;
@@ -185,6 +267,12 @@ bool myHeap<T>::xorSwap(int &x, int &y)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::setLeast
+ * @param x number
+ * @param y the least
+ * @return
+ */
 bool myHeap<T>::setLeast(int &x, int y)
 {
     x = y;
@@ -192,6 +280,10 @@ bool myHeap<T>::setLeast(int &x, int y)
 }
 
 template<typename T>
+/**
+ * @brief myHeap<T>::copy uses vectors = to copy
+ * @param other
+ */
 void myHeap<T>::copy(const myHeap<T> &other)
 {
     theWords_ = other.theWords_;
@@ -201,6 +293,12 @@ void myHeap<T>::copy(const myHeap<T> &other)
 }
 
 template<typename S>
+/**
+ * @brief operator << output overload
+ * @param out
+ * @param heap
+ * @return
+ */
 std::ostream& operator<<(std::ostream &out, const myHeap<S> &heap)
 {
     for(unsigned int i = 0; i < heap.theWords_.size(); ++i)
@@ -209,10 +307,26 @@ std::ostream& operator<<(std::ostream &out, const myHeap<S> &heap)
 }
 
 template<typename S>
+/**
+ * @brief operator >> input overload
+ * @param in
+ * @param heap
+ * @return
+ */
 std::istream& operator>>(std::istream &in, myHeap<S> &heap)
 {
+    std::string word;
+    int num;
     std::cout<<"word"<<std::endl;
-    heap.theWords_.push_back(in);
+    in>>word;
+    heap.theWords_.push_back(word);
+    std::cout<<"paragraph"<<std::endl;
+    in>>num;
+    heap.paragraph_.push_back(num);
+    std::cout<<"line"<<std::endl;
+    in>>num;
+    heap.lineNumber_.push_back(num);
+    heap.theHeap_.push_back(heap.theWords_.size()-1);
     return in;
 }
 

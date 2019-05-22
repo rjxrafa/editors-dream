@@ -43,8 +43,6 @@ public:
   unsigned int data_count() const {return data_count(root_);}
   unsigned int node_count() const {return node_count(root_);}
 
-
-
   template <typename S>
   friend
   std::ostream& operator<<(std::ostream& out, const BinaryTree<S> &other);
@@ -56,9 +54,6 @@ public:
  private:
   Node<T> *root_;
   BST_TRAVERSAL traversal_;
-  Node<T> *node_stack_;
-  int node_stack_count_ = 50;
-  int node_stack_index = 0;
   Node<T>* RotateLeft(Node<T> *root);
   Node<T>* RotateRight(Node<T> *root);
   Node<T>* RotateLeftRight(Node<T> *root);

@@ -1,3 +1,4 @@
+//@author Ara Mico Segismundo and Rafael Betita
 #ifndef EDITOR_H
 #define EDITOR_H
 #include "node.h"
@@ -7,7 +8,10 @@
 #include <algorithm>
 #include <sstream>
 #include <ctime>
-
+/**
+ * @brief The EditorAssist class
+ * base class for the binary tree and heap to help editors
+ */
 class EditorAssist
 {
 public:
@@ -19,8 +23,9 @@ public:
     bool LoadFile();
     bool WriteToFile();
     void Menu();
-    void Run();
+    void Run(bool fileWrite = true);
 
+protected:
     struct OutputFlags
     {
         OutputFlags() {
@@ -40,8 +45,6 @@ public:
              word_index,
              all;
     };
-
-protected:
     std::vector<int> uniqueLetterCounts_;
     std::vector<int> letterCounts_;
     std::vector<bst::Node<std::string>*> wordData_;

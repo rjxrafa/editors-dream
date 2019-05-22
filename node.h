@@ -235,6 +235,8 @@ template<typename T>
 void Node<T>::Clear() {
   data = T();
   count = 0;
+  line.clear();
+  paragraph.clear();
 }
 
 template<typename T>
@@ -350,7 +352,7 @@ bool operator!=(const Node<S> &x, const S &y) {
 template<typename S>
 std::ostream &operator<<(std::ostream &out, const Node<S> &n) {
   if (&n != nullptr)
-    out << '[' << n.data << ']' << '(' << n.count << ')';
+    out << n.data << " (" << n.count << ')';
 
   return out;
 }
@@ -377,7 +379,10 @@ bool operator>>(std::istream &in, Node<S> &n) {
 }
 
 } // end namespace bst
-
+/**
+ * @brief The CompareNodes struct
+ * Instruction to tell a priority queue stl how to compare nodes
+ */
 struct CompareNodes {
     bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
     {
