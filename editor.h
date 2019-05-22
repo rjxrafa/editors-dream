@@ -32,6 +32,9 @@ public:
     };
 
 protected:
+
+    std::vector<bst::Node<std::string>> wordData_;
+    std::vector<std::string> topWords;
     std::ifstream in;
     std::ofstream out;
     int sentence_;
@@ -40,6 +43,13 @@ protected:
     double fleschKincaid(int words, int sentences, int syllables);
     void Output(std::ostream &out, FileFlags &my_flags);
 
+};
+
+struct CompareNodes {
+    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
+    {
+        return x.count < y.count;
+    }
 };
 
 #endif // EDITOR_H
