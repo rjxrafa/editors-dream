@@ -2,6 +2,7 @@
 
 EditorAssist::EditorAssist()
 {
+    uniqueLetterCounts.resize(26);
     letterCounts_.resize(26);
     sentence_ = 1;
     syllables_ = 0;

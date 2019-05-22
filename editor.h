@@ -32,6 +32,7 @@ public:
     };
 
 protected:
+    std::vector<int> uniqueLetterCounts;
     std::vector<int> letterCounts_;
     std::vector<bst::Node<std::string>*> wordData_;
     std::vector<std::string> topWords_;

@@ -100,7 +100,6 @@ void EditorAssistHeap::extraction()
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s, previousWord;
-    std::vector<int> uniqueLetterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     bst::Node<std::string> temp;
     char c = 'A';

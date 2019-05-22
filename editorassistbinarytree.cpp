@@ -55,7 +55,6 @@ void EditorAssistBinaryTree::extraction()
     std::ofstream myfile ("test.txt");
     clock_t begin = clock();
     std::string s;
-    std::vector<int> uniqueLetterCounts(26);
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     char c = 'A';
     int parag, line;
@@ -67,11 +66,6 @@ void EditorAssistBinaryTree::extraction()
                       // Rafa implement
              bst::Node<std::string> *temp = new bst::Node<std::string>(orchard_[i].ExtractSmallest());
              wordData.push_back(temp);
-            // std::cout<<i<<std::endl;
-//             std::cout<<wordData[i]->data;
-//             std::cout<<wordData[i]->count;
-//             std::cout<<wordData[i]->data;
-//             std::cout<<wordData[i]->line.size();
              mypq.push(*temp);
              letterCount+= wordData[indexTrack]->count;
              ++uniqueletterCount;
@@ -116,16 +110,5 @@ void EditorAssistBinaryTree::extraction()
         }
         std::cout<<std::endl;
     }
-//    Menu();
-//    std::cout<<"Press y when you are ready to continue";
-//    std::cin>>s;
-//    for(int w = 0; w < wordData.size(); ++w)
-//    {
-//        std::cout<< wordData[w]<<":";
-//        for(int r = 0; r < wordData[w].paragraph.size(); ++r)
-//        {
-//            std::cout<<"["<<wordData[w].paragraph[r]<<","<<wordData[w].line[r]<<"]";
-//        }
-//        std::cout<<std::endl;
-//    }
+    Menu();
 }

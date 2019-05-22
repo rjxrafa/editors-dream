@@ -39,9 +39,9 @@ int main(int argc, char *argv[]) {
     EditorAssistBinaryTree book1;
     book1.insertion();
     book1.extraction();
-  EditorAssistHeap book;
-  book.insertion();
-  book.extraction();
+    EditorAssistHeap book;
+    book.insertion();
+    book.extraction();
     //  f2.waitForFinished();
 //    bst::BinaryTree<int> a;
 //    a << 10 << 20 << 30 << 40 << 50;
