@@ -60,7 +60,6 @@ void EditorAssistBinaryTree::extraction()
     {
         while(!orchard_[i].empty())
         {
-                      // Rafa implement
              bst::Node<std::string> *temp = new bst::Node<std::string>(orchard_[i].ExtractSmallest());
              wordData_.push_back(temp);
              mypq.push(*temp);

@@ -2,16 +2,14 @@
 
 EditorAssistHeap::EditorAssistHeap()
 {
-    paragraphs_ = 1;
+
 }
 
 EditorAssistHeap::~EditorAssistHeap()
 {
-//    for(int i = 0; i < 26; ++i)
-//        orchard_[i].clear();
+
 }
 
-//TODO:File check
 //TODO:Create with string parameter for auto run
 void EditorAssistHeap::insertion()
 {
@@ -48,57 +46,12 @@ void EditorAssistHeap::insertion()
         }
         ++line;
     }
-//    double seconds = (double)(clock()-begin)/CLOCKS_PER_SEC;
-//    std::cout<<"heapo "<<std::endl;
-//    std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
     in.close();
 }
-
-//void EditorAssistHeap::Output(std::ostream &out, const std::string & s)
-//{
-//    if(wordTotal)
-//       // out<<"Words: "<<total<<std::endl;
-//    if(pars)
-//        out<<"Paragraphs: "<<paragraphs_<<std::endl;
-//    if(readLevel)
-//     //   out<<"Reading level: "<<"Grade "<<round(fleschKincaid(total,sentence_,syllables_))<<std::endl;
-//    if(topTen)
-//    {
-//        out<<"Top 10 words: "<<std::endl;
-//        for(int w = 0; w < 10; ++w)
-//        {
-//            if(!topWords.empty())
-//            {
-//                topWords[w];
-//            }
-//        }
-//    }
-//    if(letterC)
-//        for(int w = 0; w < 26; ++w)
-//        {
-//            //out<<"Number of words that start with "<<c++;
-//            //if(!letterCounts.empty())
-//            //    out<<": "<<letterCounts[w]<<std::endl;
-//        }
-//    if(runTime)
-//       // std::cout<<"Runtime: "<<seconds<<" seconds"<<std::endl<<std::endl;
-//    if(wordIndex)
-//        for(int w = 0, total = wordData.size(); w < total; ++w)
-//        {
-//            out<<*wordData[w]<<":";
-//            for(int r = 0; r < wordData[w]->paragraph.size(); ++r)
-//            {
-//                out<<"["<<wordData[w]->paragraph[r]<<","<<wordData[w]->line[r]<<"]";
-//            }
-//            out<<std::endl;
-//        }
-//}
 
 void EditorAssistHeap::extraction()
 {
     bool first = true;
-  //  std::ofstream myfile ("test.txt");
-  //  clock_t begin = clock();
     std::string s, previousWord;
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
     int parag, line, letterCount = 0, uniqueletterCount = 0;
@@ -166,37 +119,4 @@ void EditorAssistHeap::extraction()
             mypq.pop();
         }
     }
-//    myfile.close();
-    //put this in a separate function
-//    std::cout<<"Words: "<<total_<<std::endl;
-//    std::cout<<"Paragraphs: "<<paragraphs_<<std::endl;
-//    std::cout<<"Reading level: "<<"Grade "<<round(fleschKincaid(total_,sentence_,syllables_))<<std::endl; //create readingLevel();
-//    std::cout<<"Top 10 words: "<<std::endl;
-//    for(int w = 0; w < 10; ++w)
-//    {
-//        if(!topWords_[w].empty())
-//        {
-//            std::cout<<topWords_[w]<<std::endl;
-//        }
-//    }
-//    for(int w = 0; w < 26; ++w)
-//    {
-//        std::cout<<"Number of words that start with "<<c++;
-//        if(!letterCounts_.empty())
-//            std::cout<<": "<<letterCounts_[w]<<" Unique: "<<uniqueLetterCounts_[w]<<std::endl;
-//    }
-//    std::cout<<"Runtime: "<<seconds_<<" seconds"<<std::endl<<std::endl
-//    for(int w = 0; w < wordData_.size(); ++w)
-//    {
-//        std::cout<< *wordData_[w]<<":";
-//        for(int r = 0; r < wordData_[w]->paragraph.size(); ++r)
-//        {
-//            std::cout<<"["<<wordData_[w]->paragraph[r]<<","<<wordData_[w]->line[r]<<"]";
-//        }
-//        std::cout<<std::endl;
-//    }
-    //Output(std::cout);
-//    if (WriteToFile())
-//      Menu();
 }
-//Word(count){[line,paragraph]}

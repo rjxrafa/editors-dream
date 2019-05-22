@@ -46,10 +46,13 @@ int main(int argc, char *argv[]) {
 //    EditorAssistBinaryTree book1;
 //    book1.insertion();
 //    book1.extraction();
-    EditorAssistBinaryTree book;
-    book.Display();
+//    EditorAssistBinaryTree book;
+//    book.Display();
+    EditorAssistBinaryTree book1;
+    book1.Run();
     EditorAssistHeap book2;
-    book2.Display();
+    book2.Run();
+
     //  f2.waitForFinished();
 //    bst::BinaryTree<int> a;
 //    a << 10 << 20 << 30 << 40 << 50;

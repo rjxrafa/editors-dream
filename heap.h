@@ -28,13 +28,13 @@ public:
     int leftChild(int i);
     int rightChild(int i);
 
-//    template<typename S>
-//    friend
-//    std::ostream& operator<<(std::ostream &, const myHeap<S> &);
+    template<typename S>
+    friend
+    std::ostream& operator<<(std::ostream &, const myHeap<S> &);
 
-//    template<typename S>
-//    friend
-//    std::istream& operator>>(std::istream &, myHeap<S> &);
+    template<typename S>
+    friend
+    std::istream& operator>>(std::istream &, myHeap<S> &);
 
 private:
     std::vector<T> theWords_;
@@ -211,7 +211,8 @@ std::ostream& operator<<(std::ostream &out, const myHeap<S> &heap)
 template<typename S>
 std::istream& operator>>(std::istream &in, myHeap<S> &heap)
 {
-
+    std::cout<<"word"<<std::endl;
+    heap.theWords_.push_back(in);
     return in;
 }
 

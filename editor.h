@@ -8,8 +8,6 @@
 #include <sstream>
 #include <ctime>
 
-enum EDITOR_ERRORS {INVALID_INPUT,OPTION_USED};
-
 class EditorAssist
 {
 public:
@@ -21,10 +19,18 @@ public:
     bool LoadFile();
     bool WriteToFile();
     void Menu();
-    void Display();
+    void Run();
 
-    struct FileFlags
+    struct OutputFlags
     {
+        OutputFlags() {
+            word_total = paragraph_total = flesch_level = top_ten =
+            letter_count = runtime = word_index = all = false;
+        }
+        ~OutputFlags() {
+            word_total = paragraph_total = flesch_level = top_ten =
+            letter_count = runtime = word_index = all = false;
+        }
         bool word_total,
              paragraph_total,
              flesch_level,
@@ -46,9 +52,9 @@ protected:
     double seconds_;
     clock_t begin_;
     int syllableCounter(const std::string &word);
-    double fleschKincaid(int words, int sentences, int syllables);
-    void Output();
-    void FileOutput(std::ostream &out, FileFlags &my_flags);
+    double FleschKincaid(int words, int sentences, int syllables);
+   // void Output();
+    void Output(std::ostream &out, OutputFlags &my_flags);
     bool getInput(const std::string &s);
 };
 
