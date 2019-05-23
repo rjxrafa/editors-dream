@@ -78,7 +78,7 @@ public:
 
 };
 
-#include "binarytree.tpp"
+#include "../src/binarytree.tpp"
 
 } // end namespace bst
 

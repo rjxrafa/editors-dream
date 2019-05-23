@@ -1,14 +1,10 @@
-#include "editorassistheap.h"
+#include "../include/editorassistheap.h"
 
 EditorAssistHeap::EditorAssistHeap()
-{
-
-}
+= default;
 
 EditorAssistHeap::~EditorAssistHeap()
-{
-
-}
+= default;
 
 //TODO:Create with string parameter for auto run
 /**

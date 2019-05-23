@@ -6,9 +6,9 @@
  * and the individuals involved will receive a failing grade.
  */
 #include <iostream>
-#include "binarytree.h"
-#include "editorassistheap.h"
-#include "editorassistbinarytree.h"
+#include "include/binarytree.h"
+#include "include/editorassistheap.h"
+#include "include/editorassistbinarytree.h"
 
 using namespace std;
 

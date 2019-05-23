@@ -1,4 +1,4 @@
-#include "editorassistbinarytree.h"
+#include "../include/editorassistbinarytree.h"
 
 EditorAssistBinaryTree::EditorAssistBinaryTree()
 {

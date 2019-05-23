@@ -1,4 +1,5 @@
-#include "editor.h"
+#include <cmath>
+#include "../include/editor.h"
 
 /**
  * @brief EditorAssist::EditorAssist
@@ -275,7 +276,7 @@ void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
     if(my_flags.paragraph_total)
         out<<"Paragraphs: "<<paragraphs_<<std::endl<<std::endl;
     if(my_flags.flesch_level)
-        out<<"Reading level: "<<"Grade "<<round(FleschKincaid(total_,sentence_,syllables_))<<std::endl
+        out<<"Reading level: "<<"Grade "<< round(FleschKincaid(total_,sentence_,syllables_))<<std::endl
              <<std::endl;
     if(my_flags.top_ten)
     {

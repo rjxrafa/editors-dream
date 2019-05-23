@@ -1,4 +1,4 @@
-#include "binarytree.h"
+#include "../include/binarytree.h"
 
 /**
  * @brief This function is called when initializing a new tree with a data and count
