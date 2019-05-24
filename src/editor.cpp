@@ -1,4 +1,3 @@
-#include <cmath>
 #include "../include/editor.h"
 
 /**

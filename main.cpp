@@ -6,17 +6,17 @@
  * and the individuals involved will receive a failing grade.
  */
 #include <iostream>
-#include "include/binarytree.h"
 #include "include/editorassistheap.h"
 #include "include/editorassistbinarytree.h"
+#include "include/binarytree.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
     EditorAssistBinaryTree book_avl;
     EditorAssistHeap book_heap;
-    book_heap.Run(1);
+    book_heap.Run(true);
     book_avl.Run(true);
 
-    return 0;
+  return 0;
 }

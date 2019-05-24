@@ -1,13 +1,19 @@
-//@author Ara Mico Segismundo and Rafael Betita
+/**
+ * @author Ara Miro Segismundo & Rafael Betita
+ * @modified 2019-0
+ */
+
 #ifndef EDITOR_H
 #define EDITOR_H
-#include "node.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <algorithm>
 #include <sstream>
 #include <ctime>
+#include <cmath>
+#include "node.h"
+
 /**
  * @brief The EditorAssist class
  * base class for the binary tree and heap to help editors
@@ -47,7 +53,7 @@ protected:
     };
     std::vector<int> uniqueLetterCounts_;
     std::vector<int> letterCounts_;
-    std::vector<bst::Node<std::string>*> wordData_;
+    std::vector<bst::Node<std::string> * > wordData_;
     std::vector<bst::Node<std::string>> topWords_;
     std::ifstream in;
     std::ofstream out;

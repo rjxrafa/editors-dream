@@ -6,10 +6,9 @@
 #include <queue>
 #include "editor.h"
 #include "binarytree.h"
-#include "vector"
+
 /**
- * @brief The EditorAssistBinaryTree class
- * class that uses binary tree to process documents
+ * @brief The class that uses binary tree to process documents
  */
 class EditorAssistBinaryTree : public EditorAssist
 {

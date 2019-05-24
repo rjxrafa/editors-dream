@@ -23,8 +23,10 @@ struct Node {
   std::vector<int> paragraph;
   Node* left;
   Node* right;
+  Node* parent;
+  int balance;
 
-  Node (const T &data = T(), const unsigned int &c = 1);
+  explicit Node (const T &data = T(), const unsigned int &c = 1, Node<T>* parent_ = nullptr);
   ~Node();
   Node(const Node<T> &other);
 
@@ -141,11 +143,13 @@ private:
  * @param c the count of the data
  */
 template<typename T>
-Node<T>::Node(const T &d, const unsigned int &c)
+Node<T>::Node(const T &d, const unsigned int &c, Node<T>* parent_)
     : data(d),
       count(c),
+      balance(0),
       left(nullptr),
-      right(nullptr){}
+      right(nullptr),
+      parent(parent_){}
 
 /**
  * This is the destructor for the node, which clears the data within the node and sets own children to
