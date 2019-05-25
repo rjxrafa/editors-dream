@@ -1,14 +1,8 @@
 #include "../include/editorassistbinarytree.h"
 
-EditorAssistBinaryTree::EditorAssistBinaryTree()
-{
+EditorAssistBinaryTree::EditorAssistBinaryTree() = default;
 
-}
-
-EditorAssistBinaryTree::~EditorAssistBinaryTree()
-{
-
-}
+EditorAssistBinaryTree::~EditorAssistBinaryTree() = default;
 
 /**
  * @brief EditorAssistBinaryTree::insertion
@@ -51,6 +45,7 @@ void EditorAssistBinaryTree::insertion()
         ++line;
     }
     in.close();
+    std::cout << orchard_[25];
 }
 
 /**
@@ -88,4 +83,21 @@ void EditorAssistBinaryTree::extraction()
             mypq.pop();
         }
     }
+}
+
+void EditorAssistBinaryTree::extractLetter(char &&ch) {
+  std::ifstream in;
+  std::string temp;
+  int mych = tolower(ch) - 97;
+  ch = tolower(ch);
+  in.open("war_and_peace.txt");
+//
+  while (in >> temp) {
+    if (tolower(temp[0]) == ch)
+      orchard_[mych].Insert(temp, 0, 0);
+  }
+  in.close();
+
+//  std::cout << orchard_[mych];
+  std::cout << char(ch) << " done\n";
 }

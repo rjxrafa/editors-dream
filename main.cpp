@@ -9,14 +9,37 @@
 #include "include/editorassistheap.h"
 #include "include/editorassistbinarytree.h"
 #include "include/binarytree.h"
+#include <thread>
+#include <vector>
+#include <chrono>
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
     EditorAssistBinaryTree book_avl;
     EditorAssistHeap book_heap;
-    book_heap.Run(true);
-    book_avl.Run(true);
+//    book_heap.Run(true);
+//    book_avl.Run(true);
+
+//    book_avl.extractLetter('a');
+
+  vector<thread> v;
+  auto start = std::chrono::high_resolution_clock::now();
+  for (size_t i = 0; i < 26; ++i) {
+    v.push_back(thread(&EditorAssistBinaryTree::extractLetter, &book_avl, 'a'+i));
+  }
+
+  for (size_t i = 0; i < 26; ++i) {
+    v[i].join();
+  }
+
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish - start;
+
+  std::cout << "Finished in " << elapsed.count() << " seconds.";
+
+
+
 
   return 0;
 }

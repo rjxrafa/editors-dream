@@ -32,7 +32,7 @@ public:
   BinaryTree<T>& operator<<(const T & data);
 //  void Insert(const T &data, const unsigned int &count = 1);
   bool Delete(const T &data, const unsigned int &count = 1);
-  Node<T>* Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l);
+//  Node<T>* Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l);
   void InsertData(const T &data, const unsigned int &p, const unsigned int &l);
   Node<T> ExtractSmallest();
   void Insert(const T &value, const size_t &p, const size_t &l); // fast-avl-implementation
@@ -280,33 +280,6 @@ bool bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
     std::cout << "No item to delete";
     return false;
   }
-}
-
-/**
- * @brief bst::BinaryTree<T>::Insert
- * @param root
- * @param data
- * @return
- */
-template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l) {
-  if (root == nullptr) {
-    root = new Node<T>(data, 1);
-    root->paragraph.push_back(p);
-    root->line.push_back(l);
-    return root;
-  } else if (data == root->data){
-    ++root->count;
-    root->paragraph.push_back(p);
-    root->line.push_back(l);
-  }else if (data < root->data) {
-    root->left = Insert(root->left, data, p, l);
-    root = rebalance(root);
-  } else if (data > root->data) {
-    root->right = Insert(root->right, data, p, l);
-    root = rebalance(root);
-  }
-  return root;
 }
 
 template <typename S>
