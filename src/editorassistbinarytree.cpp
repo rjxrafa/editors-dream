@@ -105,6 +105,5 @@ void EditorAssistBinaryTree::extractLetter(int &&count, ...) {
   }
   in.close();
 
-  std::cout << orchard_['a'];
 //  std::cout << char(ch) << " done\n";
 }

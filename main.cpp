@@ -21,25 +21,22 @@ int main(int argc, char *argv[]) {
 //    book_heap.Run(true);
 //    book_avl.Run(true);
 
-//    book_avl.extractLetter('a');
-
-  vector<thread> v;
   auto start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < 26; ++i) {
-    v.push_back(thread(&EditorAssistBinaryTree::extractLetter, &book_avl, 'a'+i));
-  }
 
-  for (size_t i = 0; i < 26; ++i) {
-    v[i].join();
+  vector<thread> t;
+  t.push_back(thread(&EditorAssistBinaryTree::extractLetter, &book_avl, 6, 'a', 'l', 'r', 's', 'u', 'v' ));
+  t.push_back(thread(&EditorAssistBinaryTree::extractLetter, &book_avl, 6, 'x', 'c', 'q', 'p', 't', 'k' ));
+  t.push_back(thread(&EditorAssistBinaryTree::extractLetter, &book_avl, 7, 'd', 'e', 'f', 'm', 'o', 'w', 'z'));
+  t.push_back(thread(&EditorAssistBinaryTree::extractLetter, &book_avl, 7, 'g', 'h', 'j', 'n', 'i', 'y', 'b'));
+
+  for (size_t i = 0; i < 4; ++i) {
+    t[i].join();
   }
 
   auto finish = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish - start;
 
-  std::cout << "Finished in " << elapsed.count() << " seconds.";
-
-
-
+  std::cout << "Finished in " << setprecision(3) << elapsed.count() << " seconds.";
 
   return 0;
 }
