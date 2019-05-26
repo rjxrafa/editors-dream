@@ -1,8 +1,13 @@
 /****
- * This Node implementation has been adapted from Paul Wilkinson's CS008 lectures.
+ * This Node class is the primary container used for the AVL tree implementation. It makes use of
+ * parent nodes to enable fast traversal as well as stl vectors to contain multiple instances of lines/paragraph
+ * for a book parser implementation.
+ *
+ * This implementation has been adapted from Paul Wilkinson's CS008 lectures.
  *
  * @author      Rafael Betita
- * @modified    05-16-2019
+ * @modified    05-25-2019
+ * @namespace   bst
  ****/
 
 #ifndef Node_H
@@ -19,7 +24,7 @@ template <typename T>
 struct Node {
   T data;
   int count;
-  std::vector<int> line;
+  std::vector<int> line; //todo: abstract book-parser functionality
   std::vector<int> paragraph;
   Node* left;
   Node* right;

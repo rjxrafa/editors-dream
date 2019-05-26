@@ -37,7 +37,7 @@ void EditorAssistBinaryTree::insertion()
                 {
                     letter = word[0] - 65;
                     syllables_ += syllableCounter(word);
-                    orchard_[letter].InsertData(word, paragraphs_, line);
+                    orchard_[letter].Insert(word, paragraphs_, line);
                 }
             }
             words.clear();
@@ -45,7 +45,6 @@ void EditorAssistBinaryTree::insertion()
         ++line;
     }
     in.close();
-    std::cout << orchard_[25];
 }
 
 /**

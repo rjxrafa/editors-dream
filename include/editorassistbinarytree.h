@@ -21,7 +21,7 @@ public:
     void extractLetter(int &&count, ...);
 
  private:
-    bst::BinaryTree<std::string> orchard_[26];
+  bst::BinaryTree<std::string> orchard_[26];
 };
 
 #endif // EDITORASSISTBINARYTREE_H

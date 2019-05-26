@@ -1,16 +1,19 @@
 /****
- * This Binary Tree class has been adapted from Paul Wilkinson's CS008 lectures.
+ * This Binary Tree class is based on the Adelson-Velsky and Landis (AVL) self balancing tree.
+ *
+ * The class has been adapted from Paul Wilkinson's CS008 lectures and
+ * Keith Wood's efficient AVL implementation @ bitlush.com.
  *
  * @author      Rafael Betita
- * @modified    05-16-2019
+ * @modified    05-25-2019
+ * @namespace   bst
  ****/
 
 #ifndef BINARYTREE_H
 #define BINARYTREE_H
 
 #include "node.h"
-#include <iomanip>
-#include <algorithm>
+#include <iomanip> // setw for printing
 
 namespace bst {
 
@@ -23,30 +26,24 @@ class BinaryTree
 
 public:
   BinaryTree() : root_(nullptr),
-                 traversal_(BST_TRAVERSAL::IN_ORDER){}
+                 traversal_(BST_TRAVERSAL::BACKWARD_IN_ORDER){}
   BinaryTree(const T &data, const unsigned int &count);
-  BinaryTree(const BinaryTree<T> &other);
   ~BinaryTree();
+  BinaryTree(const BinaryTree<T> &other);
   BinaryTree<T> &operator=(const BinaryTree<T> &other);
 
-  BinaryTree<T>& operator<<(const T & data);
-//  void Insert(const T &data, const unsigned int &count = 1);
-  bool Delete(const T &data, const unsigned int &count = 1);
-//  Node<T>* Insert(Node<T>* root, const T &data, const unsigned int &p, const unsigned int &l);
-  void InsertData(const T &data, const unsigned int &p, const unsigned int &l);
-  Node<T> ExtractSmallest();
-  void Insert(const T &value, const size_t &p, const size_t &l); // fast-avl-implementation
+  // Primary AVL tree functions
+  BinaryTree<T>& operator<<(const T & data); // Insert operation
+  Node<T> ExtractSmallest(); // Extraction operation (smallest first)
+  bool Delete(const T &data, const unsigned int &count = 1); // todo: Deletion operation
+  void Insert(const T &value, const size_t &p = 0, const size_t &l = 0); // AVL-Insert w/ rebalance
 
-
-  // Const members
-  bool empty() {return !root_;}
+  // Constant members
+  bool empty() const {return !root_;}
   int height() const {return height(root_);}
   const Node<T>* root() const {return root_;}
-  Node<T>* root() {return root_;}
-  BST_TRAVERSAL traversal() const {return traversal_;}
-  unsigned int data_count() const {return data_count(root_);}
-  unsigned int node_count() const {return node_count(root_);}
 
+  // Friend functions
   template <typename S>
   friend
   std::ostream& operator<<(std::ostream& out, const BinaryTree<S> &other);
@@ -56,30 +53,31 @@ public:
   std::istream& operator>>(std::istream& in, BinaryTree<S> &other);
 
  private:
+  // Private members
   Node<T> *root_;
   BST_TRAVERSAL traversal_;
+
+  // Rotations
   Node<T>* RotateLeft(Node<T> *root);
   Node<T>* RotateRight(Node<T> *root);
   Node<T>* RotateLeftRight(Node<T> *root);
   Node<T>* RotateRightLeft(Node<T> *root);
+  void SetBalance(Node<T> *&root, int &&balance);
 
   void ClearTree(Node<T>*& root);
   void CopyTree(const Node<T>& root);
-  Node<T> DeleteLeftChild(Node<T>* &child, Node<T>* &parent);
   void DeleteRightChild(Node<T>* &child, Node<T>* &parent);
+  Node<T> DeleteLeftChild(Node<T>* &child, Node<T>* &parent);
 
-  Node<T>* rebalance(Node<T>* root);
-  int height(Node<T>* root) const;
-  int balance_factor(Node<T>* root) const;
   unsigned int data_count(Node<T>* root) const;
   unsigned int node_count(Node<T>* root) const;
-  void PrintTree(std::ostream &out, Node<T>* root) const;
   Node<T>* Find(const T& data, Node<T> *root, Node<T>* &parent, bool &less_than) const;
   Node<T>* FindSmallest(Node<T>* root) const;
-  void PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const;
-  void CreateNodes();
-  void ResizeNodeStack();
-  void SetBalance(Node<T> *&root, int &&balance);
+  void PrintTree(std::ostream &out, Node<T>* root, size_t &&depth = 0) const;
+
+//  todo: Unimplemented
+//  void CreateNodes();
+//  void ResizeNodeStack();
 
 };
 
@@ -138,8 +136,7 @@ bst::BinaryTree<T>& bst::BinaryTree<T>::operator=(const BinaryTree<T> &other) {
  */
 template <typename T>
 bst::BinaryTree<T>& bst::BinaryTree<T>::operator<<(const T & data) {
-//  root_ = Insert(root_, data, 1, 1);
-//  Insert(data);
+  Insert(data);
   return *this;
 }
 
@@ -209,20 +206,31 @@ unsigned int bst::BinaryTree<T>::node_count(Node<T>* root) const {
  * @brief This function prints a given tree depending on the method passed
  * @param root
  * @param method
- * @modified 2019-05-19
+ * @modified 2019-05-25
  */
 template <typename T>
-void bst::BinaryTree<T>::PrintTree(std::ostream &out, Node<T>* root) const {
+void bst::BinaryTree<T>::PrintTree(std::ostream &out, Node<T>* root, size_t &&depth) const {
 
   if (root) {
-    if (traversal() == bst::BST_TRAVERSAL::PRE_ORDER)
-      out << root->data << '[' << root->count << ']' << " height: " << height(root) << std::endl;
-    PrintTree(out, root->left);
-    if (traversal() == bst::BST_TRAVERSAL::IN_ORDER)
-      out << root->data << '[' << root->count << ']' << " height: " << height(root)<< std::endl;
-    PrintTree(out, root->right);
-    if (traversal() == bst::BST_TRAVERSAL::POST_ORDER)
-      out << root->data << '[' << root->count << ']' << " height: " << height(root) << std::endl;
+    if (traversal_ == bst::BST_TRAVERSAL::PRE_ORDER)
+      out << std::setw(4*depth) << "" <<  root->data << '[' << root->count << ']' << '\n';
+
+    if (traversal_ == bst::BST_TRAVERSAL::BACKWARD_IN_ORDER)
+      PrintTree(out, root->right, depth+1);
+    else
+      PrintTree(out, root->left, depth+1);
+
+    if (traversal_ == bst::BST_TRAVERSAL::IN_ORDER || traversal_ == bst::BST_TRAVERSAL::BACKWARD_IN_ORDER)
+      out << std::setw(4*depth) << "" << root->data << '[' << root->count << ']' << '\n';
+
+
+    if (traversal_ == bst::BST_TRAVERSAL::BACKWARD_IN_ORDER)
+      PrintTree(out, root->left, depth+1);
+    else
+      PrintTree(out, root->left, depth+1);
+
+    if (traversal_ == bst::BST_TRAVERSAL::POST_ORDER)
+      out << std::setw(4*depth) << ""  <<root->data << '[' << root->count << ']' << '\n';
   }
 
 }
@@ -257,7 +265,9 @@ bst::Node<T>* bst::BinaryTree<T>::Find(const T& data, Node<T> *root, Node<T>* &p
 }
 
 /**
- * @brief Delete This function deletes N count occurences from the Binary Tree. Adapted from Paul Wilkinson's CS008 lectures.
+ * @brief Delete This function deletes N count occurences from the Binary Tree and adapted from
+ * Paul Wilkinson's CS008 lectures.
+ *
  * @param data
  * @param count
  * @modified 2019-05-18
@@ -284,8 +294,7 @@ bool bst::BinaryTree<T>::Delete(const T &data, const unsigned int &count) {
 
 template <typename S>
 std::ostream& operator<<(std::ostream& out, const bst::BinaryTree<S> &other) {
-//  other.PrintTree(out, other.root_);
-  other.PrintTreeDepth(out, other.root_, 0);
+  other.PrintTree(out, other.root_);
   return out;
 }
 
@@ -443,6 +452,48 @@ bst::Node<T>* bst::BinaryTree<T>::RotateRight(Node<T> *root) { // LL case
 }
 
 /**
+ * This function is the primary rebalance function for the AVL implementation. Adapted from Mike Wood's AVL
+ * C# efficient avl tree implementation
+ *
+ * @tparam T
+ * @param root
+ * @param balance
+ */
+template<typename T>
+void bst::BinaryTree<T>::SetBalance(Node<T> *&root, int &&balance) {
+  while (root) {
+    balance = root->balance += balance;
+
+    if (balance == 0)
+      return;
+    else if (balance == 2) {
+      if (root->left->balance == 1)
+        RotateRight(root);
+      else
+        RotateLeftRight(root);
+
+      return;
+    } else if (balance == -2) {
+      if (root->right->balance == -1)
+        RotateLeft(root);
+      else
+        RotateRightLeft(root);
+
+      return;
+    }
+
+    Node<T> *parent = root->parent;
+
+    if (parent)
+      balance = (parent->left == root) ? 1 : -1;
+
+    root = parent;
+
+
+  }
+}
+
+/**
  * @brief This function rotates a given node and its children twice (RL case)
  * @param root
  * @return
@@ -545,24 +596,6 @@ bst::Node<T>* bst::BinaryTree<T>::RotateLeftRight(Node<T> *root) { // also known
   return leftRight;
 }
 
-/**
- * @brief PrintTreeDepth This function prints a given tree with depth
- * @param out
- * @param root
- * @param depth
- * @modified 2019-05-18
- */
-template <typename T>
-void bst::BinaryTree<T>::PrintTreeDepth(std::ostream &out, Node<T>* root, size_t depth) const {
-  if (root == nullptr) {
-    return;
-  }  else {
-    PrintTreeDepth(out, root->right, depth+1);
-    out << std::setw(4*depth) << "" << root->data << std::endl;
-    PrintTreeDepth(out, root->left, depth+1);
-  }
-}
-
 template <typename T>
 bst::Node<T> bst::BinaryTree<T>::ExtractSmallest() {
 
@@ -576,8 +609,6 @@ bst::Node<T> bst::BinaryTree<T>::ExtractSmallest() {
     parent = min;
   };
 
-//  std::cout << "parent:" << *parent;
-//  std::cout << std::endl << "min: " << *min << std::endl;
   Node <T> temp = *min;
   if (min == root_) {
     root_ = root_->right;
@@ -589,78 +620,15 @@ bst::Node<T> bst::BinaryTree<T>::ExtractSmallest() {
 }
 
 /**
- * @brief This function is a wrapper for the insert class that automatically inserts at the root.
- * @param root
- * @param data
+ * This function is the insertion function for the AVL implementation. Adapted from Mike Wood's AVL
+ * C# efficient AVL tree implementation
+ *
+ * @tparam T
+ * @param value
  * @param p
  * @param l
+ * @modified 2019-05-25
  */
-template <typename T>
-void bst::BinaryTree<T>::InsertData(const T &data,
-                                    const unsigned int &p,
-                                    const unsigned int &l) {
-//  root_ = Insert(root_, data, p, l);
-  Insert(data, p, l);
-}
-
-/**
- * @brief rebalance This rebalance implements the AVL rebalancing algorithm.
- * @param root
- * @return
- */
-template <typename T>
-bst::Node<T>* bst::BinaryTree<T>::rebalance(Node<T>* root) {
-
-  int balance = balance_factor(root);
-
-  if (balance > 1) {
-    if (balance_factor(root->left) > 0)
-      root = RotateRight(root);
-    else {
-      root = RotateLeftRight(root);
-    }
-  } else if (balance < -1) {
-    if (balance_factor(root->right) > 0)
-      root = RotateRightLeft(root);
-    else {
-      root = RotateLeft(root);
-    }
-  }
-  return root;
-}
-
-/**
- * @brief This function returns the height of a given root node
- * @param root
- * @return
- */
-template <typename T>
-int bst::BinaryTree<T>::height(Node<T>* root) const {
-  if (root == nullptr)
-    return 0;
-  else {
-    int left = 0, right = 0;
-
-    if (root->left != nullptr)
-      left = height(root->left) + 1;
-    if (root->right != nullptr)
-      right = height(root->right) + 1;
-    return std::max(left,right);
-  }
-}
-
-/**
- * @brief This function returns the balance factor which is calculated recursively.
- * @param root
- * @return
- */
-template <typename T>
-int bst::BinaryTree<T>::balance_factor(Node<T>* root) const {
-  int left = height(root->left),
-      right = height(root->right);
-  return left - right;
-}
-
 template <typename T>
 void bst::BinaryTree<T>::Insert(const T &value, const size_t &p, const size_t &l) {
   if (root_ == nullptr)
@@ -696,39 +664,6 @@ void bst::BinaryTree<T>::Insert(const T &value, const size_t &p, const size_t &l
   }
 }
 
-template<typename T>
-void bst::BinaryTree<T>::SetBalance(Node<T> *&root, int &&balance) {
-  while (root) {
-    balance = root->balance += balance;
-
-    if (balance == 0)
-      return;
-    else if (balance == 2) {
-      if (root->left->balance == 1)
-        RotateRight(root);
-      else
-        RotateLeftRight(root);
-
-      return;
-    } else if (balance == -2) {
-      if (root->right->balance == -1)
-        RotateLeft(root);
-      else
-        RotateRightLeft(root);
-
-      return;
-    }
-
-    Node<T> *parent = root->parent;
-
-    if (parent)
-      balance = (parent->left == root) ? 1 : -1;
-
-    root = parent;
-
-
-  }
-}
 } // end namespace bst
 
 #endif // BINARYTREE_H
