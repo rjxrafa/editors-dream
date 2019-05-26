@@ -18,7 +18,7 @@ public:
 
     void insertion();
     void extraction();
-    void extractLetter(char &&ch);
+    void extractLetter(int &&count, ...);
 
  private:
     bst::BinaryTree<std::string> orchard_[26];

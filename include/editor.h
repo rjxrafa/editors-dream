@@ -12,6 +12,7 @@
 #include <sstream>
 #include <ctime>
 #include <cmath>
+#include <map>
 #include "node.h"
 
 /**

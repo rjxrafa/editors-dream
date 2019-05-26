@@ -1,15 +1,32 @@
-Considerations:
+----------- Editor -----------
+- add multithreading for all cases
+- A 69k words
+-
 
-Binary Trees
-    Needed functions
-    - tree traversal (level order traversal)
-    - find max/min/any
-    Auxiliary functions
-    - finding least common ancestor for nodes
-    - AVL balance
-    - replace function calls (set) with their constituents for opimization?
-    - finish extractor for bst
-    - move semantics for templated data in node
-Heap
-    - input validation when file not found
-Editor
+
+----------- AVL -----------
+
+
+
+
+----------- Heap -----------
+
+
+----------------------------
+
+Thread 1	9702	49753	1655	15031	1425	30743	25076
+Thread 2	17099	11594	21197	19455	33799	40400	146
+Thread 3	450	    21147	6656	18695	87116	4020
+Thread 4	69121	13113	15056	40651	5571	3967
+
+
+	        SUM
+Thread 1	133385
+Thread 2	143690
+Thread 3	138084
+Thread 4	147479
+
+Thread 1	G	H	J	N	I	Y	B
+Thread 2	D	E	F	M	O	W	Z
+Thread 3	X	C	Q	P	T	K
+Thread 4	A	L	R	S	U	V

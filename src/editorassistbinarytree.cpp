@@ -85,19 +85,27 @@ void EditorAssistBinaryTree::extraction()
     }
 }
 
-void EditorAssistBinaryTree::extractLetter(char &&ch) {
+void EditorAssistBinaryTree::extractLetter(int &&count, ...) {
+  va_list args;
+  va_start(args, count);
+
+
+  std::map<char, int> char_to_check; // ideally use bst
+  for (size_t i = 0; i < count; ++i) { // load all characters into our map
+    char ch = tolower(va_arg(args, char));
+    char_to_check.emplace(ch, ch-97);
+  }
+
+
   std::ifstream in;
   std::string temp;
-  int mych = tolower(ch) - 97;
-  ch = tolower(ch);
-  in.open("war_and_peace.txt");
-//
+  in.open("war_and_peace.txt"); // todo: should ask for user input
   while (in >> temp) {
-    if (tolower(temp[0]) == ch)
-      orchard_[mych].Insert(temp, 0, 0);
+    if (char_to_check.count(tolower(temp[0])))
+      orchard_[tolower(temp[0])-97].Insert(temp, 0, 0);
   }
   in.close();
 
-//  std::cout << orchard_[mych];
-  std::cout << char(ch) << " done\n";
+  std::cout << orchard_['a'];
+//  std::cout << char(ch) << " done\n";
 }
