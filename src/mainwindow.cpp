@@ -29,7 +29,7 @@ void MainWindow::on_actionNew_File_triggered()
                 "All files (*.*);;Text File (*.txt)"
                 );
     QMessageBox::information(
-                this,tr("Book Name"),fileName
+                this,tr("Book Dir"),fileName
                 );
 
     ay.QtInsertion(fileName);

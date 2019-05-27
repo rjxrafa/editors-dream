@@ -296,9 +296,10 @@ void EditorAssist::Output(std::ostream &out, OutputFlags &my_flags) {
         {
             if(letterCounts_[w] != 0)
             {
-                out<<c++
+                out<<c
                   <<": "<<letterCounts_[w]<< " (" <<uniqueLetterCounts_[w]<< ')' <<std::endl;
             }
+            ++c;
         }
         out<<std::endl;
     }
@@ -380,7 +381,7 @@ QString EditorAssist::QtOutput()
 //    toDisplay = "Words: " % /*total_*/  "\n\n";
     message += QString("Paragraphs:  %1 \n\n").arg(paragraphs_);
 //    toDisplay += "Paragraphs: " + std::to_string(paragraphs_) + "\n\n";
-    message += QString("Reading Leve: Grade %1 \n\n").arg(round(FleschKincaid(total_,sentence_,syllables_)));
+    message += QString("Reading Level: Grade %1 \n\n").arg(round(FleschKincaid(total_,sentence_,syllables_)));
 //    toDisplay += "Reading level: Grade " + std::to_string(round(FleschKincaid(total_,sentence_,syllables_))) + "\n\n";
     message += QString("Top 10 words: \n");
 
@@ -392,17 +393,18 @@ QString EditorAssist::QtOutput()
             message += QString("%1 (%2)\n").arg(QString::fromStdString(temp)).arg(topWords_[w].count);
         }
     }
-    message += QString("\n\n");
+    message += QString("\n");
 
     char c = 'A';
     for(unsigned int w = 0; w < 26; ++w)
     {
         if(letterCounts_[w] != 0)
         {
-            message += QString("%1: %2 (%3)\n").arg(QChar(c++)).arg(letterCounts_[w]).arg(uniqueLetterCounts_[w]);
+            message += QString("%1: %2 (%3)\n").arg(QChar(c)).arg(letterCounts_[w]).arg(uniqueLetterCounts_[w]);
         }
+        ++c;
     }
-    message += QString("\n\n");
+    message += QString("\n");
 
     message += QString("Runtime: %1 seconds").arg(seconds_);
 
