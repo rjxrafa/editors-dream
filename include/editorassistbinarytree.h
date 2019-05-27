@@ -19,6 +19,7 @@ public:
 
     void insertion();
     void extraction();
+    void QtInsertion(QString qs);
     void extractLetter(int &&count, ...);
 
  private:
