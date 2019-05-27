@@ -6,6 +6,7 @@
 #include <queue>
 #include "editor.h"
 #include "binarytree.h"
+#include <cstdarg>
 
 /**
  * @brief The class that uses binary tree to process documents

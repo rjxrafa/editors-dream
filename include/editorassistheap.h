@@ -8,6 +8,8 @@
 #include <ctime>
 #include <vector>
 #include <queue>
+#include <cstdarg>
+
 /**
  * @brief The EditorAssistHeap class
  * class that uses heap to process documents
@@ -20,6 +22,7 @@ public:
 
     void insertion();
     void extraction();
+    void extractLetter(int &&count, ...);
 
 private:
   //  std::vector<bst::Node<std::string>*> wordData;

@@ -117,3 +117,31 @@ void EditorAssistHeap::extraction()
         }
     }
 }
+
+
+void EditorAssistHeap::extractLetter(int &&count, ...) {
+  va_list args;
+  va_start(args, count);
+
+
+  std::map<char, int> char_to_check; // ideally use bst
+  for (size_t i = 0; i < count; ++i) { // load all characters into our map
+    char ch = va_arg(args, int);
+    char_to_check.emplace(ch, ch-65);
+  }
+
+
+  std::ifstream in;
+  std::string temp;
+  in.open("war_and_peace.txt"); // todo: should ask for user input
+  while (in >> temp) {
+    if (SanitizeString(temp) && char_to_check.count(temp[0]))
+    {
+        syllables_ += syllableCounter(temp);
+      orchard_[temp[0]-65].insertData(temp, 0, 0);
+    }
+  }
+  in.close();
+
+//  std::cout << char(ch) << " done\n";
+}

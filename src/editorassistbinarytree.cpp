@@ -8,7 +8,7 @@ EditorAssistBinaryTree::~EditorAssistBinaryTree() = default;
  * @brief EditorAssistBinaryTree::insertion
  * information insertion to the binary tree
  */
-void EditorAssistBinaryTree::insertion()
+inline void EditorAssistBinaryTree::insertion()
 {
     std::cout<<"Binary Tree Start:"<<std::endl;
     bool flag = false;
@@ -16,18 +16,19 @@ void EditorAssistBinaryTree::insertion()
     std::stringstream words;
     int line = 1, letter;
 
-    while (!LoadFile());
+   //while (!LoadFile());
+    in.open("war_and_peace.txt");
     begin_ = clock();
     while(!in.eof())
     {
         getline(in, temp);
         words.str(temp);
-        if(temp.empty())
-            flag = true;
-        else
+       // if(temp.empty())
+        //    flag = true;
+       // else
         {
-            if(flag)
-                ++paragraphs_;
+        //    if(flag)
+         //       ++paragraphs_;
             flag = false;
             while(words >> word)
             {
@@ -51,7 +52,7 @@ void EditorAssistBinaryTree::insertion()
  * @brief EditorAssistBinaryTree::extraction
  * information extractrion from the binary tree
  */
-void EditorAssistBinaryTree::extraction()
+inline void EditorAssistBinaryTree::extraction()
 {
     std::string s;
     std::priority_queue<bst::Node<std::string>, std::vector<bst::Node<std::string>>, CompareNodes> mypq;
@@ -91,8 +92,8 @@ void EditorAssistBinaryTree::extractLetter(int &&count, ...) {
 
   std::map<char, int> char_to_check; // ideally use bst
   for (size_t i = 0; i < count; ++i) { // load all characters into our map
-    char ch = tolower(va_arg(args, char));
-    char_to_check.emplace(ch, ch-97);
+    char ch = va_arg(args, int);
+    char_to_check.emplace(ch, ch-65);
   }
 
 
@@ -100,8 +101,11 @@ void EditorAssistBinaryTree::extractLetter(int &&count, ...) {
   std::string temp;
   in.open("war_and_peace.txt"); // todo: should ask for user input
   while (in >> temp) {
-    if (char_to_check.count(tolower(temp[0])))
-      orchard_[tolower(temp[0])-97].Insert(temp, 0, 0);
+    if (SanitizeString(temp) && char_to_check.count(temp[0]))
+    {
+        syllables_ += syllableCounter(temp);
+      orchard_[temp[0]-65].Insert(temp, 0, 0);
+    }
   }
   in.close();
 

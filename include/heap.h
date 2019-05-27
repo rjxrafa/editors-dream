@@ -9,6 +9,10 @@
 #include <cmath>
 #include <vector>
 
+//#define leftChild(x) (2*x + 1)
+//#define rightChild(x) (2*x + 2)
+//#define parent(x) ((x-1)/2)
+
 enum HEAP_ERRORS {FULL, EMPTY};
 
 template<typename T>
@@ -32,6 +36,7 @@ public:
     int parent(int i);
     int leftChild(int i);
     int rightChild(int i);
+    void sort();
 
     template<typename S>
     friend
@@ -49,7 +54,7 @@ private:
     void shuffleUp();
     bool shuffleDown(int i);
     bool xorSwap(int &x, int &y);
-    bool setLeast(int &x, int y);
+//    bool setLeast(int &x, int y);
     void copy(const myHeap<T> &other);
 };
 
@@ -107,7 +112,7 @@ template<typename T>
  * @param paragr
  * @param index
  */
-void myHeap<T>::insertData(const T &data, const int &paragr, const int &index)
+inline void myHeap<T>::insertData(const T &data, const int &paragr, const int &index)
 {
     theWords_.push_back(data);
     paragraph_.push_back(paragr);
@@ -124,7 +129,7 @@ template<typename T>
  * @param paragr
  * @param index
  */
-void myHeap<T>::extractData(T &data, int &paragr, int &index)
+inline void myHeap<T>::extractData(T &data, int &paragr, int &index)
 {
     if(empty())
         throw EMPTY;
@@ -192,7 +197,7 @@ template<typename T>
  * @param i
  * @return
  */
-int myHeap<T>::parent(int i)
+inline int myHeap<T>::parent(int i)
 {
     return (i-1)/2;
 }
@@ -203,7 +208,7 @@ template<typename T>
  * @param i
  * @return
  */
-int myHeap<T>::leftChild(int i)
+inline int myHeap<T>::leftChild(int i)
 {
     return (2*i)+1;
 }
@@ -214,7 +219,7 @@ template<typename T>
  * @param i
  * @return
  */
-int myHeap<T>::rightChild(int i)
+inline int myHeap<T>::rightChild(int i)
 {
     return (2*i)+2;
 }
@@ -241,17 +246,56 @@ template<typename T>
  * @param i
  * @return
  */
-bool myHeap<T>::shuffleDown(int i)
+inline bool myHeap<T>::shuffleDown(int i)
 {
     //left 2n+1, right 2n+2
     int left = leftChild(i), right = rightChild(i), toBeSwapped = i;
     //first check if it is within the vector then if the left is less than it
-    (left < theHeap_.size())&&(theWords_[theHeap_[left]] < theWords_[theHeap_[i]])&&setLeast(toBeSwapped,left);
+    (left < theHeap_.size())&&(theWords_[theHeap_[left]] < theWords_[theHeap_[i]])&&(toBeSwapped = left);
     //if so set it to the left and then check if the right is less than it
-    (right < theHeap_.size())&&(theWords_[theHeap_[right]] < theWords_[theHeap_[toBeSwapped]])&&setLeast(toBeSwapped,right);
+    (right < theHeap_.size())&&(theWords_[theHeap_[right]] < theWords_[theHeap_[toBeSwapped]])&&(toBeSwapped = right);
     (toBeSwapped != i)&&xorSwap(theHeap_[i], theHeap_[toBeSwapped])&&shuffleDown(toBeSwapped);
     return true;
+//    xorSwap(theHeap_[0], theHeap_[i]); //Removed root from the heap
+                                       //by swapping with last node
+                                       //entered into the heap;
+//    int lastEntered = i - 1,
+//        nodeToMove = 0,                //Make the last entered one less
+//                                       //on node list and start off with
+//                                       //the root
+//        toCompare = 0;
+//    bool switched;//Node to compare with
+//    bool done = false;                 //Semiphore to determine if
+//    //more shuffling needs to be done
+//    while(!done)
+//    {
+//        switched=false;
+//        //if the left child is less than the parent
+//        if(leftChild(nodeToMove) <= lastEntered && theWords_[theHeap_[leftChild(nodeToMove)]] < theWords_[theHeap_[nodeToMove]])
+//        {
+//            switched = true;
+//            toCompare = leftChild(nodeToMove);
+//        }
+//        if(rightChild(nodeToMove) <= lastEntered && theWords_[theHeap_[rightChild(nodeToMove)]] < theWords_[theHeap_[toCompare]])
+//        {
+//            switched = true;
+//            toCompare = rightChild(nodeToMove);
+//        }
+//        if(switched)
+//        {
+//            xorSwap(theHeap_[toCompare],theHeap_[nodeToMove]);
+//            nodeToMove = toCompare;
+//        }
+//        else
+//            done = true;
+//    }
 }
+//template<typename T>
+//void myHeap<T>::sort()
+//{
+//    for(int i = theHeap_.size()-1; i > 0; --i)
+//        shuffleDown(i);
+//}
 
 template<typename T>
 /**
@@ -260,24 +304,22 @@ template<typename T>
  * @param y
  * @return
  */
-bool myHeap<T>::xorSwap(int &x, int &y)
+inline bool myHeap<T>::xorSwap(int &x, int &y)
 {
-    x ^= y ^= x ^= y;
-    return true;
+    x ^= y ^= x ^= y; return true;
 }
 
-template<typename T>
+//template<typename T>
 /**
  * @brief myHeap<T>::setLeast
  * @param x number
  * @param y the least
  * @return
  */
-bool myHeap<T>::setLeast(int &x, int y)
-{
-    x = y;
-    return true;
-}
+//inline bool myHeap<T>::setLeast(int &x, int y)
+//{
+//    x = y; return true;
+//}
 
 template<typename T>
 /**
