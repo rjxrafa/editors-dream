@@ -1,22 +1,32 @@
-//#ifndef MAINWINDOW_H
-//#define MAINWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-//#include <QMainWindow>
+#include <QMainWindow>
+#include <string>
 
-//namespace Ui {
-//class MainWindow;
-//}
+namespace Ui {
+class MainWindow;
+}
 
-//class MainWindow : public QMainWindow
-//{
-//    Q_OBJECT
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
 
-//public:
-//    explicit MainWindow(QWidget *parent = nullptr);
-//    ~MainWindow();
+public:
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
-//private:
-//    Ui::MainWindow *ui;
-//};
+private slots:
+    void on_actionNew_File_triggered();
 
-//#endif // MAINWINDOW_H
+    void on_tabWidget_currentChanged(int index);
+
+    void on_tab_2_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionExit_triggered();
+
+private:
+    Ui::MainWindow *ui;
+};
+
+#endif // MAINWINDOW_H

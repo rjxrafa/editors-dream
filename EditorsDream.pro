@@ -44,27 +44,43 @@
 #else: unix:!android: target.path = /opt/$${TARGET}/bin
 #!isEmpty(target.path): INSTALLS += target
 #QT += concurrent widgets
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = EditorsDream
+
 TEMPLATE = app
-CONFIG += console c++11
-CONFIG -= app_bundle
+
+CONFIG += c++11
+#CONFIG -= app_bundle
 #CONFIG -= qt
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    binarytree.tpp \
-    editor.cpp \
-    editorassistheap.cpp \
-    editorassistbinarytree.cpp
+    src/editor.cpp \
+    src/editorassistbinarytree.cpp \
+    src/editorassistheap.cpp \
+    src/mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    binarytree.h \
-    heap.h \
-    node.h \
-    editor.h \
-    editorassistheap.h \
-    editorassistbinarytree.h
+    include/binarytree.h \
+    include/editor.h \
+    include/editorassistbinarytree.h \
+    include/editorassistheap.h \
+    include/heap.h \
+    include/mainwindow.h \
+    include/node.h
+
+
 
 DISTFILES += \
     todo
+
+FORMS += \
+    src/mainwindow.ui
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

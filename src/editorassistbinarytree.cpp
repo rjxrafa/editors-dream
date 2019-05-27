@@ -111,3 +111,42 @@ void EditorAssistBinaryTree::extractLetter(int &&count, ...) {
 
 //  std::cout << char(ch) << " done\n";
 }
+
+void EditorAssistBinaryTree::QtInsertion(QString qs)
+{
+    bool flag = false;
+    std::string word, temp;
+    std::stringstream words;
+    int line = 1, letter;
+
+    while (!QtLoadFile(qs));
+    begin_ = clock();
+    while(!in.eof())
+    {
+        getline(in, temp);
+        words.str(temp);
+        if(temp.empty())
+            flag = true;
+        else
+        {
+            if(flag)
+                ++paragraphs_;
+            flag = false;
+            while(words >> word)
+            {
+
+                //ascii for A = 65 and 65 is for index 0
+                if(SanitizeString(word))
+                {
+                    letter = word[0] - 65;
+                    syllables_ += syllableCounter(word);
+                    orchard_[letter].Insert(word, paragraphs_, line);
+                }
+            }
+            words.clear();
+        }
+        ++line;
+    }
+    in.close();
+    extraction();
+}

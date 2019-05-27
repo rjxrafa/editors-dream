@@ -328,15 +328,15 @@ void EditorAssist::Run(bool fileWrite)
 {
     OutputFlags cout_flags;
     insertion();
-    extraction();
-    Output(std::cout,cout_flags);
-    if(fileWrite)
-    {
-        if(WriteToFile())
-        {
-            Menu();
-        }
-    }
+   // extraction();
+   // Output(std::cout,cout_flags);
+//    if(fileWrite)
+//    {
+//        if(WriteToFile())
+//        {
+//            Menu();
+//        }
+//    }
 }
 
 /**
@@ -354,4 +354,86 @@ bool EditorAssist::getInput(const std::string &s)
     if(user_input.empty())
         return false;
     return tolower(user_input[0]) == 'y';
+}
+
+bool EditorAssist::QtLoadFile(QString qs)
+{
+  std::string filename = qs.toStdString();
+
+//  std::cout << "Filename: ";
+//  getline(std::cin, filename);
+
+  in.close(); // closes if already open
+  in.open(filename);
+  in.clear();
+  if (!in.good())
+    std::cout << "File not found! Try again. " << std::endl;
+
+  return in.good();
+}
+
+QString EditorAssist::QtOutput()
+{
+    QString message =  "";
+
+    message += QString("Words: %1 \n\n").arg(total_);
+//    toDisplay = "Words: " % /*total_*/  "\n\n";
+    message += QString("Paragraphs:  %1 \n\n").arg(paragraphs_);
+//    toDisplay += "Paragraphs: " + std::to_string(paragraphs_) + "\n\n";
+    message += QString("Reading Leve: Grade %1 \n\n").arg(round(FleschKincaid(total_,sentence_,syllables_)));
+//    toDisplay += "Reading level: Grade " + std::to_string(round(FleschKincaid(total_,sentence_,syllables_))) + "\n\n";
+    message += QString("Top 10 words: \n");
+
+    for(unsigned int w = 0; w < topWords_.size(); ++w)
+    {
+        if(!topWords_[w].empty())
+        {
+            std::string temp = topWords_[w].data;
+            message += QString("%1 (%2)\n").arg(QString::fromStdString(temp)).arg(topWords_[w].count);
+        }
+    }
+    message += QString("\n\n");
+
+    char c = 'A';
+    for(unsigned int w = 0; w < 26; ++w)
+    {
+        if(letterCounts_[w] != 0)
+        {
+            message += QString("%1: %2 (%3)\n").arg(QChar(c++)).arg(letterCounts_[w]).arg(uniqueLetterCounts_[w]);
+        }
+    }
+    message += QString("\n\n");
+
+    message += QString("Runtime: %1 seconds").arg(seconds_);
+
+
+//    toDisplay += "Top 10 words: " +
+//    if(my_flags.top_ten)
+//    {
+//        out<<"Top 10 words: "<<std::endl;
+//        for(unsigned int w = 0; w < topWords_.size(); ++w)
+//        {
+//            if(!topWords_[w].empty())
+//            {
+//                out<<topWords_[w]<<std::endl;
+//            }
+//        }
+//        out<<std::endl;
+//    }
+//    if(my_flags.letter_count)
+//    {
+//        char c='A';
+//        for(unsigned int w = 0; w < 26; ++w)
+//        {
+//            if(letterCounts_[w] != 0)
+//            {
+//                out<<c++
+//                  <<": "<<letterCounts_[w]<< " (" <<uniqueLetterCounts_[w]<< ')' <<std::endl;
+//            }
+//        }
+//        out<<std::endl;
+//    }
+//    if(my_flags.runtime)
+//        out<<"Runtime: "<<seconds_<<" seconds"<<std::endl<<std::endl;
+    return message;
 }

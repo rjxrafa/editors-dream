@@ -14,6 +14,7 @@
 #include <cmath>
 #include <map>
 #include "node.h"
+#include <QString>
 
 /**
  * @brief The EditorAssist class
@@ -31,6 +32,8 @@ public:
     bool WriteToFile();
     void Menu();
     void Run(bool fileWrite = true);
+    QString QtOutput();
+    bool QtLoadFile(QString qs);
 
 protected:
     struct OutputFlags
