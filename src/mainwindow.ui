@@ -96,6 +96,11 @@ p, li { white-space: pre-wrap; }
        <attribute name="title">
         <string>F</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="QTextBrowser" name="textBrowser_7"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_8">
        <attribute name="title">
