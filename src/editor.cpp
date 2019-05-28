@@ -412,6 +412,7 @@ QString EditorAssist::QtOutput() const
     }
     message += QString("\n");
 
+    message += QString("Letter: count (unique)\n");
     char c = 'A';
     for(unsigned int w = 0; w < 26; ++w)
     {
