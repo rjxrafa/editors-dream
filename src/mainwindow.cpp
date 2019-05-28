@@ -14,7 +14,11 @@ MainWindow::~MainWindow()
     fileName = "";
     secs = 0;
 }
-
+/**
+ * @brief MainWindow::on_actionNew_File_triggered
+ * When file is pressed and chosen, gets filename
+ * and puts them into two new trees
+ */
 void MainWindow::on_actionNew_File_triggered()
 {
     EditorAssistBinaryTree bTree;
@@ -40,12 +44,17 @@ void MainWindow::on_actionNew_File_triggered()
                 );
     }
 }
-
+/**
+ * Exits qt creator
+ */
 void MainWindow::on_actionExit_triggered()
 {
     QApplication::quit();
 }
-
+/**
+ * @brief MainWindow::tabDisplay
+ * Displays word information for letters
+ */
 void MainWindow::tabDisplay(const EditorAssistBinaryTree &b)
 {
     ui->infoTab->setText(b.QtOutput());
@@ -77,6 +86,11 @@ void MainWindow::tabDisplay(const EditorAssistBinaryTree &b)
     ui->tabZ->setText(b.QtTabWords('Z'));
 }
 
+/**
+ * @brief MainWindow::on_actionSave_Info_triggered
+ * Uses the seconds from the file opening
+ * and saves all information to a new file
+ */
 void MainWindow::on_actionSave_Info_triggered()
 {
     EditorAssistBinaryTree bTree;

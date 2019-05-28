@@ -4,7 +4,6 @@ EditorAssistHeap::EditorAssistHeap() = default;
 
 EditorAssistHeap::~EditorAssistHeap() = default;
 
-//TODO:Create with string parameter for auto run
 /**
  * @brief EditorAssistHeap::insertion
  * information insertion to the heap
@@ -145,7 +144,10 @@ void EditorAssistHeap::extractLetter(int &&count, ...) {
 
 //  std::cout << char(ch) << " done\n";
 }
-
+/**
+ * @brief EditorAssistHeap::timeTest
+ * Seconds counter for heap using qt gui
+ */
 void EditorAssistHeap::timeTest(std::string fileName)
 {
     bool flag = false;
