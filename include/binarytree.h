@@ -634,18 +634,24 @@ void bst::BinaryTree<T>::Insert(const T &value, const size_t &p, const size_t &l
   if (root_ == nullptr)
   { // todo add node stack implementation
     root_ = new Node<T>(value, 1, nullptr);
+    root_->paragraph.push_back(p);
+    root_->line.push_back(l);
   } else {
     Node<T> *temp = root_;
 
     while (temp != nullptr) {
       if (temp->data == value) {
         ++temp->count;
+        temp->paragraph.push_back(p);
+        temp->line.push_back(l);
         return;
       }
       else if (temp->data > value) {
         if (!temp->left) { // if left child doesn't exist, add new node
           temp->left = new Node<T>(value, 1, temp);
-           SetBalance(temp, 1);
+          temp->left->paragraph.push_back(p);
+          temp->left->line.push_back(l);
+          SetBalance(temp, 1);
           return;
         }
         else
@@ -653,6 +659,8 @@ void bst::BinaryTree<T>::Insert(const T &value, const size_t &p, const size_t &l
       } else if (temp->data < value) {
         if (!temp->right) {
           temp->right = new Node<T>(value, 1, temp);
+          temp->right->paragraph.push_back(p);
+          temp->right->line.push_back(l);
           SetBalance (temp, -1);
           return;
         } else
