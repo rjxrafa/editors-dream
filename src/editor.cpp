@@ -427,7 +427,11 @@ QString EditorAssist::QtOutput() const
 
     return message;
 }
-
+/**
+ * @brief EditorAssist::QtTabWords
+ * @param letter
+ * The words to display to on the letter tabs
+ */
 QString EditorAssist::QtTabWords(char letter) const
 {
     QString message = "";
@@ -449,11 +453,12 @@ QString EditorAssist::QtTabWords(char letter) const
     return message;
 }
 
+//Seconds getter
 double EditorAssist::getSeconds() const
 {
     return seconds_;
 }
-
+//Seconds setter
 void EditorAssist::setSeconds(double d)
 {
     seconds_ = d;

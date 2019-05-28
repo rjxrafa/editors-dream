@@ -111,7 +111,10 @@ void EditorAssistBinaryTree::extractLetter(int &&count, ...) {
 
 //  std::cout << char(ch) << " done\n";
 }
-
+/**
+ * @brief EditorAssistBinaryTree::QtInsertion
+ * Instructions to input file from qt gui
+ */
 void EditorAssistBinaryTree::QtInsertion(QString qs)
 {
     bool flag = false;
