@@ -17,7 +17,7 @@ inline void EditorAssistBinaryTree::insertion()
     int line = 1, letter;
 
     while (!LoadFile());
-    //in.open("war_and_peace.txt");
+
     begin_ = clock();
     while(!in.eof())
     {
