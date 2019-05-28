@@ -32,10 +32,15 @@ public:
     bool WriteToFile();
     void Menu();
     void Run(bool fileWrite = true);
-    QString QtOutput();
+    QString QtOutput() const;
+    QString QtTabWords(char letter) const;
+    void QtWriteToFile(const std::string &fileName);
     bool QtLoadFile(QString qs);
+    double getSeconds() const;
+    void setSeconds(double d);
 
 protected:
+    //Output flags to tell us what we want printed to file
     struct OutputFlags
     {
         OutputFlags() {
@@ -65,8 +70,7 @@ protected:
     double seconds_;
     clock_t begin_;
     int syllableCounter(const std::string &word);
-    double FleschKincaid(int words, int sentences, int syllables);
-   // void Output();
+    double FleschKincaid(int words, int sentences, int syllables) const;
     void Output(std::ostream &out, OutputFlags &my_flags);
     bool getInput(const std::string &s);
 };

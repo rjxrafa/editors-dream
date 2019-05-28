@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>600</height>
+    <width>872</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>6</number>
+       <number>26</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -29,23 +29,22 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_3"/>
+         <widget class="QTextBrowser" name="infoTab"/>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>A</string>
+        <string>&amp;A</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QTextBrowser" name="textBrowser">
+         <widget class="QTextBrowser" name="tabA">
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Text Goes Here&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
          </widget>
@@ -54,153 +53,253 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
-        <string>B</string>
+        <string>&amp;B</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_2"/>
+         <widget class="QTextBrowser" name="tabB"/>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
-        <string>C</string>
+        <string>&amp;C</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_4"/>
+         <widget class="QTextBrowser" name="tabC"/>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
-        <string>D</string>
+        <string>&amp;D</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_5"/>
+         <widget class="QTextBrowser" name="tabD"/>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
-        <string>E</string>
+        <string>&amp;E</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_6"/>
+         <widget class="QTextBrowser" name="tabE"/>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_7">
        <attribute name="title">
-        <string>F</string>
+        <string>&amp;F</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
-         <widget class="QTextBrowser" name="textBrowser_7"/>
+         <widget class="QTextBrowser" name="tabF"/>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_8">
        <attribute name="title">
-        <string>G</string>
+        <string>&amp;G</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <widget class="QTextBrowser" name="tabG"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_9">
        <attribute name="title">
-        <string>H</string>
+        <string>&amp;H</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <widget class="QTextBrowser" name="tabH"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_10">
        <attribute name="title">
-        <string>I</string>
+        <string>&amp;I</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <widget class="QTextBrowser" name="tabI"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_11">
        <attribute name="title">
-        <string>J</string>
+        <string>&amp;J</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_11">
+        <item>
+         <widget class="QTextBrowser" name="tabJ"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_12">
        <attribute name="title">
-        <string>K</string>
+        <string>&amp;K</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_12">
+        <item>
+         <widget class="QTextBrowser" name="tabK"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_13">
        <attribute name="title">
-        <string>L</string>
+        <string>&amp;L</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_13">
+        <item>
+         <widget class="QTextBrowser" name="tabL"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_14">
        <attribute name="title">
-        <string>M</string>
+        <string>&amp;M</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_14">
+        <item>
+         <widget class="QTextBrowser" name="tabM"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
-        <string>N</string>
+        <string>&amp;N</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_15">
+        <item>
+         <widget class="QTextBrowser" name="tabN"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_16">
        <attribute name="title">
-        <string>O</string>
+        <string>&amp;O</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_16">
+        <item>
+         <widget class="QTextBrowser" name="tabO"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_17">
        <attribute name="title">
-        <string>P</string>
+        <string>&amp;P</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <item>
+         <widget class="QTextBrowser" name="tabP"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_18">
        <attribute name="title">
-        <string>Q</string>
+        <string>&amp;Q</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_18">
+        <item>
+         <widget class="QTextBrowser" name="tabQ"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_19">
        <attribute name="title">
-        <string>R</string>
+        <string>&amp;R</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_19">
+        <item>
+         <widget class="QTextBrowser" name="tabR"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_20">
        <attribute name="title">
-        <string>S</string>
+        <string>&amp;S</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_20">
+        <item>
+         <widget class="QTextBrowser" name="tabS"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_21">
        <attribute name="title">
-        <string>T</string>
+        <string>&amp;T</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_21">
+        <item>
+         <widget class="QTextBrowser" name="tabT"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_22">
        <attribute name="title">
-        <string>U</string>
+        <string>&amp;U</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_22">
+        <item>
+         <widget class="QTextBrowser" name="tabU"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_23">
        <attribute name="title">
-        <string>V</string>
+        <string>&amp;V</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_23">
+        <item>
+         <widget class="QTextBrowser" name="tabV"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_24">
        <attribute name="title">
-        <string>W</string>
+        <string>&amp;W</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_24">
+        <item>
+         <widget class="QTextBrowser" name="tabW"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_25">
        <attribute name="title">
-        <string>X</string>
+        <string>&amp;X</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_25">
+        <item>
+         <widget class="QTextBrowser" name="tabX"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_26">
        <attribute name="title">
-        <string>Y</string>
+        <string>&amp;Y</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_26">
+        <item>
+         <widget class="QTextBrowser" name="tabY"/>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_27">
        <attribute name="title">
-        <string>Z</string>
+        <string>&amp;Z</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_27">
+        <item>
+         <widget class="QTextBrowser" name="tabZ"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
@@ -211,7 +310,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
+     <width>872</width>
      <height>20</height>
     </rect>
    </property>
@@ -220,7 +319,7 @@ p, li { white-space: pre-wrap; }
      <string>File</string>
     </property>
     <addaction name="actionNew_File"/>
-    <addaction name="actionSave_As"/>
+    <addaction name="actionSave_Info"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -238,15 +337,24 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Open</string>
    </property>
-  </action>
-  <action name="actionSave_As">
-   <property name="text">
-    <string>Save As</string>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionSave_Info">
+   <property name="text">
+    <string>Save As..</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

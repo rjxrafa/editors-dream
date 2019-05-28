@@ -23,20 +23,10 @@ public:
     void insertion();
     void extraction();
     void extractLetter(int &&count, ...);
+    void timeTest(std::string fileName);
 
 private:
-  //  std::vector<bst::Node<std::string>*> wordData;
     myHeap<std::string> orchard_[26];
-//    int sentences_;
 };
-
-//Helper to tell the priority how to compare nodes by its count so it does not conflict
-//with the current word comparison, this uses its count
-//struct CompareNodes {
-//    bool operator()(const bst::Node<std::string>& x, const bst::Node<std::string>& y)
-//    {
-//        return x.count < y.count;
-//    }
-//};
 
 #endif // EDITORASSISTHEAP_H

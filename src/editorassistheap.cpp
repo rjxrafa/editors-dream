@@ -145,3 +145,40 @@ void EditorAssistHeap::extractLetter(int &&count, ...) {
 
 //  std::cout << char(ch) << " done\n";
 }
+
+void EditorAssistHeap::timeTest(std::string fileName)
+{
+    bool flag = false;
+    std::string word, temp;
+    std::stringstream words;
+    int line = 1, letter;
+    in.open(fileName);
+    begin_ = clock();
+    while(!in.eof())
+    {
+        getline(in, temp);
+        words.str(temp);
+        if(temp.empty())
+            flag = true;
+        else
+        {
+            if(flag)
+                ++paragraphs_;
+            flag = false;
+            while(words >> word)
+            {
+                //ascii for A = 65 and 65 is for index 0
+                if(SanitizeString(word)) //optimize sanitize?
+                {
+                    letter = word[0] - 65;
+                    syllables_ += syllableCounter(word);
+                    orchard_[letter].insertData(word,paragraphs_,line);
+                }
+            }
+            words.clear();
+        }
+        ++line;
+    }
+    in.close();
+    extraction();
+}
