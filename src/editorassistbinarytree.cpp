@@ -16,19 +16,19 @@ inline void EditorAssistBinaryTree::insertion()
     std::stringstream words;
     int line = 1, letter;
 
-   //while (!LoadFile());
-    in.open("war_and_peace.txt");
+    while (!LoadFile());
+    //in.open("war_and_peace.txt");
     begin_ = clock();
     while(!in.eof())
     {
         getline(in, temp);
         words.str(temp);
-       // if(temp.empty())
-        //    flag = true;
-       // else
+        if(temp.empty())
+            flag = true;
+        else
         {
-        //    if(flag)
-         //       ++paragraphs_;
+            if(flag)
+                ++paragraphs_;
             flag = false;
             while(words >> word)
             {
@@ -134,7 +134,6 @@ void EditorAssistBinaryTree::QtInsertion(QString qs)
             flag = false;
             while(words >> word)
             {
-
                 //ascii for A = 65 and 65 is for index 0
                 if(SanitizeString(word))
                 {

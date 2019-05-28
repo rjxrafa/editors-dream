@@ -8,7 +8,6 @@
  */
 EditorAssist::EditorAssist()
 {
-
     uniqueLetterCounts_.resize(26);
     letterCounts_.resize(26);
     sentence_ = 1;
@@ -109,7 +108,7 @@ int EditorAssist::syllableCounter(const std::string &word)
  * @return
  * Uses the FleschKincaid math to calculate grade level
  */
-double EditorAssist::FleschKincaid(int words, int sentences, int syllables)
+double EditorAssist::FleschKincaid(int words, int sentences, int syllables) const
 {
     double temp = 0.39 * ((double)words/sentences) + 11.8 * ((double)syllables/words) - 15.9;
     if(temp < 0)
@@ -179,6 +178,20 @@ bool EditorAssist::WriteToFile() {
       return true;
     }
   }
+}
+/**
+ * @brief EditorAssist::QtWriteToFile
+ * @param fileName
+ * different file instructions if writing
+ * from qt gui
+ */
+void EditorAssist::QtWriteToFile(const std::string &fileName)
+{
+    OutputFlags my_flags;
+    my_flags.all= true;
+    out.open(fileName);
+    Output(out, my_flags);
+    out.close();
 }
 
 /**
@@ -329,15 +342,15 @@ void EditorAssist::Run(bool fileWrite)
 {
     OutputFlags cout_flags;
     insertion();
-   // extraction();
-   // Output(std::cout,cout_flags);
-//    if(fileWrite)
-//    {
-//        if(WriteToFile())
-//        {
-//            Menu();
-//        }
-//    }
+    extraction();
+    Output(std::cout,cout_flags);
+    if(fileWrite)
+    {
+        if(WriteToFile())
+        {
+            Menu();
+        }
+    }
 }
 
 /**
@@ -356,33 +369,37 @@ bool EditorAssist::getInput(const std::string &s)
         return false;
     return tolower(user_input[0]) == 'y';
 }
-
+/**
+ * @brief EditorAssist::QtLoadFile
+ * @param qs
+ * Instructions on how to load file
+ * if using qt Gui
+ */
 bool EditorAssist::QtLoadFile(QString qs)
 {
   std::string filename = qs.toStdString();
 
-//  std::cout << "Filename: ";
-//  getline(std::cin, filename);
-
   in.close(); // closes if already open
   in.open(filename);
   in.clear();
-  if (!in.good())
-    std::cout << "File not found! Try again. " << std::endl;
 
   return in.good();
 }
 
-QString EditorAssist::QtOutput()
+/**
+ * @brief EditorAssist::QtOutput
+ * Output to qt textDisplay
+ */
+QString EditorAssist::QtOutput() const
 {
     QString message =  "";
 
     message += QString("Words: %1 \n\n").arg(total_);
-//    toDisplay = "Words: " % /*total_*/  "\n\n";
+
     message += QString("Paragraphs:  %1 \n\n").arg(paragraphs_);
-//    toDisplay += "Paragraphs: " + std::to_string(paragraphs_) + "\n\n";
+
     message += QString("Reading Level: Grade %1 \n\n").arg(round(FleschKincaid(total_,sentence_,syllables_)));
-//    toDisplay += "Reading level: Grade " + std::to_string(round(FleschKincaid(total_,sentence_,syllables_))) + "\n\n";
+
     message += QString("Top 10 words: \n");
 
     for(unsigned int w = 0; w < topWords_.size(); ++w)
@@ -408,34 +425,37 @@ QString EditorAssist::QtOutput()
 
     message += QString("Runtime: %1 seconds").arg(seconds_);
 
-
-//    toDisplay += "Top 10 words: " +
-//    if(my_flags.top_ten)
-//    {
-//        out<<"Top 10 words: "<<std::endl;
-//        for(unsigned int w = 0; w < topWords_.size(); ++w)
-//        {
-//            if(!topWords_[w].empty())
-//            {
-//                out<<topWords_[w]<<std::endl;
-//            }
-//        }
-//        out<<std::endl;
-//    }
-//    if(my_flags.letter_count)
-//    {
-//        char c='A';
-//        for(unsigned int w = 0; w < 26; ++w)
-//        {
-//            if(letterCounts_[w] != 0)
-//            {
-//                out<<c++
-//                  <<": "<<letterCounts_[w]<< " (" <<uniqueLetterCounts_[w]<< ')' <<std::endl;
-//            }
-//        }
-//        out<<std::endl;
-//    }
-//    if(my_flags.runtime)
-//        out<<"Runtime: "<<seconds_<<" seconds"<<std::endl<<std::endl;
     return message;
 }
+
+QString EditorAssist::QtTabWords(char letter) const
+{
+    QString message = "";
+
+    for (unsigned int i = 0, total = wordData_.size(); i < total; ++i)
+    {
+        if(wordData_[i]->data[0] == letter)
+            message += QString("%1(%2):").arg(QString::fromStdString(wordData_[i]->data)).arg(wordData_[i]->count);
+        for (unsigned int s = 0; s < wordData_[i]->paragraph.size(); ++s)
+        {
+            if(wordData_[i]->data[0] == letter)
+                message += QString("[%1,%2]").arg(wordData_[i]->paragraph[s]).arg(wordData_[i]->line[s]);
+        }
+        if(wordData_[i]->data[0] == letter)
+        message += ("\n");
+    }
+    if(message == "")
+        message = "No words with letter found";
+    return message;
+}
+
+double EditorAssist::getSeconds() const
+{
+    return seconds_;
+}
+
+void EditorAssist::setSeconds(double d)
+{
+    seconds_ = d;
+}
+

@@ -1,5 +1,12 @@
-//@author Ara Mico Segismundo
-//min heap array implementation with "pointers"
+/****
+ * This Heap class is using concept of no ifs and fake pointers
+ *
+ * The class has refereced Paul Wilkinson's CS008 lectures,
+ * wikipedia @ https://en.wikipedia.org/wiki/Heap_(data_structure),
+ * and how to implement Heaps as an array by Saksham Raj Seth @ geeksforgeeks.org
+ *
+ * @author      Ara Mico Segismundo
+ ****/
 #ifndef HEAP_H
 #define HEAP_H
 
@@ -8,10 +15,6 @@
 #include <fstream>
 #include <cmath>
 #include <vector>
-
-//#define leftChild(x) (2*x + 1)
-//#define rightChild(x) (2*x + 2)
-//#define parent(x) ((x-1)/2)
 
 enum HEAP_ERRORS {FULL, EMPTY};
 
@@ -166,7 +169,7 @@ template<typename T>
  * @brief myHeap<T>::empty if size is 0
  * @return
  */
-bool myHeap<T>::empty() const
+inline bool myHeap<T>::empty() const
 {
     return !theHeap_.size();
 }
@@ -230,11 +233,12 @@ template<typename T>
  */
 void myHeap<T>::shuffleUp()
 {
-    int i = theHeap_.size()-1;
-    while (i != 0 && theWords_[theHeap_[parent(i)]] > theWords_[theHeap_[i]])
+    int toMoveUp = theHeap_.size()-1;
+    //If moving is at the 0 index it is not necessary to go up
+    while (toMoveUp != 0 && theWords_[theHeap_[parent(toMoveUp)]] > theWords_[theHeap_[toMoveUp]])
        {
-          xorSwap(theHeap_[i], theHeap_[parent(i)]);
-          i = parent(i);
+          xorSwap(theHeap_[toMoveUp], theHeap_[parent(toMoveUp)]);
+          toMoveUp = parent(toMoveUp);
        }
     return;
 }
@@ -256,46 +260,7 @@ inline bool myHeap<T>::shuffleDown(int i)
     (right < theHeap_.size())&&(theWords_[theHeap_[right]] < theWords_[theHeap_[toBeSwapped]])&&(toBeSwapped = right);
     (toBeSwapped != i)&&xorSwap(theHeap_[i], theHeap_[toBeSwapped])&&shuffleDown(toBeSwapped);
     return true;
-//    xorSwap(theHeap_[0], theHeap_[i]); //Removed root from the heap
-                                       //by swapping with last node
-                                       //entered into the heap;
-//    int lastEntered = i - 1,
-//        nodeToMove = 0,                //Make the last entered one less
-//                                       //on node list and start off with
-//                                       //the root
-//        toCompare = 0;
-//    bool switched;//Node to compare with
-//    bool done = false;                 //Semiphore to determine if
-//    //more shuffling needs to be done
-//    while(!done)
-//    {
-//        switched=false;
-//        //if the left child is less than the parent
-//        if(leftChild(nodeToMove) <= lastEntered && theWords_[theHeap_[leftChild(nodeToMove)]] < theWords_[theHeap_[nodeToMove]])
-//        {
-//            switched = true;
-//            toCompare = leftChild(nodeToMove);
-//        }
-//        if(rightChild(nodeToMove) <= lastEntered && theWords_[theHeap_[rightChild(nodeToMove)]] < theWords_[theHeap_[toCompare]])
-//        {
-//            switched = true;
-//            toCompare = rightChild(nodeToMove);
-//        }
-//        if(switched)
-//        {
-//            xorSwap(theHeap_[toCompare],theHeap_[nodeToMove]);
-//            nodeToMove = toCompare;
-//        }
-//        else
-//            done = true;
-//    }
 }
-//template<typename T>
-//void myHeap<T>::sort()
-//{
-//    for(int i = theHeap_.size()-1; i > 0; --i)
-//        shuffleDown(i);
-//}
 
 template<typename T>
 /**
@@ -308,18 +273,6 @@ inline bool myHeap<T>::xorSwap(int &x, int &y)
 {
     x ^= y ^= x ^= y; return true;
 }
-
-//template<typename T>
-/**
- * @brief myHeap<T>::setLeast
- * @param x number
- * @param y the least
- * @return
- */
-//inline bool myHeap<T>::setLeast(int &x, int y)
-//{
-//    x = y; return true;
-//}
 
 template<typename T>
 /**
