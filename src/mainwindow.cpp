@@ -100,5 +100,4 @@ void MainWindow::on_actionSave_Info_triggered()
                                                     tr("Save Name"),"",
                                                     tr("Text File (*.txt);;All files (*.*)"));
     bTree.QtWriteToFile(saveName.toStdString());
-
 }
